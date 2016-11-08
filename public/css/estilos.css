@@ -1,0 +1,154 @@
+/*Estilos generales para el HTML, body, container principal y el pie de página*/
+html, body { 
+    height: 100%; 
+    margin:0;
+    padding:0;
+    height:100%;
+}
+
+body {
+    -webkit-perspective: 700;
+    background-color: #90D3FE;
+    display: table;
+    width: 100%;
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+}
+
+.container {
+    padding-top: 58px;
+    padding-bottom: 24px;
+    text-align: center;
+}
+
+.footer {
+    display: table-row;
+    background-color: rgba(92, 180, 238, 1);
+    color: white;
+    height: 85px;
+}
+
+/* Estilos para el header (navbar navigation) de los usuarios convencionales*/
+#menu-usuario.navbar-default .navbar-brand {
+    color: rgba(255, 255, 255, 1);
+}
+
+#menu-usuario.navbar-default {
+    font-size: 15px;
+    background-color: rgba(92, 180, 238, 1);
+    border-bottom-width: 1px;
+}
+
+#menu-usuario.navbar-default .navbar-nav>li>a {
+    transition: ease 0.3s all;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(92, 180, 238, 1);
+}
+
+#mi-cuenta {
+    background-color: rgba(92, 180, 238, 1);
+}
+
+#menu-usuario.navbar-default .navbar-nav>li>ul>li>a {
+    transition: ease 0.3s all;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(92, 180, 238, 1);
+}
+
+#menu-usuario.navbar-default .navbar-nav>li>ul>li>a:hover {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(68, 154, 208, 1);
+}
+
+#menu-usuario.navbar-default .navbar-nav>li>a:hover/*,
+#menu-usuario.navbar-default .navbar-nav>li>a:focus*/ {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(68, 154, 208, 1);
+}
+
+#menu-usuario.navbar-default .navbar-nav>.active>a/*,
+#menu-usuario.navbar-default .navbar-nav>.active>a:hover,
+#menu-usuario.navbar-default .navbar-nav>.active>a:focus*/ {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(49, 123, 176, 1);
+}
+
+#menu-usuario.navbar-default .navbar-toggle {
+    border-color: #317bb0;
+}
+
+#menu-usuario.navbar-default .navbar-toggle:hover,
+#menu-usuario.navbar-default .navbar-toggle:focus {
+    background-color: #317bb0;
+}
+
+#menu-usuario.navbar-default .navbar-toggle .icon-bar {
+    background-color: #317bb0;
+}
+
+#menu-usuario.navbar-default .navbar-toggle:hover .icon-bar,
+#menu-usuario.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #5cb4ee;
+}
+
+/* Estilo personalizado para el campo "buscador"*/
+.searcher {
+    display: none;
+    color: white;
+}
+
+/* Estilos para los íconos de contacto en el pie de página */
+.social {
+    color: rgba(49, 123, 176, 1);
+    -webkit-transform: scale(0.8);
+    /* Browser Variations: */
+    -moz-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+}
+
+.social:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+ }
+
+#social-fb:hover {
+    color: #3B5998;
+}
+
+#social-tw:hover {
+    color: #4099FF;
+}
+
+#social-gp:hover {
+    color: #d34836;
+}
+
+#social-em:hover {
+    color: #f39c12;
+}
+
+#social-ig:hover {
+    color: #670366;
+}
+
+#social-li:hover {
+    color: blue;
+}
+
+#social-yt:hover {
+    color: red;
+}
+
+/*Estilo para mantener el diseño responsivo en el header*/
+@media (max-width: 890px) {
+    .navbar-form {
+        display: none;
+    }
+    .searcher {
+        display: block;
+        color: white;
+    }
+}
