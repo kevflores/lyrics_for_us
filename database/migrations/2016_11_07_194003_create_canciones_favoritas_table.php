@@ -15,7 +15,24 @@ class CreateCancionesFavoritasTable extends Migration
     {
         Schema::create('canciones_favoritas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('cancion_id')->unsigned();
+            $table->integer('usuario_id')->unsigned();
+            $table->dateTime('fecha');
             $table->timestamps();
+
+            // Restricción de unicidad
+            $table->unique(['cancion_id', 'usuario_id']);
+
+            // Llaves foráneas
+            $table->foreign('cancion_id')
+                ->references('id')->on('canciones')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('usuario_id')
+                ->references('id')->on('usuarios')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

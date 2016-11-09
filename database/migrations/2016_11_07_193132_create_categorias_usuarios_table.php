@@ -15,6 +15,7 @@ class CreateCategoriasUsuariosTable extends Migration
     {
         Schema::create('categorias_usuarios', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('descripcion', 45)->unique();
             $table->timestamps();
         });
     }

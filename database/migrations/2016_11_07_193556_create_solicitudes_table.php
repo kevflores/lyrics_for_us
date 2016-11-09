@@ -15,7 +15,29 @@ class CreateSolicitudesTable extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('descripcion');
+            $table->integer('tipo_solicitud_id')->unsigned();
+            $table->integer('usuario_solicitante_id')->unsigned();
+            $table->dateTime('fecha_solicitud');
+            $table->integer('usuario_admin_id')->unsigned()->nullable();
+            $table->dateTime('fecha_atencion')->nullable();
             $table->timestamps();
+
+            // Llaves foráneas
+            $table->foreign('tipo_solicitud_id')
+                  ->references('id')->on('tipos_solicitudes')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+
+            $table->foreign('usuario_solicitante_id')
+                  ->references('id')->on('usuarios')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
+
+            $table->foreign('usuario_admin_id')
+                  ->references('id')->on('usuarios')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
         });
     }
 

@@ -15,7 +15,23 @@ class CreateMensajesTable extends Migration
     {
         Schema::create('mensajes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('asunto', 100);
+            $table->text('descripcion');
+            $table->dateTime('fecha');
+            $table->integer('usuario_receptor_id')->unsigned();
+            $table->integer('usuario_emisor_id')->unsigned();
             $table->timestamps();
+
+            // Llaves foráneas
+            $table->foreign('usuario_receptor_id')
+                  ->references('id')->on('usuarios')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
+
+            $table->foreign('usuario_emisor_id')
+                  ->references('id')->on('usuarios')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
         });
     }
 

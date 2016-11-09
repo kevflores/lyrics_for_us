@@ -15,7 +15,22 @@ class CreateComentariosDiscosTable extends Migration
     {
         Schema::create('comentarios_discos', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('descripcion');
+            $table->integer('disco_id')->unsigned();
+            $table->integer('usuario_id')->unsigned();
+            $table->dateTime('fecha');
             $table->timestamps();
+
+            // Llaves foráneas
+            $table->foreign('disco_id')
+                ->references('id')->on('discos')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('usuario_id')
+                ->references('id')->on('usuarios')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

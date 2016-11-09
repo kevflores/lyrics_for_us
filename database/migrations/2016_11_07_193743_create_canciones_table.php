@@ -15,7 +15,36 @@ class CreateCancionesTable extends Migration
     {
         Schema::create('canciones', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('titulo', 100);
+            $table->string('resumen', 255)->nullable();
+            $table->integer('disco_id')->unsigned();
+            $table->string('autor')->nullable();
+            $table->string('compositor')->nullable();
+            $table->text('audio')->nullable();
+            $table->text('portada')->nullable();
+            $table->text('letra')->nullable();
+            $table->dateTime('fecha_letra')->nullable();
+            $table->integer('usuario_id')->unsigned();
+            $table->dateTime('fecha_letra_modificada')->nullable();
+            $table->integer('usuario_modificador_id')->unsigned();
+            $table->integer('visitas');
             $table->timestamps();
+
+            // Llaves foráneas
+            $table->foreign('disco_id')
+                ->references('id')->on('discos')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
+
+            $table->foreign('usuario_id')
+                ->references('id')->on('usuarios')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
+
+            $table->foreign('usuario_modificador_id')
+                ->references('id')->on('usuarios')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
         });
     }
 

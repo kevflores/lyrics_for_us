@@ -15,6 +15,7 @@ class CreateTiposSolicitudesTable extends Migration
     {
         Schema::create('tipos_solicitudes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('descripcion', 45)->unique();
             $table->timestamps();
         });
     }

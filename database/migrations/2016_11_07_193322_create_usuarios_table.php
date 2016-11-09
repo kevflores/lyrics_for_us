@@ -15,7 +15,24 @@ class CreateUsuariosTable extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nickname', 20)->unique();
+            $table->string('nombre', 45);
+            $table->string('apellido', 45);
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('url')->nullable();
+            $table->string('imagen')->nullable();
+            $table->boolean('estado')->default(false);
+            $table->boolean('permiso')->default(true);
+            $table->integer('categoria_usuario_id')->unsigned();
+            $table->rememberToken();
             $table->timestamps();
+
+            // Llaves foráneas
+            $table->foreign('categoria_usuario_id')
+                  ->references('id')->on('categorias_usuarios')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
         });
     }
 

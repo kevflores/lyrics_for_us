@@ -15,7 +15,29 @@ class CreateUsuariosReportadosTable extends Migration
     {
         Schema::create('usuarios_reportados', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('usuario_reportado_id')->unsigned();
+            $table->text('descripcion');
+            $table->integer('usuario_reportante_id')->unsigned();
+            $table->dateTime('fecha_reporte');
+            $table->integer('usuario_admin_id')->unsigned()->nullable();
+            $table->dateTime('fecha_atencion')->nullable();
             $table->timestamps();
+
+            // Llaves foráneas
+            $table->foreign('usuario_reportado_id')
+                  ->references('id')->on('usuarios')
+                  ->onDelete('no action')
+                  ->onUpdate('cascade');
+
+            $table->foreign('usuario_reportante_id')
+                  ->references('id')->on('usuarios')
+                  ->onDelete('no action')
+                  ->onUpdate('cascade');
+
+            $table->foreign('usuario_admin_id')
+                  ->references('id')->on('usuarios')
+                  ->onDelete('no action')
+                  ->onUpdate('cascade');
         });
     }
 

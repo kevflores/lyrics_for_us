@@ -15,7 +15,18 @@ class CreateNombresArtistasTable extends Migration
     {
         Schema::create('nombres_artistas', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nombre_alternativo', 100);
+            $table->integer('artista_id')->unsigned();
             $table->timestamps();
+
+            // Restricción de unicidad
+            $table->unique(['nombre_alternativo', 'artista_id']);
+
+            // Llaves foráneas
+            $table->foreign('artista_id')
+                ->references('id')->on('artistas')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

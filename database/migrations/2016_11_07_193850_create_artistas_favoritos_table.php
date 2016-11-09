@@ -15,7 +15,24 @@ class CreateArtistasFavoritosTable extends Migration
     {
         Schema::create('artistas_favoritos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('artista_id')->unsigned();
+            $table->integer('usuario_id')->unsigned();
+            $table->dateTime('fecha');
             $table->timestamps();
+
+            // Restricción de unicidad
+            $table->unique(['artista_id', 'usuario_id']);
+
+            // Llaves foráneas
+            $table->foreign('artista_id')
+                ->references('id')->on('artistas')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('usuario_id')
+                ->references('id')->on('usuarios')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

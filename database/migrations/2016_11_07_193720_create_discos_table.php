@@ -15,7 +15,18 @@ class CreateDiscosTable extends Migration
     {
         Schema::create('discos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('titulo', 100);
+            $table->string('resumen', 255)->nullable();
+            $table->dateTime('fecha')->nullable();
+            $table->text('portada')->nullable();
+            $table->integer('artista_id')->unsigned();
             $table->timestamps();
+
+            // Llaves foráneas
+            $table->foreign('artista_id')
+                ->references('id')->on('artistas')
+                ->onDelete('restrict')
+                ->onUpdate('cascade');
         });
     }
 
