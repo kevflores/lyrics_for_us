@@ -17,16 +17,16 @@ class CreateCancionesTable extends Migration
             $table->increments('id');
             $table->string('titulo', 100);
             $table->string('resumen', 255)->nullable();
-            $table->integer('disco_id')->unsigned();
+            $table->integer('disco_id')->unsigned()->nullable();
             $table->string('autor')->nullable();
             $table->string('compositor')->nullable();
             $table->text('audio')->nullable();
             $table->text('portada')->nullable();
             $table->text('letra')->nullable();
             $table->dateTime('fecha_letra')->nullable();
-            $table->integer('usuario_id')->unsigned();
+            $table->integer('usuario_id')->unsigned()->nullable();
             $table->dateTime('fecha_letra_modificada')->nullable();
-            $table->integer('usuario_modificador_id')->unsigned();
+            $table->integer('usuario_modificador_id')->unsigned()->nullable();
             $table->integer('visitas');
             $table->timestamps();
 
