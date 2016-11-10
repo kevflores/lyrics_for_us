@@ -13,4 +13,12 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+Route::get('/home', function () {
+    return view('userview/home');
+})->name('userhome');
+
+Route::get('/admin/home', function () {
+    return view('adminview/home');
+})->name('adminhome');

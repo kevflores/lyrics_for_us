@@ -18,6 +18,7 @@ body {
     padding-top: 58px;
     padding-bottom: 24px;
     text-align: center;
+    display: table;
 }
 
 .footer {
@@ -26,6 +27,25 @@ body {
     color: white;
     height: 85px;
 }
+
+
+.titulo_inicio {
+    position: relative;
+    height:100px;
+}
+
+.boton_inicio {
+    border-radius: 30px;;
+}
+
+.central {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+}
+
 
 /* Estilos para el header (navbar navigation) de los usuarios convencionales*/
 #menu-usuario.navbar-default .navbar-brand {

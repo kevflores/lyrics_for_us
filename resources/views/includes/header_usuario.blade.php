@@ -10,7 +10,7 @@
         <div id="menu-usuario" class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Lyrics For Us</a>
+                    <a class="navbar-brand" href="{{ route('home') }}">Lyrics For Us</a>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
