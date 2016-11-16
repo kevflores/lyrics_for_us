@@ -8,11 +8,7 @@ class BusquedaController extends Controller
 {
     public function index(Request $request)
     {
-
+    	// Mostrar los resultados relacionados al término especificado en el campo de búsqueda.
     }
 
-    public function verResultados($Request $request)
-    {
-    	
-    }
 }

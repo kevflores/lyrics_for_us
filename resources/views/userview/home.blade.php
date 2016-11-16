@@ -15,7 +15,7 @@
     <br>
     <br>
 
-    {!! Form::open(['url' => '/', 'method' => 'get']) !!}
+    {!! Form::open(['url' => route('userhome'), 'method' => 'get']) !!}
 
 		<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
 			{!! Form::label('Nombre:') !!}
