@@ -9,16 +9,19 @@ class SolicitudController extends Controller
     public function verLista()
     {
         // Mostrar la lista de solicitudes realizadas por el usuario autenticado.
+        return view('userview.solicitudes.ver_lista');
     }
 
     public function verSolicitud($id)
     {
         // Mostrar la información correspondiente al registro de la solicitud seleccionada.
+        return view('userview.solicitudes.ver_solicitud');
     }
 
     public function nuevaSolicitud()
     {
     	// Mostrar el formulario necesario para realizar una nueva solicitud
+        return view('userview.nueva_solicitud');
     }
 
     public function enviarSolicitud(Request $request)

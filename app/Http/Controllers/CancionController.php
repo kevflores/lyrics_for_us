@@ -9,16 +9,19 @@ class CancionController extends Controller
     public function index()
     {
         // Mostrar la vista con todas las opciones disponibles para seleccionar a una canción.
+        return view('userview.canciones.index');
     }
 
     public function verLista($seleccion)
     {
         // Mostrar la lista de canciones asociadas a la selección del usuario.
+        return view('userview.canciones.ver_lista');
     }
     
     public function verInformacion($id_cancion)
     {
         // Mostrar la información de una canción.
+        return view('userview.canciones.ver_informacion');
     }
     
     public function comentar(Request $request, $id_cancion)

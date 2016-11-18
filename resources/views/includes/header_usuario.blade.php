@@ -21,38 +21,59 @@
 
                 <div class="collapse navbar-collapse navbar-menubuilder">
                     <ul class="nav navbar-nav navbar-left">
-                        <li class="active"><a href="#">Inicio</a></li>
-                        <li><a href="#">Artistas</a></li>
-                        <li><a href="#">Solicitar</a></li>
-                        <li><a href="#">Registro</a></li>
-                        <li class="dropdown">
+                        <li {{ current_page("inicio") ? 'class=active' : '' }}><a href="{{ route('userhome') }}">Inicio</a></li>
+                        <li {{ current_page("artistas") ? 'class=active' : '' }}><a href="{{ route('artistas') }}">Artistas</a></li>
+                        <li {{ current_page("discos") ? 'class=active' : '' }}><a href="{{ route('discos') }}">Discos</a></li>
+                        <li {{ current_page("canciones") ? 'class=active' : '' }}><a href="{{ route('canciones') }}">Canciones</a></li>
+                        <li {{ current_page("registro") ? 'class=active' : '' }}><a href="{{ route('usuario.registro') }}">Registro</a></li>
+                        <li class="dropdown" >
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mi cuenta <span class="caret"></span>
                           </a>
                           <ul id="mi-cuenta" class="dropdown-menu">
-                            <li><a href="#">Ver mi perfil</a></li>
-                            <li><a href="#">Bandeja de entrada</a></li>
-                            <li><a href="#">Configuración</a></li>
+                            <li class="text-center">
+                                {{--
+                                @if ($usuario)
+                                    <a>{{ $usuario->nickname }}</a>
+                                @else
+                                    <a>Nombre de usuario</a>
+                                @endif
+                                --}}
+                                <a> nickname</a>
+                            </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">Cerrar sesión</a></li>
+                                {{--
+                                @if ($usuario)
+                                    <li><a href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">Ver mi perfil</a></li>
+                                @else
+                                    <li><a href="#">Ver mi perfil</a></li>                                
+                                @endif
+                                --}}
+                            <li {{ current_page("cuenta") ? "style='background-colo:black;'"  : '' }}><a href="#">Ver mi perfil</a></li>   
+                            <li><a href="{{ route('mensajes_recibidos') }}">Mensajes privados</a></li>
+                            <li><a href="{{ route('usuario.solicitudes') }}">Mis solicitudes</a></li>
+                            <li><a href="{{ route('usuario.configuracion') }}">Configuración</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ route('usuario.salir') }}">Salir</a></li>
                           </ul>
                         </li>
+                        <li {{ current_page("ingreso") ? 'class=active' : '' }}><a href="{{ route('usuario.ingreso') }}">Login</a></li>
                     </ul>
-
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                          <input type="text" class="form-control" placeholder="Artista, disco, canción..." style="border-radius: 30px; width: 200px;">
+                    {!! Form::open(['url' => route('buscar'), 'method' => 'get' /*, 'class' => 'navbar-form navbar-right'*/]) !!}
+                        <div class="navbar-form navbar-right">
+                            <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Artista, disco, canción..." style="width: 200px;">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="border-radius: 30px;">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </form>
 
                     <ul class="nav navbar-nav navbar-right searcher">
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-search"></span></a>
+                        <li {{ current_page("buscar") ? 'class=active' : '' }}>
+                            <a href="{{ route('buscar') }}"><span class="glyphicon glyphicon-search"></span></a>
                         </li>
                     </ul>
-
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

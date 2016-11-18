@@ -9,11 +9,13 @@ class MensajeController extends Controller
     public function verMensajesRecibidos()
     {
         // Mostrar lista de mensajes recibidos por el usuario autenticado.
+        return view('userview.mensajes.ver_lista_mensajes_recibidos');
     }
     
     public function verMensajeRecibido($id_mensaje)
     {
         // Mostrar un mensaje en específico de la lista de mensajes recibidos por el usuario autenticado.
+        return view('userview.mensajes.ver_mensaje_recibido');
     }
     
     public function borrarMensajeRecibido($id_mensaje)
@@ -45,11 +47,13 @@ class MensajeController extends Controller
     public function verMensajesEnviados()
     {
         // Mostrar lista de mensajes enviados por el usuario autenticado.
+        return view('userview.mensajes.ver_lista_mensajes_enviados');
     }
     
     public function verMensajeEnviado($id_mensaje)
     {
         // Mostrar un mensaje en específico de la lista de mensajes enviados por el usuario autenticado.
+        return view('userview.mensajes.ver_mensaje_enviado');
     }
     
     public function borrarMensajeEnviado($id_mensaje)
@@ -67,6 +71,7 @@ class MensajeController extends Controller
     public function escribirMensaje()
     {
         // Mostrar la vista con el formulario para que el usuario escriba el mensaje que desea enviar.
+        return view('userview.mensajes.escribir_mensaje.blade.php');
     }
 
     public function enviarMensaje(Request $request)

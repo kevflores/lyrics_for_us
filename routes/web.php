@@ -11,276 +11,111 @@
 |
 */
 
-Route::get('/', [
-    'uses' => 'HomeController@index',
-    'as' => 'home'
-]);
+Route::group(['middleware' => ['web']], function () {
 
-// Rutas para Modo Usuario:
+    Route::get('/', ['uses' => 'InicioController@index', 'as' => 'home'
+    ]);
 
-Route::get('/home', [
-    'uses' => 'HomeController@indexUsuario',
-    'as' => 'userhome'
-]);
+    # RUTAS PARA MODO USUARIO
 
-Route::get('/artista', [
-    'uses' => 'ArtistaController@index',
-    'as' => 'artista'
-]);
+    # INICIO
 
-Route::get('/artista/por/{seleccion}', [
-    'uses' => 'ArtistaController@verLista',
-    'as' => 'artista.lista'
-]);
+    Route::get('/inicio', 'InicioController@indexUsuario')->name('userhome');
 
-Route::get('/artista/{id_artista}', [
-    'uses' => 'ArtistaController@verInformacion',
-    'as' => 'artista.informacion'
-]);
 
-Route::post('/artista/{id_artista}/comentar', [
-    'uses' => 'ArtistaController@comentar',
-    'as' => 'artista.comentar'
-]);
+    # ARTISTAS
 
-Route::post('/artista/{id_artista}/favorito', [
-    'uses' => 'ArtistaController@favorito',
-    'as' => 'artista.favorito'
-]);
+    Route::get('/artistas', 'ArtistaController@index')->name('artistas');
+    Route::get('/artistas/por/{seleccion}', 'ArtistaController@verLista')->name('artistas.lista');
+    Route::get('/artistas/{id_artista}', 'ArtistaController@verInformacion')->name('artistas.informacion');
+    Route::post('/artistas/{id_artista}/comentar', 'ArtistaController@comentar')->name('artistas.comentar');
+    Route::post('/artistas/{id_artista}/favorito', 'ArtistaController@favorito')->name('artistas.favorito');
 
-Route::get('/disco', [
-    'uses' => 'DiscoController@index',
-    'as' => 'disco'
-]);
 
-Route::get('/disco/por/{seleccion}', [
-    'uses' => 'DiscoController@verLista',
-    'as' => 'disco.lista'
-]);
+    # DISCOS
 
-Route::get('/disco/{id_disco}', [
-    'uses' => 'DiscoController@verInformacion',
-    'as' => 'disco.informacion'
-]);
+    Route::get('/discos', 'DiscoController@index')->name('discos');
+    Route::get('/discos/por/{seleccion}', 'DiscoController@verLista')->name('discos.lista');
+    Route::get('/discos/{id_disco}', 'DiscoController@verInformacion')->name('discos.informacion');
+    Route::post('/discos/{id_disco}/comentar', 'DiscoController@comentar')->name('discos.comentar');
+    Route::post('/discos/{id_disco}/favorito', 'DiscoController@favorito')->name('discos.favorito');
 
-Route::post('/disco/{id_disco}/comentar', [
-    'uses' => 'DiscoController@comentar',
-    'as' => 'disco.comentar'
-]);
 
-Route::post('/disco/{id_disco}/favorito', [
-    'uses' => 'DiscoController@favorito',
-    'as' => 'disco.favorito'
-]);
+    # CANCIONES
 
-Route::get('/cancion', [
-    'uses' => 'CancionController@index',
-    'as' => 'cancion'
-]);
+    Route::get('/canciones', 'CancionController@index')->name('canciones');
+    Route::get('/canciones/por/{seleccion}', 'CancionController@verLista')->name('canciones.lista');
+    Route::get('/canciones/{id_cancion}', 'CancionController@verInformacion')->name('canciones.informacion');
+    Route::post('/canciones/{id_cancion}/comentar', 'CancionController@comentar')->name('canciones.comentar');
+    Route::post('/canciones/{id_cancion}/favorita', 'CancionController@favorita')->name('canciones.favorita');
+    Route::post('/canciones/{id_cancion}/guardarletra', 'CancionController@guardarLetra')->name('canciones.guardarletra');
+    Route::post('/canciones/{id_cancion}/reportarletra', 'CancionController@reportarLetra')->name('canciones.reportarletra');
 
-Route::get('/cancion/por/{seleccion}', [
-    'uses' => 'CancionController@verLista',
-    'as' => 'cancion.lista'
-]);
 
-Route::get('/cancion/{id_cancion}', [
-    'uses' => 'CancionController@verInformacion',
-    'as' => 'cancion.informacion'
-]);
+    # REGISTRO
 
-Route::post('/cancion/{id_cancion}/comentar', [
-    'uses' => 'CancionController@comentar',
-    'as' => 'cancion.comentar'
-]);
+    Route::get('/registro', 'UsuarioController@indexRegistro')->name('usuario.registro');
+    Route::post('/registro/continuar', 'UsuarioController@registrar')->name('usuario.continuar_registro');
 
-Route::post('/cancion/{id_cancion}/favorita', [
-    'uses' => 'CancionController@favorita',
-    'as' => 'cancion.favorita'
-]);
 
-Route::post('/cancion/{id_cancion}/guardarletra', [
-    'uses' => 'CancionController@guardarLetra',
-    'as' => 'cancion.guardarletra'
-]);
+    # INGRESO Y SALIDA 
 
-Route::post('/cancion/{id_cancion}/reportarletra', [
-    'uses' => 'CancionController@reportarLetra',
-    'as' => 'cancion.reportarletra'
-]);
+    Route::get('/ingreso', 'UsuarioController@indexIngreso')->name('usuario.ingreso');
+    Route::post('/ingreso/continuar', 'UsuarioController@ingresar')->name('usuario.continuar_ingreso');
+    Route::get('/salir', 'UsuarioController@salir')->name('usuario.salir');
 
-Route::get('/registro', [
-    'uses' => 'UsuarioController@indexRegistro',
-    'as' => 'usuario.registro'
-]);
 
-Route::post('/registro/continuar', [
-    'uses' => 'UsuarioController@registrar',
-    'as' => 'usuario.continuar_registro'
-]);
+    # ACTIVACIÓN DE CUENTA Y RECUPERACIÓN DE PASSWORD
 
-Route::get('/activar-cuenta/{codigo}', [
-    'uses' => 'UsuarioController@activarCuenta',
-    'as' => 'usuario.activar'
-]);
+    Route::get('/activar-cuenta/{codigo}', 'UsuarioController@activarCuenta')->name('usuario.activar');
+    Route::get('/recuperar-password', 'UsuarioController@recuperarPassworld')->name('usuario.recuperar_password');
+    Route::post('/recuperar-password/validar', 'UsuarioController@validarRecuperacion')->name('usuario.validar_recuperacion');
+    Route::get('/activar-recuperacion/{codigo}', 'UsuarioController@activarRecuperacion')->name('usuario.activar_recuperacion');
+    Route::post('/generar-password/{id_usuario}', 'UsuarioController@generarPassword')->name('usuario.generar_password');
 
-Route::get('/ingreso', [
-    'uses' => 'UsuarioController@indexIngreso',
-    'as' => 'usuario.ingreso'
-]);
 
-Route::post('/ingreso/continuar', [
-    'uses' => 'UsuarioController@ingresar',
-    'as' => 'usuario.continuar_ingreso'
-]);
+    # USUARIO
 
-Route::get('/recuperar-password', [
-    'uses' => 'UsuarioController@recuperarPassworld',
-    'as' => 'usuario.recuperar_password'
-]);
+    Route::get('/usuario/{nickname}', 'UsuarioController@mostrarPerfil')->name('usuario.perfil');
+    Route::post('/usuario/{id_usuario}/comentar', 'UsuarioController@comentar')->name('usuario.comentar');
+    Route::post('/usuario/{id_usuario}/reportar', 'UsuarioController@reportar')->name('usuario.reportar');
+    Route::get('/usuario/{id_usuario}/favoritos', 'UsuarioController@verFavoritos')->name('usuario.ver_favoritos');
 
-Route::post('/recuperar-password/validar', [
-    'uses' => 'UsuarioController@validarRecuperacion',
-    'as' => 'usuario.validar_recuperacion'
-]);
 
-Route::get('/activar-recuperacion/{codigo}', [
-    'uses' => 'UsuarioController@activarRecuperacion',
-    'as' => 'usuario.activar_recuperacion'
-]);
+    # MI CUENTA
 
-Route::post('/generar-password/{id_usuario}', [
-    'uses' => 'UsuarioController@generarPassword',
-    'as' => 'usuario.generar_password'
-]);
+    Route::get('/cuenta/configuracion', 'UsuarioController@verConfiguracion')->name('usuario.configuracion');
+    Route::get('/cuenta/configuracion/editar-datos', 'UsuarioController@editarDatos')->name('usuario.editar_datos');
+    Route::get('/cuenta/mensajes-recibidos', 'MensajeController@verMensajesRecibidos')->name('mensajes_recibidos');
+    Route::get('/cuenta/mensajes-recibidos/{id_mensaje}', 'MensajeController@verMensajeRecibido')->name('ver_mensaje_recibido');
+    Route::get('/cuenta/mensajes-recibidos/{id_mensaje}/borrar', 'MensajeController@borrarMensajeRecibido')->name('borrar_mensaje_recibido');
+    Route::get('/cuenta/mensajes-recibidos/{id_mensaje}/responder', 'MensajeController@responder')->name('responder_mensaje');
+    Route::get('/cuenta/mensajes-recibidos/borrar-marcados/{mensajes}', 'MensajeController@borrarMensajesRecibidosMarcados')->name('borrar_mensajes_recibidos');
+    Route::get('/cuenta/mensajes-recibidos/marcar-leidos/{mensajes}', 'MensajeController@marcarComoLeidos')->name('marcar_como_leidos');
+    Route::get('/cuenta/mensajes-enviados', 'MensajeController@verMensajesEnviados')->name('mensajes_enviados');
+    Route::get('/cuenta/mensajes-enviados/{id_mensaje}', 'MensajeController@verMensajeEnviado')->name('ver_mensaje_enviado');
+    Route::get('/cuenta/mensajes-enviados/{id_mensaje}/borrar', 'MensajeController@borrarMensajeEnviado')->name('borrar_mensaje_recibido');
+    Route::get('/cuenta/mensajes-enviados/borrar-marcados/{mensajes}', 'MensajeController@borrarMensajesEnviadosMarcados')->name('borrar_mensajes_enviados');
+    Route::get('/cuenta/nuevo-mensaje', 'MensajeController@escribirMensaje')->name('nuevo_mensaje');
+    Route::post('/cuenta/nuevo-mensaje/enviar', 'MensajeController@enviarMensaje')->name('enviar_mensaje');
+    Route::get('/cuenta/mis-solicitudes', 'SolicitudController@verLista')->name('usuario.solicitudes');
+    Route::get('/cuenta/mis-solicitudes/{id_solicitud}', 'SolicitudController@verSolicitud')->name('usuario.ver_solicitud');
+    Route::get('/cuenta/nueva-solicitud', 'SolicitudController@nuevaSolicitud')->name('usuario.nueva_solicitud');
+    Route::post('/cuenta/nueva-solicitud/enviar', 'SolicitudController@enviarSolicitud')->name('usuario.enviar_solicitud');
 
-Route::get('/usuario/{id_usuario}', [
-    'uses' => 'UsuarioController@mostrarPerfil',
-    'as' => 'usuario.perfil'
-]);
 
-Route::post('/usuario/{id_usuario}/comentar', [
-    'uses' => 'UsuarioController@comentar',
-    'as' => 'usuario.comentar'
-]);
+    # BUSCAR
 
-Route::post('/usuario/{id_usuario}/reportar', [
-    'uses' => 'UsuarioController@reportar',
-    'as' => 'usuario.reportar'
-]);
+    Route::get('/buscar', 'BusquedaController@index')->name('buscar');
 
-Route::post('/usuario/{id_usuario}/reportar', [
-    'uses' => 'UsuarioController@reportar',
-    'as' => 'usuario.reportar'
-]);
 
-Route::get('/usuario/{id_usuario}/favoritos', [
-    'uses' => 'UsuarioController@verFavoritos',
-    'as' => 'usuario.ver_favoritos'
-]);
+    # RUTAS PARA MODO ADMINISTRADOR
 
-Route::get('/configuracion', [
-    'uses' => 'UsuarioController@verConfiguracion',
-    'as' => 'usuario.configuracion'
-]);
+    Route::get('/adminview/home', 'InicioController@indexAdmin')->name('adminhome');
 
-Route::get('/configuracion/editar-datos', [
-    'uses' => 'UsuarioController@editarDatos',
-    'as' => 'usuario.editar_datos'
-]);
+});
 
-Route::get('/salir', [
-    'uses' => 'UsuarioController@salir',
-    'as' => 'usuario.salir'
-]);
-
-Route::get('/mensajes-recibidos', [
-    'uses' => 'MensajeController@verMensajesRecibidos',
-    'as' => 'mensajes_recibidos'
-]);
-
-Route::get('/mensajes-recibidos/{id_mensaje}', [
-    'uses' => 'MensajeController@verMensajeRecibido',
-    'as' => 'ver_mensaje_recibido'
-]);
-
-Route::get('/mensajes-recibidos/{id_mensaje}/borrar', [
-    'uses' => 'MensajeController@borrarMensajeRecibido',
-    'as' => 'borrar_mensaje_recibido'
-]);
-
-Route::get('/mensajes-recibidos/{id_mensaje}/responder', [
-    'uses' => 'MensajeController@responder',
-    'as' => 'responder_mensaje'
-]);
-
-Route::get('/mensajes-recibidos/borrar-marcados/{mensajes}', [
-    'uses' => 'MensajeController@borrarMensajesRecibidosMarcados',
-    'as' => 'borrar_mensajes_recibidos'
-]);
-
-Route::get('/mensajes-recibidos/marcar-leidos/{mensajes}', [
-    'uses' => 'MensajeController@marcarComoLeidos',
-    'as' => 'marcar_como_leidos'
-]);
-
-Route::get('/mensajes-enviados', [
-    'uses' => 'MensajeController@verMensajesEnviados',
-    'as' => 'mensajes_enviados'
-]);
-
-Route::get('/mensajes-enviados/{id_mensaje}', [
-    'uses' => 'MensajeController@verMensajeEnviado',
-    'as' => 'ver_mensaje_enviado'
-]);
-
-Route::get('/mensajes-enviados/{id_mensaje}/borrar', [
-    'uses' => 'MensajeController@borrarMensajeEnviado',
-    'as' => 'borrar_mensaje_recibido'
-]);
-
-Route::get('/mensajes-enviados/borrar-marcados/{mensajes}', [
-    'uses' => 'MensajeController@borrarMensajesEnviadosMarcados',
-    'as' => 'borrar_mensajes_enviados'
-]);
-
-Route::get('/nuevo-mensaje', [
-    'uses' => 'MensajeController@escribirMensaje',
-    'as' => 'nuevo_mensaje'
-]);
-
-Route::post('/nuevo-mensaje/enviar', [
-    'uses' => 'MensajeController@enviarMensaje',
-    'as' => 'enviar_mensaje'
-]);
-
-Route::get('/mis-solicitudes', [
-    'uses' => 'SolicitudController@verLista',
-    'as' => 'usuario.solicitudes'
-]);
-
-Route::get('/mis-solicitudes/{id_solicitud}', [
-    'uses' => 'SolicitudController@verSolicitud',
-    'as' => 'usuario.ver_solicitud'
-]);
-
-Route::get('/nueva-solicitud', [
-    'uses' => 'SolicitudController@nuevaSolicitud',
-    'as' => 'usuario.nueva_solicitud'
-]);
-
-Route::post('/nueva-solicitud/enviar', [
-    'uses' => 'SolicitudController@enviarSolicitud',
-    'as' => 'usuario.enviar_solicitud'
-]);
-
-Route::get('/buscar', [
-    'uses' => 'BusquedaController@index',
-    'as' => 'buscar'
-]);
-
-// Rutas para Modo Administrador:
-
-Route::get('/adminview/home', [
-    'uses' => 'HomeController@indexAdmin',
-    'as' => 'adminhome'
-]);
+function current_page($uri = "/") {
+    return strstr(request()->path(), $uri);
+    //return request()->path == $uri;
+}
