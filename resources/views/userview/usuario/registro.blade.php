@@ -6,14 +6,15 @@
 
 @section('contenido')
     
-	<h3>Registro (Vista de Usuario)</h3>
+	<h3>Registro de Usuario</h3>
 	<br>
-	@include('includes.message-block')
+	@include('includes.bloque_de_mensajes')
     <div class="row">
     	<div class="col-md-4">
     	</div>
         <div class="col-md-4">
             <form action="{{ route('usuario.continuar_registro') }}" method="post">
+                {!! csrf_field() !!}
                 <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
                     <label for="nombre">Nombre</label>
                     <input class="form-control" type="text" name="nombre" id="nombre" value="{{ Request::old('nombre') }}">
@@ -32,7 +33,7 @@
                 </div>
                 
                 <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <label for="password">Your Password</label>
+                    <label for="password">Password</label>
                     <input class="form-control" type="password" name="password" id="password" value="{{ Request::old('password') }}">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

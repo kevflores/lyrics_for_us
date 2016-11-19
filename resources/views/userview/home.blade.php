@@ -14,7 +14,7 @@
     
     <br>
     <br>
-
+<!--
     {!! Form::open(['url' => route('userhome'), 'method' => 'get']) !!}
 
 		<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
@@ -40,5 +40,5 @@
 		</div>
 
 	{!! Form::close() !!}
-
+-->
 @endsection

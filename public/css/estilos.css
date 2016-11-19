@@ -75,6 +75,11 @@ body {
     background-color: rgba(68, 154, 208, 1);
 }
 
+/* El nickname del usuario no debe cambiar su background-color con el hover*/
+#menu-usuario.navbar-default .navbar-nav>li>ul>li>a#mi-cuenta-nickname:hover {
+    background-color: rgba(92, 180, 238, 1);;
+}
+
 #menu-usuario.navbar-default .navbar-nav>li>a:hover/*,
 #menu-usuario.navbar-default .navbar-nav>li>a:focus*/ {
     color: rgba(255, 255, 255, 1);
@@ -157,7 +162,17 @@ body {
 #social-yt:hover {
     color: red;
 }
-
+@media (min-width: 768px) {
+    /* Para que el ancho del dropdown de 'Mi Cuenta' no sea modificado debido a la longitud del nickname
+       del usuario*/
+    #mi-cuenta-nickname {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: blue;
+    }
+}
 /*Estilo para mantener el diseño responsivo en el header*/
 @media (max-width: 890px) {
     .navbar-form {
@@ -168,3 +183,4 @@ body {
         color: white;
     }
 }
+

@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 use App\Usuario;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class InicioController extends Controller
@@ -21,12 +20,12 @@ class InicioController extends Controller
     public function indexUsuario()
     {    
         //$usuario = Auth::usuario();
-    	//return view('userview.home', ['usuario' => Auth::Usuario()]);
-        return view('userview.home');
+    	return view('userview.home', ['usuario' => Auth::User()]);
+        //return view('userview.home');
     }
 
 	public function indexAdmin()
     {
-    	return view('adminview.home');
+    	return view('adminview.home', ['usuario' => Auth::User()]);
     }
 }

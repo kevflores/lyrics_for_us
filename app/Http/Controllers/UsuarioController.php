@@ -1,19 +1,20 @@
 <?php
 namespace App\Http\Controllers;
 use App\Usuario;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Session;
 
 class UsuarioController extends Controller
 {
     public function indexRegistro()
     {
         // Mostrar la vista para el registro de usuario.
-        return view('userview.usuario.registro');
+        return view('userview.usuario.registro', ['usuario' => Auth::User()]);
     }
 
     public function registrar(Request $request)
@@ -32,6 +33,7 @@ class UsuarioController extends Controller
         $apellido = $request['apellido'];
         $email = $request['email'];
         $password = bcrypt($request['password']);
+        $remember_token = $request['_token'];
 
         $usuario = new Usuario();
 
@@ -40,11 +42,12 @@ class UsuarioController extends Controller
         $usuario->apellido = $apellido;
         $usuario->email = $email;
         $usuario->password = $password;
-        $usuario->categoria_usuario_id = 1;
+        $usuario->categoria_usuario_id = 2; // Categoría = Usuario.
+        $usuario->remember_token = $remember_token;
 
         $usuario->save();
 
-        Auth::login($usuario);
+        Auth::login($usuario); // Línea provisional.
 
         return redirect()->route('userhome');
     }
@@ -58,18 +61,30 @@ class UsuarioController extends Controller
     public function indexIngreso()
     {
         // Mostrar vista para el ingreso al sistema.
-        return view ('userview.usuario.ingreso');
+        return view ('userview.usuario.ingreso', ['usuario' => Auth::User()]);
     }
 
     public function ingresar(Request $request)
     {
         // Validar credenciales.
+        $this->validate($request, [
+            'nickname' => 'required',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt(['nickname' => $request['nickname'], 'password' => $request['password']])) {
+            return redirect()->route('userhome');
+        }
+        else {
+            $mensaje = "Credenciales incorrectas.";
+            return redirect()->back()->with(['mensaje' => $mensaje]);
+        }
     }
 
     public function recuperarPassword()
     {
         // Mostrar vista para ingresar el email o nickname del usuario que desea recuperar su password.
-        return view('userview.usuario.recuperar_password');
+        return view('userview.usuario.recuperar_password', ['usuario' => Auth::User()]);
     }
 
     public function validarRecuperacion(Request $request)
@@ -90,7 +105,7 @@ class UsuarioController extends Controller
     public function mostrarPerfil($nickname)
     {
         // Mostrar el perfil de un usuario.
-        return view ('userview.usuario.ver_perfil');
+        return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User()]);
     }
 
 
@@ -107,7 +122,7 @@ class UsuarioController extends Controller
     public function verConfiguracion(){
         // Mostrar toda la información del usuario autenticado, de modo que éste pueda
         // modificar lo que crea conveniente.
-        return view ('userview.usuario.ver_configuracion');
+        return view ('userview.usuario.ver_configuracion', ['usuario' => Auth::User()]);
     }
 
     public function editarDatos(Request $request)
@@ -118,7 +133,7 @@ class UsuarioController extends Controller
     public function verFavoritos($id_usuario)
     {
         // Mostrar los favoritos (artistas, discos y canciones) de un usuario.
-        return view('userview.usuario.ver_favoritos');
+        return view('userview.usuario.ver_favoritos', ['usuario' => Auth::User()]);
     }
 
     public function escribirMensaje($id_usuario)
@@ -132,5 +147,7 @@ class UsuarioController extends Controller
     public function salir()
     {
         // Permitir el cierre de la sesión del usuario autenticado.
+        Auth::logout();
+        return redirect()->route('userhome');
     }
 }

@@ -119,3 +119,7 @@ function current_page($uri = "/") {
     return strstr(request()->path(), $uri);
     //return request()->path == $uri;
 }
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

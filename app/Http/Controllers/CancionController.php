@@ -3,25 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class CancionController extends Controller
 {
     public function index()
     {
         // Mostrar la vista con todas las opciones disponibles para seleccionar a una canción.
-        return view('userview.canciones.index');
+        return view('userview.canciones.index', ['usuario' => Auth::User()]);
     }
 
     public function verLista($seleccion)
     {
         // Mostrar la lista de canciones asociadas a la selección del usuario.
-        return view('userview.canciones.ver_lista');
+        return view('userview.canciones.ver_lista', ['usuario' => Auth::User()]);
     }
     
     public function verInformacion($id_cancion)
     {
         // Mostrar la información de una canción.
-        return view('userview.canciones.ver_informacion');
+        return view('userview.canciones.ver_informacion', ['usuario' => Auth::User()]);
     }
     
     public function comentar(Request $request, $id_cancion)
