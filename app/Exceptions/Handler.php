@@ -44,6 +44,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        /*
+        if ($exception instanceof ModelNotFoundException or $exception instanceof NotFoundHttpException) {
+            // ajax 404 json feedback
+            if ($request->ajax()) {
+                return response()->json(['error' => 'Not Found'], 404);
+            }
+
+            // normal 404 view page feedback
+            return response()->view('errors.missing', [], 404);
+        }
+        */
+
         return parent::render($request, $exception);
     }
 
@@ -60,6 +72,6 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest('login');
+        return redirect()->guest(route('usuario.ingreso'));
     }
 }

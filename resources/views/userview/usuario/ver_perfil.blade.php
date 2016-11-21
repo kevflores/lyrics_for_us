@@ -6,6 +6,7 @@
 
 @section('contenido')
     
-	<h3>Perfil (Vista de Usuario)</h3>
+	<h3>Perfil</h3>
+	Nombre: {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}}
     
 @endsection

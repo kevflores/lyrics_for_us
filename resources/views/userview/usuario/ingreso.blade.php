@@ -15,9 +15,9 @@
         <div class="col-md-4">
             <form action="{{ route('usuario.continuar_ingreso') }}" method="post">
                 {!! csrf_field() !!}
-                <div class="form-group {{ $errors->has('nickname') ? 'has-error' : '' }}">
-                    <label for="nickname">Nombre de Usuario</label>
-                    <input class="form-control" type="text" name="nickname" id="nickname" value="{{ Request::old('nickname') }}">
+                <div class="form-group {{ $errors->has('login') ? 'has-error' : '' }}">
+                    <label for="login">Nombre de Usuario o  E-Mail</label>
+                    <input class="form-control" type="text" name="login" id="login" value="{{ Request::old('login') }}">
                 </div>
                 <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                     <label for="password">Contraseña</label>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class UsuarioController extends Controller
 {
@@ -66,25 +67,36 @@ class UsuarioController extends Controller
 
     public function ingresar(Request $request)
     {
+        if ($request == null) {
+            return redirect()->route('userhome');
+        }
+
         // Validar credenciales.
         $this->validate($request, [
-            'nickname' => 'required',
+            'login' => 'required',
             'password' => 'required'
         ]);
 
-        if (Auth::attempt(['nickname' => $request['nickname'], 'password' => $request['password']])) {
+        // Se verifica si el login es igual a algún "nickname"...
+        if (Auth::attempt(['nickname' => $request['login'], 'password' => $request['password']])) {
             return redirect()->route('userhome');
         }
         else {
-            $mensaje = "Credenciales incorrectas.";
-            return redirect()->back()->with(['mensaje' => $mensaje]);
+            // Se verifica si el login es igual a algún "email"...
+            if (Auth::attempt(['email' => $request['login'], 'password' => $request['password']])) {
+                return redirect()->route('userhome');
+            }
+            else {
+                $mensaje = "Credenciales incorrectas.";
+                return redirect()->back()->with(['mensaje' => $mensaje]);
+            }
         }
     }
 
     public function recuperarPassword()
     {
         // Mostrar vista para ingresar el email o nickname del usuario que desea recuperar su password.
-        return view('userview.usuario.recuperar_password', ['usuario' => Auth::User()]);
+        return view('userview.home', ['usuario' => Auth::User()]);
     }
 
     public function validarRecuperacion(Request $request)
@@ -104,8 +116,20 @@ class UsuarioController extends Controller
 
     public function mostrarPerfil($nickname)
     {
-        // Mostrar el perfil de un usuario.
-        return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User()]);
+        // Mostrar el perfil de un usuario.        
+        $usuarioPerfil = DB::table('usuarios')->where('nickname', $nickname)->first();
+
+        // Si el usuario existe...
+        if ($usuarioPerfil){
+            echo $usuarioPerfil->apellido;
+            return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User(), 'usuarioPerfil' => $usuarioPerfil]);
+        } 
+        // Sino...
+        else {
+            echo 'Mostrar vista con mensaje de "Usuario No Existe"';
+            // return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User()]);
+        }
+        
     }
 
 
