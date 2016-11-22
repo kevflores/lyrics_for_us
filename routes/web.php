@@ -23,7 +23,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/inicio', 'InicioController@indexUsuario')->name('userhome');
 
 
-    # ARTISTAS
+    # ARTISTAS 
+
+    // NOTA: Colocar FILTROS a las rutas
 
     Route::get('/artistas', 'ArtistaController@index')->name('artistas');
     Route::get('/artistas/por/{seleccion}', 'ArtistaController@verLista')->name('artistas.lista');

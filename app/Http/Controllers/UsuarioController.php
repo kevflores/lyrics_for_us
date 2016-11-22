@@ -62,6 +62,7 @@ class UsuarioController extends Controller
     public function indexIngreso()
     {
         // Mostrar vista para el ingreso al sistema.
+
         return view ('userview.usuario.ingreso', ['usuario' => Auth::User()]);
     }
 
@@ -77,18 +78,20 @@ class UsuarioController extends Controller
             'password' => 'required'
         ]);
 
+        $mensaje = "¡Bienvenido!";
+
         // Se verifica si el login es igual a algún "nickname"...
         if (Auth::attempt(['nickname' => $request['login'], 'password' => $request['password']])) {
-            return redirect()->route('userhome');
+            return redirect()->route('userhome')->with(['mensaje' => $mensaje]);
         }
         else {
             // Se verifica si el login es igual a algún "email"...
             if (Auth::attempt(['email' => $request['login'], 'password' => $request['password']])) {
-                return redirect()->route('userhome');
+                return redirect()->route('userhome')->with(['mensaje' => $mensaje]);
             }
             else {
                 $mensaje = "Credenciales incorrectas.";
-                return redirect()->back()->with(['mensaje' => $mensaje]);
+                return redirect()->back()->withInput()->with(['mensajeError' => $mensaje]);
             }
         }
     }
@@ -121,8 +124,13 @@ class UsuarioController extends Controller
 
         // Si el usuario existe...
         if ($usuarioPerfil){
-            echo $usuarioPerfil->apellido;
-            return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User(), 'usuarioPerfil' => $usuarioPerfil]);
+
+
+            return view ('userview.usuario.ver_perfil', [
+                            'usuario' => Auth::User(),
+                            'usuarioPerfil' => $usuarioPerfil,
+                            
+                        ]);
         } 
         // Sino...
         else {

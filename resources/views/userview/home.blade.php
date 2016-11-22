@@ -5,7 +5,9 @@
 @endsection
 
 @section('contenido')
-    
+
+    @include('includes.bloque_de_mensajes')
+
 	<h3>Título de Prueba (Vista de Usuario)</h3>
 
     @for($i=0;$i<20;$i++)
