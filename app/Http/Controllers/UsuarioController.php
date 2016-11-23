@@ -78,15 +78,17 @@ class UsuarioController extends Controller
             'password' => 'required'
         ]);
 
-        $mensaje = "¡Bienvenido!";
+        
 
         // Se verifica si el login es igual a algún "nickname"...
         if (Auth::attempt(['nickname' => $request['login'], 'password' => $request['password']])) {
+            $mensaje = "¡Bienvenido, ".Auth::User()->nombre." ".Auth::User()->apellido."!";
             return redirect()->route('userhome')->with(['mensaje' => $mensaje]);
         }
         else {
             // Se verifica si el login es igual a algún "email"...
             if (Auth::attempt(['email' => $request['login'], 'password' => $request['password']])) {
+                $mensaje = "¡Bienvenido, ".Auth::User()->nombre." ".Auth::User()->apellido."!";
                 return redirect()->route('userhome')->with(['mensaje' => $mensaje]);
             }
             else {

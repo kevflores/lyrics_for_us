@@ -162,7 +162,7 @@ body {
 #social-yt:hover {
     color: red;
 }
-
+/*
 .error,
 .success {
     text-align: center;
@@ -184,6 +184,12 @@ body {
     border: 1px solid green;
     background-color: #d1f9da;
     color: green;
+}
+*/
+#perfil-seccion-datos ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 @media (min-width: 768px) {

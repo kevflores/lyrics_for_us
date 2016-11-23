@@ -22,8 +22,8 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if (!$usuario)
-                        <li {{ current_page("registro") ? 'class=active' : '' }}><a href="{{ route('usuario.registro') }}">Registro</a></li>
                         <li {{ current_page("ingreso") ? 'class=active' : '' }}><a href="{{ route('usuario.ingreso') }}">Login</a></li>
+                        <li {{ current_page("registro") ? 'class=active' : '' }}><a href="{{ route('usuario.registro') }}">Registro</a></li>
                         @endif
                         @if ($usuario)
                             <li class="dropdown" >

@@ -52,12 +52,14 @@
 
     <body>
 
-    	<div class="container">
-    		<h1 style="color:white;">Lyrics For Us</h1>
-    		<br>
-            <h3>Esta página no está disponible.</h3>
-            <br>
-            <a href="{{ route('userhome') }}"><h4>Volver a Inicio</h4></a>
+    	<div class="container" style="">
+    		<div class="jumbotron info" style="margin:auto;">
+                <h1>Lyrics For Us</h1>
+                <br>
+                <br>
+                <p>Esta página no está disponible.</p>
+                <p><a href="{{ route('userhome') }}">Volver a Inicio</a></p>
+            </div>
         </div>
 
         @include('includes.footer')

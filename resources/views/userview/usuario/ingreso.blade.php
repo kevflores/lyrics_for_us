@@ -17,7 +17,7 @@
                 {!! csrf_field() !!}
                 <div class="form-group {{ $errors->has('login') ? 'has-error' : '' }}">
                     <label for="login">Nombre de Usuario o  E-Mail</label>
-                    <input class="form-control" type="text" name="login" id="login" value="{{ Request::old('login') }}">
+                    <input class="form-control" type="text" name="login" id="login" value="{{ Request::old('login') }}" autofocus>
                 </div>
                 <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                     <label for="password">Contraseña</label>
