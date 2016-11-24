@@ -1,4 +1,5 @@
-/*Estilos generales para el HTML, body, container principal y el pie de página*/
+/* ESTILOS GENERALES */
+
 html, body { 
     height: 100%; 
     margin:0;
@@ -15,26 +16,13 @@ body {
 }
 
 .container {
-    padding-top: 58px;
-    padding-bottom: 24px;
+    padding-top: 80px;
+    padding-bottom: 30px;
     text-align: center;
     display: table;
 }
 
-.footer {
-    display: table-row;
-    background-color: rgba(92, 180, 238, 1);
-    color: white;
-    height: 85px;
-}
-
-
-.titulo_inicio {
-    position: relative;
-    height:100px;
-}
-
-.central {
+.botones-bienvenida {
     position: absolute;
     top: 50%;
     left:50%;
@@ -42,8 +30,11 @@ body {
     -webkit-transform: translate(-50%,-50%);
 }
 
+/* FIN DE ESTILOS GENERALES */
 
-/* Estilos para el header (navbar navigation) de los usuarios convencionales*/
+
+/* ESTILOS PARA EL HEADER (NAVBAR) DE LOS USUARIOS CONVENCIONALES */
+
 #menu-usuario.navbar-default .navbar-brand {
     color: rgba(255, 255, 255, 1);
 }
@@ -111,13 +102,30 @@ body {
     background-color: #5cb4ee;
 }
 
-/* Estilo personalizado para el campo "buscador"*/
-.searcher {
-    display: none;
-    color: white;
+@media (min-width: 768px) {
+    /* Para que el ancho del dropdown de 'Mi Cuenta' no sea modificado debido a la longitud del nickname
+       del usuario*/
+    #mi-cuenta-nickname {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: blue;
+    }
 }
 
-/* Estilos para los íconos de contacto en el pie de página */
+/* FIN DE ESTILOS PARA EL HEADER (NAVBAR) DE LOS USUARIOS CONVENCIONALES */
+
+
+/* ESTILOS PARA EL FOOTER Y LOS ICONOS DE CONTACTO */
+
+.footer {
+    display: table-row;
+    background-color: rgba(92, 180, 238, 1);
+    color: white;
+    height: 85px;
+}
+
 .social {
     color: rgba(49, 123, 176, 1);
     -webkit-transform: scale(0.8);
@@ -133,7 +141,7 @@ body {
     -webkit-transform: scale(1.1);
     -moz-transform: scale(1.1);
     -o-transform: scale(1.1);
- }
+}
 
 #social-fb:hover {
     color: #3B5998;
@@ -162,64 +170,96 @@ body {
 #social-yt:hover {
     color: red;
 }
-/*
-.error,
-.success {
-    text-align: center;
-}
 
-.error {
-    border: 1px solid red;
-    background-color: #f9b5af;
-    color: red;
-}
+/* FIN DE ESTILOS PARA EL FOOTER Y LOS ICONOS DE CONTACTO */
 
-.error ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
 
-.success {
-    border: 1px solid green;
-    background-color: #d1f9da;
-    color: green;
-}
-*/
+/* ESTILOS PARA EL MÓDULO "INICIO" */
+/* FIN DE ESTILOS PARA EL MÓDULO "INICIO" */
+
+
+/* ESTILOS GENÉRICOS PARA LOS MÓDULOS "ARTISTAS", "DISCOS" Y "CANCIONES"*/
+/* FIN DE ESTILOS GENÉRICOS PARA LOS MÓDULOS "ARTISTAS", "DISCOS" Y "CANCIONES"*/
+
+
+/* ESTILOS PARA EL MÓDULO "ARTISTAS" */
+/* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS" */
+
+
+/* ESTILOS PARA EL MÓDULO "DISCOS" */
+/* FIN DE ESTILOS PARA EL MÓDULO "DISCOS" */
+
+
+/* ESTILOS PARA EL MÓDULO "CANCIONES" */
+/* FIN DE ESTILOS PARA EL MÓDULO "CANCIONES" */
+
+
+/* ESTILOS PARA EL SUBMÓDULO "PERFIL DE USUARIO" */
+
 #perfil-seccion-datos ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-#lfu-panel-heading {
-    background-color: rgba(68, 154, 208, 1);
+#lfu-perfil-panel-heading-datos, #lfu-perfil-panel-heading-opciones,
+#lfu-perfil-panel-heading-letras, #lfu-perfil-panel-heading-comentarios {
+    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
     border-radius: 0px;
 }
 
-#lfu-panel {
+#lfu-perfil-panel-datos, #lfu-perfil-panel-opciones, #lfu-perfil-panel-letras, #lfu-perfil-panel-comentarios {
+    border-color: rgba(68, 154, 208, 1);
     border-radius: 0px;
+    margin-bottom:0px;
 }
 
-@media (min-width: 768px) {
-    /* Para que el ancho del dropdown de 'Mi Cuenta' no sea modificado debido a la longitud del nickname
-       del usuario*/
-    #mi-cuenta-nickname {
-        max-width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        color: blue;
+a[href="#lfu-perfil-panel-collapse-comentarios"] {
+    color: white;
+}
+
+#lfu-perfil-comentario-individual {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.no-border-bottom {
+    border-bottom:0px;
+}
+
+@media (min-width: 991px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-perfil-panel-letras {
+        border-left: none;
+    }
+    #lfu-perfil-panel-opciones, #lfu-perfil-panel-comentarios {
+        border-top: none;
     }
 }
-/*Estilo para mantener el diseño responsivo en el header*/
-@media (max-width: 890px) {
-    .navbar-form {
-        display: none;
-    }
-    .searcher {
-        display: block;
-        color: white;
+
+@media (max-width: 990px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-perfil-panel-letras, #lfu-perfil-panel-opciones, #lfu-perfil-panel-comentarios {
+        border-top: none;
     }
 }
+
+/* FIN DE ESTILOS PARA EL SUBMÓDULO "PERFIL DE USUARIO" */
+
+
+/* ESTILOS PARA EL SUBMÓDULO "MENSAJES" */
+/* FIN DE ESTILOS PARA EL SUBMÓDULO "MENSAJES" */
+
+
+/* ESTILOS PARA EL SUBMÓDULO "SOLICITUDES" */
+/* FIN DE ESTILOS PARA EL SUBMÓDULO "SOLICITUDES" */
+
+
+/* ESTILOS PARA EL SUBMÓDULO "CONFIGURACIÓN" */
+/* FIN DE ESTILOS PARA EL SUBMÓDULO "CONFIGURACIÓN" */
+
+
+/* ESTILOS PARA EL MÓDULO "BUSCAR" */
+/* FIN DE ESTILOS PARA EL MÓDULO "BUSCAR" */
+
 

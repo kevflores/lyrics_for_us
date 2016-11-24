@@ -40,5 +40,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <!-- <script src="{{ URL::to('bootstrap-3.3.7/js/bootstrap.min.js') }}></script> -->
 
+        <script>
+            $(document).ready(function(){
+                $("a[href='#lfu-perfil-panel-collapse-comentarios']").click(function(){
+                    $("#lfu-perfil-panel-comentarios").toggleClass("no-border-bottom");
+                });
+            });
+        </script>
+
     </body>
 </html>

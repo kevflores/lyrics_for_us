@@ -9,7 +9,7 @@
 	<h1>Título de Prueba | Página Inicial</h1>
 
 	<div class="botones_inicio">
-		<div class="central">	
+		<div class="botones-bienvenida">	
 		<a href="{{ route('userhome') }}"><button type="button" class="btn btn-primary btn-lg boton_inicio">Modo Usuario</button></a>
 		<br>
 		<br>
