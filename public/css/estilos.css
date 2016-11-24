@@ -192,6 +192,15 @@ body {
     padding: 0;
 }
 
+#lfu-panel-heading {
+    background-color: rgba(68, 154, 208, 1);
+    border-radius: 0px;
+}
+
+#lfu-panel {
+    border-radius: 0px;
+}
+
 @media (min-width: 768px) {
     /* Para que el ancho del dropdown de 'Mi Cuenta' no sea modificado debido a la longitud del nickname
        del usuario*/

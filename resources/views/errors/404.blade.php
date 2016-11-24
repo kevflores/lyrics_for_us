@@ -58,7 +58,7 @@
                 <br>
                 <br>
                 <p>Esta página no está disponible.</p>
-                <p><a href="{{ route('userhome') }}">Volver a Inicio</a></p>
+                <p><a href="{{ route('userhome') }}" class="btn btn-primary btn-lg">Volver a Inicio</a></p>
             </div>
         </div>
 
