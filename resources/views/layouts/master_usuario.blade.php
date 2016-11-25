@@ -55,6 +55,9 @@
                     $(".ocultar-comentarios").hide();
                     $("#lfu-panel-heading-comentarios").css({"border-bottom-left-radius":"3px","border-bottom-right-radius":"3px"});
                 });
+                $("#lfu-comentar").click(function(){
+                    $("#myModal").modal();
+                });
             });
         </script>
 

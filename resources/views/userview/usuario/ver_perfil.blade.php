@@ -11,6 +11,7 @@
 		<div class="lfu-seccion-completa col-md-12">
 	    	
 	    	<div class="lfu-seccion-dividida col-md-4">
+	    		{{-- Sección de Datos --}}
 		    	<div class="panel panel-primary" id="lfu-perfil-panel-datos">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-datos">Datos</div>
 					<div class="panel-body">
@@ -26,7 +27,7 @@
 						</ul>
 					</div>
 			    </div>
-
+			    {{-- Sección de Opciones --}}
 		    	<div class="panel panel-primary perfil-seccion-opciones" id="lfu-perfil-panel-opciones">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-opciones">Opciones</div>
 					<div class="panel-body">
@@ -42,6 +43,7 @@
 	    	</div>
 
 	    	<div class="lfu-seccion-dividida col-md-8" style="">
+	    		{{-- Sección de Letras --}}
 		    	<div class="panel panel-primary perfil-seccion-letras" id="lfu-perfil-panel-letras" style="">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-letras">Letras</div>
 					<div class="panel-body">
@@ -55,6 +57,7 @@
 		</div>
 
 		<div class="lfu-seccion-completa col-md-12" >
+			{{-- Sección de Comentarios --}}
 			<div class="panel panel-primary perfil-seccion-comentarios no-border-bottom" id="lfu-panel-comentarios">
 				<div class="panel-heading" id="lfu-panel-heading-comentarios">
 					<a data-toggle="collapse" class="ver-comentarios" href="#lfu-panel-collapse-comentarios">Ver comentarios</a>
@@ -62,9 +65,7 @@
 				</div>
 				<div id="lfu-panel-collapse-comentarios" class="panel-collapse collapse">
 					<div class="panel-body">
-						<ul>
-							<li><a href="#">Comentar</a></li>
-						</ul>
+						<a href="#" id="lfu-comentar">Comentar</a></li>
 						<div class="media" id="lfu-comentarios">
 							
 							<div class="media-left">
@@ -87,6 +88,30 @@
 				</div>
 			</div>
 		</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" >
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-pencil"></span> Comentar en el perfil de {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido }}</h4>
+        </div>
+        <div class="modal-body" >
+          <form action="{{ route('usuario.comentar', ['id_usuario' => $usuarioPerfil->id]) }}" method="post">
+          	{!! csrf_field() !!}
+            <div class="form-group">
+              <textarea rows="8" cols="50" placeholder="Ingrese comentario..." style="width:100%;"></textarea>
+            </div>
+            	<button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
 
 	@else {{-- Sino, un guest/invitado está accediendo al perfil de un usuario  --}}
 

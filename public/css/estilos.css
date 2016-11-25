@@ -1,5 +1,16 @@
 /* ESTILOS GENERALES */
 
+.modal-header, h4, .close {
+  background-color: rgba(49, 123, 176, 1);
+  color:white !important;
+  text-align: center;
+  //font-size: 30px;
+}
+
+.modal-footer {
+    background-color: #f9f9f9;
+}
+
 html, body { 
     height: 100%; 
     margin:0;

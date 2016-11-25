@@ -146,6 +146,7 @@ class UsuarioController extends Controller
     public function comentar(Request $request, $id_usuario)
     {
         // Registrar el comentario realizado sobre un ususario.
+        echo "Agregar comentario";
     }
 
     public function reportar($id_usuario)
