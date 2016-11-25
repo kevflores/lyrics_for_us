@@ -42,8 +42,18 @@
 
         <script>
             $(document).ready(function(){
-                $("a[href='#lfu-perfil-panel-collapse-comentarios']").click(function(){
-                    $("#lfu-perfil-panel-comentarios").toggleClass("no-border-bottom");
+                $("a[class='ver-comentarios']").click(function(){
+                    $("#lfu-panel-comentarios").toggleClass("no-border-bottom");
+                    $(".ver-comentarios").hide();
+                    $(".ocultar-comentarios").show();
+                    $("#lfu-panel-heading-comentarios").css("border-radius","0px");
+
+                });
+                $("a[class='ocultar-comentarios']").click(function(){
+                    $("#lfu-panel-comentarios").toggleClass("no-border-bottom");
+                    $(".ver-comentarios").show();
+                    $(".ocultar-comentarios").hide();
+                    $("#lfu-panel-heading-comentarios").css({"border-bottom-left-radius":"3px","border-bottom-right-radius":"3px"});
                 });
             });
         </script>
