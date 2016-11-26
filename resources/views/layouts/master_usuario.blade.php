@@ -61,8 +61,14 @@
                 // Al momento de presionar "Enviar" comentario
                 $(".modal-body").on('click', '#enviar-comentario', function (e) {
                     $(this.form).submit();              // Se envía el comentario
-                    $("#lfu-campo_comentario").val(''); // El campo queda en blanco
+                    $("#lfu-textarea-comentario").val(''); // El campo queda en blanco
                     $("#myModal").modal('hide');        // Se oculta el modal
+                });
+                $("#cancelar-comentario").click(function(){
+                    $("#lfu-textarea-comentario").val(''); // El campo queda en blanco
+                });
+                $(".cerrar_modal").click(function(){
+                    $("#lfu-textarea-comentario").val(''); // El campo queda en blanco
                 });
             });
         </script>

@@ -65,7 +65,7 @@
 				</div>
 				<div id="lfu-panel-collapse-comentarios" class="panel-collapse collapse">
 					<div class="panel-body">
-						<a id="lfu-comentar" style="cursor:pointer">Comentar</a></li>
+						<a id="lfu-comentar" style="cursor:pointer">Comentar</a>
 						<div class="media" id="lfu-comentarios">
 							
 							<div class="media-left">
@@ -102,9 +102,10 @@
 						<form action="{{ route('usuario.comentar', ['id_usuario' => $usuarioPerfil->id]) }}" method="post">
 							{!! csrf_field() !!}
 							<div class="form-group">
-								<textarea rows="8" cols="50" id="lfu-campo_comentario" placeholder="Ingrese comentario..." style="width:100%;"></textarea>
+								<textarea rows="8" cols="50" id="lfu-textarea-comentario" placeholder="Ingresar comentario..."></textarea>
 							</div>
-							<button type="submit" class="btn btn-primary" id="enviar-comentario">Enviar</button>
+							<button type="button" class="btn btn-danger" id="cancelar-comentario" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-primary" id="enviar-comentario" >Enviar</button>
 						</form>
 					</div>
 				</div>

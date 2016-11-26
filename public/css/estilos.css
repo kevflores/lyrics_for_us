@@ -297,6 +297,13 @@ a[href="#lfu-panel-collapse-comentarios"] {
     display: none;
 }
 
+#lfu-textarea-comentario {
+    width:100%;
+    padding-top:3px;
+    padding-left:6px;
+    resize: none;
+}
+
 .lfu-comentario-individual {
     text-align:left;
 }
