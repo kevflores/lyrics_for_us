@@ -58,6 +58,12 @@
                 $("#lfu-comentar").click(function(){
                     $("#myModal").modal();
                 });
+                // Al momento de presionar "Enviar" comentario
+                $(".modal-body").on('click', '#enviar-comentario', function (e) {
+                    $(this.form).submit();              // Se envía el comentario
+                    $("#lfu-campo_comentario").val(''); // El campo queda en blanco
+                    $("#myModal").modal('hide');        // Se oculta el modal
+                });
             });
         </script>
 

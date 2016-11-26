@@ -4,7 +4,7 @@
   background-color: rgba(49, 123, 176, 1);
   color:white !important;
   text-align: center;
-  //font-size: 30px;
+  /*font-size: 30px;*/
 }
 
 .modal-header {
@@ -20,11 +20,10 @@ html, body {
     height: 100%; 
     margin:0;
     padding:0;
-    height:100%;
 }
 
 body {
-    -webkit-perspective: 700;
+    /*-webkit-perspective: 700; (Si esto se activa, entonces el navbar no permanecería fijo).*/
     background-color: #90D3FE;
     display: table;
     width: 100%;

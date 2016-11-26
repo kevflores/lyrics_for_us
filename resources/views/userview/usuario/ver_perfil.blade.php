@@ -65,7 +65,7 @@
 				</div>
 				<div id="lfu-panel-collapse-comentarios" class="panel-collapse collapse">
 					<div class="panel-body">
-						<a href="#" id="lfu-comentar">Comentar</a></li>
+						<a id="lfu-comentar" style="cursor:pointer">Comentar</a></li>
 						<div class="media" id="lfu-comentarios">
 							
 							<div class="media-left">
@@ -89,6 +89,27 @@
 			</div>
 		</div>
 
+		<!-- Modal para crear comentario en el perfil del usuario -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+			<!-- Contenido del Modal-->
+				<div class="modal-content">
+					<div class="modal-header" >
+						<button type="button" class="close cerrar_modal" data-dismiss="modal">&times;</button>
+						<h4><span class="glyphicon glyphicon-pencil"></span> Comentar en el perfil de {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido }}</h4>
+					</div>
+					<div class="modal-body" >
+						<form action="{{ route('usuario.comentar', ['id_usuario' => $usuarioPerfil->id]) }}" method="post">
+							{!! csrf_field() !!}
+							<div class="form-group">
+								<textarea rows="8" cols="50" id="lfu-campo_comentario" placeholder="Ingrese comentario..." style="width:100%;"></textarea>
+							</div>
+							<button type="submit" class="btn btn-primary" id="enviar-comentario">Enviar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div> 
 
 	@else {{-- Sino, un guest/invitado está accediendo al perfil de un usuario  --}}
 
