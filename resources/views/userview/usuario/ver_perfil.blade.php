@@ -60,7 +60,7 @@
 			{{-- Sección de Comentarios --}}
 			<div class="panel panel-primary perfil-seccion-comentarios no-border-bottom" id="lfu-panel-comentarios">
 				<div class="panel-heading" id="lfu-panel-heading-comentarios">
-					<a data-toggle="collapse" class="ver-comentarios" href="#lfu-panel-collapse-comentarios">Ver comentarios</a>
+					<a data-toggle="collapse" class="ver-comentarios" href="#lfu-panel-collapse-comentarios">Mostrar comentarios</a>
 					<a data-toggle="collapse" class="ocultar-comentarios" href="#lfu-panel-collapse-comentarios">Ocultar comentarios</a>
 				</div>
 				<div id="lfu-panel-collapse-comentarios" class="panel-collapse collapse">
@@ -89,29 +89,6 @@
 			</div>
 		</div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header" >
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-pencil"></span> Comentar en el perfil de {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido }}</h4>
-        </div>
-        <div class="modal-body" >
-          <form action="{{ route('usuario.comentar', ['id_usuario' => $usuarioPerfil->id]) }}" method="post">
-          	{!! csrf_field() !!}
-            <div class="form-group">
-              <textarea rows="8" cols="50" placeholder="Ingrese comentario..." style="width:100%;"></textarea>
-            </div>
-            	<button type="submit" class="btn btn-primary">Enviar</button>
-          </form>
-        </div>
-      </div>
-      
-    </div>
-  </div> 
 
 	@else {{-- Sino, un guest/invitado está accediendo al perfil de un usuario  --}}
 
@@ -157,7 +134,7 @@
 		<div class="lfu-seccion-completa col-md-12" >
 			<div class="panel panel-primary perfil-seccion-comentarios no-border-bottom" id="lfu-panel-comentarios">
 				<div class="panel-heading" id="lfu-panel-heading-comentarios">
-					<a data-toggle="collapse" class="ver-comentarios" href="#lfu-panel-collapse-comentarios">Ver comentarios</a>
+					<a data-toggle="collapse" class="ver-comentarios" href="#lfu-panel-collapse-comentarios">Mostrar comentarios</a>
 					<a data-toggle="collapse" class="ocultar-comentarios" href="#lfu-panel-collapse-comentarios">Ocultar comentarios</a>
 				</div>
 				<div id="lfu-panel-collapse-comentarios" class="panel-collapse collapse">

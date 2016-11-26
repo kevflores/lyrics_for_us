@@ -1,10 +1,15 @@
 /* ESTILOS GENERALES */
 
-.modal-header, h4, .close {
+.modal-header, h4, .cerrar_modal {
   background-color: rgba(49, 123, 176, 1);
   color:white !important;
   text-align: center;
   //font-size: 30px;
+}
+
+.modal-header {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 .modal-footer {

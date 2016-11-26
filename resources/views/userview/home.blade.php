@@ -10,13 +10,13 @@
 
 	<h3>Título de Prueba (Vista de Usuario)</h3>
 
-    @for($i=0;$i<20;$i++)
+    @for($i=0;$i<40;$i++)
         Contenido y Formulario de Prueba{{$i+1}}
     @endfor
     
     <br>
     <br>
-<!--
+
     {!! Form::open(['url' => route('userhome'), 'method' => 'get']) !!}
 
 		<div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
@@ -42,5 +42,5 @@
 		</div>
 
 	{!! Form::close() !!}
--->
+
 @endsection

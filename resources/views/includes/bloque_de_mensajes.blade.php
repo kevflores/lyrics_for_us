@@ -18,7 +18,7 @@
         <div class="col-md-4 col-md-offset-4 success">
                 
                 <div class="alert alert-success alert-dismissable fade in">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong> {{Session::get('mensaje')}} </strong>
                 </div>
             
