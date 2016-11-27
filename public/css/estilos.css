@@ -203,6 +203,30 @@ body {
 /* FIN DE ESTILOS PARA EL MÓDULO "INICIO" */
 
 
+/* ESTILOS PARA EL MÓDULO "REGISTRO" */
+
+#lfu-registro-panel {
+    border-color: rgba(68, 154, 208, 1); /*rgba(92, 180, 238, 1);*/
+}
+
+#lfu-registro-panel-heading, #lfu-registro-panel-footer {
+    background-color: rgba(92, 180, 238, 1);
+    background-color: rgba(92, 180, 238, 1);
+    border-color: rgba(68, 154, 208, 1); /*rgba(92, 180, 238, 1);*/
+    color: white;
+}
+
+#lfu-registro-panel-heading {
+    font-size: 14px;
+}
+
+/* FIN DE ESTILOS PARA EL MÓDULO "REGISTRO" */
+
+
+/* ESTILOS PARA EL MÓDULO "LOGIN" */
+/* FIN DE ESTILOS PARA EL MÓDULO "LOGIN" */
+
+
 /* ESTILOS GENÉRICOS PARA LOS MÓDULOS "ARTISTAS", "DISCOS" Y "CANCIONES"*/
 /* FIN DE ESTILOS GENÉRICOS PARA LOS MÓDULOS "ARTISTAS", "DISCOS" Y "CANCIONES"*/
 
