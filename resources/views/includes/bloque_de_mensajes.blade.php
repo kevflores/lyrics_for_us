@@ -1,15 +1,15 @@
 @if(count($errors) > 0)
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4 error">
-            
-                <div class="alert alert-danger alert-dismissable">
-                    @foreach($errors->all() as $error)
-                        <strong> - {{$error}} </strong>
-                        <br>
-                    @endforeach
-                </div>
-            
+    <div class="lfu-seccion-completa col-xs-12">
+        <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
+        <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4">
+            <div class="alert alert-danger alert-dismissable">
+                @foreach($errors->all() as $error)
+                    <strong> - {{$error}} </strong>
+                    <br>
+                @endforeach
+            </div>
         </div>
+        <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
     </div>
 @endif
 

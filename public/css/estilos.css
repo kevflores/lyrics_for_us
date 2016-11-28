@@ -220,6 +220,29 @@ body {
     font-size: 14px;
 }
 
+#lfu-registro-panel-body {
+    /*display: inline-block;*/
+}
+
+#nombre, #apellido, #nickname, #email, #password, #password-repeat {
+    text-align: center;
+}
+
+
+@media (max-width: 768px) { 
+
+
+    .lfu-registro-nombre {
+        width: 300px;
+    }
+}
+
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { ... }
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) { ... }
+@media (min-width: 1200px) {
+
+}
+
 /* FIN DE ESTILOS PARA EL MÓDULO "REGISTRO" */
 
 

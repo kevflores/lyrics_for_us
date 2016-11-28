@@ -6,11 +6,9 @@
 
 @section('contenido')
     
-    <div class="lfu-seccion-completa col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        @include('includes.bloque_de_mensajes')
-    </div>
-
-    <div class="lfu-seccion-completa col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    @include('includes.bloque_de_mensajes')
+        
+    <div class="lfu-seccion-completa col-xs-12">
 
         <form action="{{ route('usuario.continuar_registro') }}" method="post">
             {!! csrf_field() !!}
