@@ -70,6 +70,12 @@
                 $(".cerrar_modal").click(function(){
                     $("#lfu-textarea-comentario").val(''); // El campo queda en blanco
                 });
+                $(".close").click(function(){
+                    $(".mensaje-bienvenida").fadeOut(1000); // Para desaparecer los espacios 'responsive' del mensaje de bienvenida.
+                });
+
+                
+
             });
         </script>
 

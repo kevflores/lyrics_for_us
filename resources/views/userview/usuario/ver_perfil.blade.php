@@ -8,9 +8,9 @@
 
 	@if ($usuario) {{-- Si un usuario autenticado está accediendo al perfil --}}
 
-		<div class="lfu-seccion-completa col-md-12">
+		<div class="lfu-seccion-completa col-xs-12">
 	    	
-	    	<div class="lfu-seccion-dividida col-md-4">
+	    	<div class="lfu-seccion-dividida col-xs-12 col-sm-4">
 	    		{{-- Sección de Datos --}}
 		    	<div class="panel panel-primary" id="lfu-perfil-panel-datos">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-datos">Datos</div>
@@ -42,7 +42,7 @@
 			    </div>		    
 	    	</div>
 
-	    	<div class="lfu-seccion-dividida col-md-8" style="">
+	    	<div class="lfu-seccion-dividida col-xs-12 col-sm-8" style="">
 	    		{{-- Sección de Letras --}}
 		    	<div class="panel panel-primary perfil-seccion-letras" id="lfu-perfil-panel-letras" style="">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-letras">Letras</div>
@@ -56,7 +56,7 @@
 
 		</div>
 
-		<div class="lfu-seccion-completa col-md-12" >
+		<div class="lfu-seccion-completa col-xs-12" >
 			{{-- Sección de Comentarios --}}
 			<div class="panel panel-primary perfil-seccion-comentarios no-border-bottom" id="lfu-panel-comentarios">
 				<div class="panel-heading" id="lfu-panel-heading-comentarios">
@@ -114,9 +114,10 @@
 
 	@else {{-- Sino, un guest/invitado está accediendo al perfil de un usuario  --}}
 
-		<div class="lfu-seccion-completa col-md-12">
+		<div class="lfu-seccion-completa col-xs-12">
 	    	
-	    	<div class="lfu-seccion-dividida col-md-4">
+	    	<div class="lfu-seccion-dividida col-xs-12 col-sm-4">
+	    		{{-- Sección de Datos --}}
 		    	<div class="panel panel-primary" id="lfu-perfil-panel-datos">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-datos">Datos</div>
 					<div class="panel-body">
@@ -130,6 +131,7 @@
 					</div>
 			    </div>
 
+		    	{{-- Sección de Opciones --}}
 		    	<div class="panel panel-primary perfil-seccion-opciones" id="lfu-perfil-panel-opciones">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-opciones">Opciones</div>
 					<div class="panel-body">
@@ -140,7 +142,8 @@
 			    </div>		    
 	    	</div>
 
-	    	<div class="lfu-seccion-dividida col-md-8" style="">
+	    	<div class="lfu-seccion-dividida col-xs-12 col-sm-8" style="">
+	    		{{-- Sección de Letras --}}
 		    	<div class="panel panel-primary perfil-seccion-letras" id="lfu-perfil-panel-letras" style="">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-letras">Letras</div>
 					<div class="panel-body">
@@ -153,7 +156,8 @@
 
 		</div>
 
-		<div class="lfu-seccion-completa col-md-12" >
+		<div class="lfu-seccion-completa col-xs-12" >
+			{{-- Sección de Comentarios --}}
 			<div class="panel panel-primary perfil-seccion-comentarios no-border-bottom" id="lfu-panel-comentarios">
 				<div class="panel-heading" id="lfu-panel-heading-comentarios">
 					<a data-toggle="collapse" class="ver-comentarios" href="#lfu-panel-collapse-comentarios">Mostrar comentarios</a>
@@ -184,4 +188,13 @@
 		</div>
 
 	@endif  
+
+	{{-- Prueba para el front-end --}}
+    <h6 class="col-xs-12">Resolución: 
+        <div class="visible-xs">Extra-Small</div>
+        <div class="visible-sm">Small</div>
+        <div class="visible-md">Medium</div>
+        <div class="visible-lg">Large</div>
+    </h6>
+
 @endsection

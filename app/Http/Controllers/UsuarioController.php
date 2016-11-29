@@ -56,7 +56,7 @@ class UsuarioController extends Controller
 
         Auth::login($usuario); // Línea provisional.
 
-        return redirect()->route('userhome');
+        return redirect()->route('usuario.configuracion');
     }
     
     public function activarCuenta($codigo)

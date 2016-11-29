@@ -209,8 +209,6 @@ body {
 
 /* ESTILOS PARA EL MÓDULO "REGISTRO" */
 
-
-
 #lfu-panel {
     border-color: rgba(68, 154, 208, 1); /*rgba(92, 180, 238, 1);*/
 }
@@ -230,21 +228,12 @@ body {
     height: 40px; /*Se le da una altura, ya que no contiene texto.*/
 }
 
-#lfu-registro-panel-body {
-    /*display: inline-block;*/
-}
-
 #nombre, #apellido, #nickname, #email, #password, #password-repeat {
     text-align: center;
 }
 
-
 @media (max-width: 768px) { 
 
-
-    .lfu-registro-nombre {
-        width: 300px;
-    }
 }
 
 @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { ... }
@@ -290,15 +279,15 @@ body {
 }
 
 .lfu-seccion-completa {
-    padding-left:0;
-    padding-right:0;
-    padding-bottom:0
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
 }
 
 .lfu-seccion-dividida {
-    padding-left:0;
-    padding-right:0;
-    padding-bottom:0
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
 }
 .lfu-comentario-avatar {
     width:60px;
@@ -387,7 +376,7 @@ a[href="#lfu-panel-collapse-comentarios"] {
     border-bottom-right-radius: 3px;
 }
 
-@media (min-width: 991px) {
+@media (min-width: 768px) {
     /* Para no mostrar 'doble borde' entre paneles adyacentes*/
     #lfu-perfil-panel-letras {
         border-left: none;
@@ -405,7 +394,7 @@ a[href="#lfu-panel-collapse-comentarios"] {
     } 
 }
 
-@media (max-width: 990px) {
+@media (max-width: 767px) {
     /* Para no mostrar 'doble borde' entre paneles adyacentes*/
     #lfu-perfil-panel-letras, #lfu-perfil-panel-opciones, #lfu-panel-comentarios {
         border-top: none;
@@ -429,6 +418,96 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
 
 /* ESTILOS PARA EL SUBMÓDULO "CONFIGURACIÓN" */
+
+.panel-footer-configuracion {
+    border-top: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+#lfu-configuracion-panel-imagen {
+    height:250px;
+    margin-bottom:0px;
+}
+
+#lfu-configuracion-panel-password {
+    height:250px;
+    margin-bottom:0px;
+}
+
+#lfu-configuracion-panel-datos {
+    height: 500px;
+    overflow: hidden;
+}
+
+#lfu-configuracion-panel-body-datos{
+    overflow:auto;
+    height:457px;
+    padding-bottom: 15px;
+}
+
+/* visible|hidden|scroll|auto|initial|inherit; */
+
+.lfu-separador-comentarios {
+    margin-top:0px;
+    margin-bottom:13px;
+}
+
+#lfu-configuracion-panel-datos, #lfu-configuracion-panel-password, #lfu-configuracion-panel-imagen {
+    border-color: rgba(68, 154, 208, 1);
+    //border-radius: 0px;
+    border-bottom-right-radius: 0px; 
+    border-bottom-left-radius: 0px;
+    margin-bottom:0px;
+}
+
+#lfu-configuracion-panel-password, #lfu-panel-comentarios {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#lfu-configuracion-panel-heading-imagen, #lfu-configuracion-panel-heading-datos,
+#lfu-configuracion-panel-heading-password {
+    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    font-size: 14px;
+}
+
+#lfu-configuracion-panel-heading-password {
+    border-radius: 0px;
+}
+
+@media (min-width: 768px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-configuracion-panel-datos {
+        border-right: none;
+    }
+    #lfu-configuracion-panel-password {
+        border-top: none;
+    }
+
+    #lfu-configuracion-panel-imagen, #lfu-configuracion-panel-heading-imagen {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    #lfu-configuracion-panel-datos, #lfu-configuracion-panel-heading-datos {
+        border-top-right-radius: 0px;
+    } 
+}
+
+@media (max-width: 767px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-configuracion-panel-imagen, #lfu-configuracion-panel-password {
+        border-top: none;
+    }
+
+    #lfu-configuracion-panel-imagen, #lfu-configuracion-panel-heading-imagen {
+        border-radius: 0px;
+    }
+}
+
+
 /* FIN DE ESTILOS PARA EL SUBMÓDULO "CONFIGURACIÓN" */
 
 

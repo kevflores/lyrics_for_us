@@ -16,10 +16,10 @@
 
 {{-- Mostrar mensajes de éxito --}}
 @if(Session::has('mensaje'))
-    <div class="lfu-seccion-completa col-xs-12">
+    <div class="lfu-seccion-completa mensaje-bienvenida col-xs-12">
         <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4 lfu-espacio-responsive"></div>
         <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4">
-            <div class="alert alert-success alert-dismissable fade in">
+            <div class="alert alert-success alert-dismissable">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong> {{Session::get('mensaje')}} </strong>
             </div>
