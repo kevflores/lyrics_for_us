@@ -38,7 +38,7 @@
 		</div>
 
 		<div class="form-group">
-			<button class="btn btn-primary" style="border-radius: 30px; width: 100px;">Enviar</button>
+			<button class="btn btn-primary">Enviar</button>
 		</div>
 
 	{!! Form::close() !!}

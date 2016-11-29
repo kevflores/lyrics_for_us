@@ -45,15 +45,19 @@ body {
     -webkit-transform: translate(-50%,-50%);
 }
 
-// Estilos para el título de cada vista:
-#lfu-titulo {
-    color: rgba(255, 255, 255, 1);
-    font-size: 15px;
-    font-weight: lighter;
-    border-color: rgba(68, 154, 208, 1);
-    border-radius: 0px;
-    background: linear-gradient(rgba(68, 154, 208, 1),rgba(92, 180, 238, 1));
+.lfu-espacio-responsive {
+    padding-left:0;
+    padding-right:0;
+    padding-bottom:0
 }
+
+.mensaje-de-validacion {
+    text-align:center;
+    padding:10px;
+}
+
+
+
 
 /* FIN DE ESTILOS GENERALES */
 
@@ -205,19 +209,25 @@ body {
 
 /* ESTILOS PARA EL MÓDULO "REGISTRO" */
 
-#lfu-registro-panel {
+
+
+#lfu-panel {
     border-color: rgba(68, 154, 208, 1); /*rgba(92, 180, 238, 1);*/
 }
 
-#lfu-registro-panel-heading, #lfu-registro-panel-footer {
+#lfu-panel-heading, #lfu-panel-footer {
     background-color: rgba(92, 180, 238, 1);
     background-color: rgba(92, 180, 238, 1);
     border-color: rgba(68, 154, 208, 1); /*rgba(92, 180, 238, 1);*/
     color: white;
 }
 
-#lfu-registro-panel-heading {
+#lfu-panel-heading {
     font-size: 14px;
+}
+
+.panel-primary.panel-footer.sin-texto {
+    height: 40px; /*Se le da una altura, ya que no contiene texto.*/
 }
 
 #lfu-registro-panel-body {
@@ -247,6 +257,11 @@ body {
 
 
 /* ESTILOS PARA EL MÓDULO "LOGIN" */
+
+#login {
+    text-align: center;
+}
+
 /* FIN DE ESTILOS PARA EL MÓDULO "LOGIN" */
 
 

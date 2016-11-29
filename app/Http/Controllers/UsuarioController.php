@@ -22,11 +22,17 @@ class UsuarioController extends Controller
     {
         // Validar el registro de usuario.
         $this->validate($request, [
-            'nickname' => 'required|unique:usuarios',
-            'apellido' => 'required',
+            'nombre' => 'required|string|max:45',
+            'apellido' => 'required|string|max:45',
+            'nickname' => 'required|unique:usuarios|min:5|max:20',
             'email' => 'required|email|unique:usuarios',
-            'nombre' => 'required|max:120',
-            'password' => 'required|min:4'
+            'password' => 'required|min:4',
+            'password-repeat' => 'required'
+        ]);
+
+        // Validar que las contraseñas coincidan.
+        $this->validate($request, [
+            'password-repeat' => 'same:password'
         ]);
 
         $nickname = $request['nickname'];
@@ -78,23 +84,17 @@ class UsuarioController extends Controller
             'password' => 'required'
         ]);
 
-        
-
-        // Se verifica si el login es igual a algún "nickname"...
         if (Auth::attempt(['nickname' => $request['login'], 'password' => $request['password']])) {
+            // Se verifica si el login es igual a algún "nickname" con su password correspondiente...
             $mensaje = "¡Bienvenido, ".Auth::User()->nombre." ".Auth::User()->apellido."!";
             return redirect()->route('userhome')->with(['mensaje' => $mensaje]);
-        }
-        else {
-            // Se verifica si el login es igual a algún "email"...
-            if (Auth::attempt(['email' => $request['login'], 'password' => $request['password']])) {
-                $mensaje = "¡Bienvenido, ".Auth::User()->nombre." ".Auth::User()->apellido."!";
-                return redirect()->route('userhome')->with(['mensaje' => $mensaje]);
-            }
-            else {
-                $mensaje = "Credenciales incorrectas.";
-                return redirect()->back()->withInput()->with(['mensajeError' => $mensaje]);
-            }
+        } elseif (Auth::attempt(['email' => $request['login'], 'password' => $request['password']])) {
+            // Se verifica si el login es igual a algún "email" con su password correspondiente...
+            $mensaje = "¡Bienvenido, ".Auth::User()->nombre." ".Auth::User()->apellido."!";
+            return redirect()->route('userhome')->with(['mensaje' => $mensaje]);
+        } else {
+            $mensaje = "Credenciales incorrectas.";
+            return redirect()->back()->withInput()->with(['mensajeError' => $mensaje]);
         }
     }
 

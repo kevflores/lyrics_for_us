@@ -99,6 +99,11 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        
+        'password-repeat' => [
+            'required' => 'The password repeated is required.',
+            'same' => 'The passwords must match.',
+        ],
     ],
 
     /*
@@ -112,6 +117,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email' => 'correo electrónico',
+    ],
 
 ];
