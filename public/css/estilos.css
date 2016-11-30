@@ -56,8 +56,20 @@ body {
     padding:10px;
 }
 
+.lfu-panel-footer {
+    border-top: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
 
+.panel-primary.panel-footer.sin-texto {
+    height: 40px; /*Se le da una altura al panel-footer, ya que no contiene texto.*/
+}
 
+.lfu-separador-comentarios {
+    margin-top:0px;
+    margin-bottom:13px;
+}
 
 /* FIN DE ESTILOS GENERALES */
 
@@ -204,6 +216,127 @@ body {
 
 
 /* ESTILOS PARA EL MÓDULO "INICIO" */
+
+#lfu-inicio-panel-ultimasletras {
+    overflow: hidden;
+    min-height: 500px;
+    max-height: 500px;
+}
+
+#lfu-inicio-panel-body-ultimasletras {
+    overflow: auto;
+    min-height: 457px;
+    max-height: 457px;
+    padding-bottom: 15px;
+}
+
+#lfu-inicio-panel-topcanciones {
+    overflow: hidden;
+    max-height:250px;
+    min-height:250px;
+    margin-bottom:0px;
+}
+
+#lfu-inicio-panel-body-topcanciones {
+    overflow: auto;
+    min-height: 207px;
+    max-height: 207px;
+    padding-bottom: 15px;
+}
+
+#lfu-inicio-panel-topusuarios {
+    overflow: hidden;
+    max-height:250px;
+    min-height:250px;
+    margin-bottom:0px;
+}
+
+#lfu-inicio-panel-body-topusuarios {
+    overflow: auto;
+    min-height: 207px;
+    max-height: 207px;
+    padding-bottom: 15px;
+}
+
+#lfu-inicio-panel-ultimasletras, #lfu-inicio-panel-topusuarios, #lfu-inicio-panel-topcanciones {
+    border-color: rgba(68, 154, 208, 1);
+    //border-radius: 0px;
+    border-bottom-right-radius: 0px; 
+    border-bottom-left-radius: 0px;
+    margin-bottom:0px;
+}
+
+#lfu-inicio-panel-topusuarios {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#lfu-inicio-panel-heading-topcanciones, #lfu-inicio-panel-heading-ultimasletras,
+#lfu-inicio-panel-heading-topusuarios {
+    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    font-size: 14px;
+}
+
+#lfu-inicio-panel-heading-topusuarios {
+    border-radius: 0px;
+}
+
+@media (min-width: 768px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-inicio-panel-ultimasletras {
+        border-right: none;
+    }
+    #lfu-inicio-panel-topusuarios {
+        border-top: none;
+    }
+
+    #lfu-inicio-panel-topcanciones, #lfu-inicio-panel-heading-topcanciones {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    #lfu-inicio-panel-ultimasletras, #lfu-inicio-panel-heading-ultimasletras {
+        border-top-right-radius: 0px;
+    } 
+}
+
+@media (max-width: 767px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-inicio-panel-topcanciones, #lfu-inicio-panel-topusuarios {
+        border-top: none;
+    }
+
+    #lfu-inicio-panel-topcanciones, #lfu-inicio-panel-heading-topcanciones {
+        border-radius: 0px;
+    }
+
+    #lfu-inicio-panel-ultimasletras {
+        max-height: 5000px;
+    }
+
+    #lfu-inicio-panel-body-ultimasletras {
+        max-height: 4957px;
+    }
+
+    #lfu-inicio-panel-topcanciones {
+        max-height: 5000px;
+    }
+
+    #lfu-inicio-panel-body-topcanciones {
+        max-height: 4957px;
+    }
+
+    #lfu-inicio-panel-topusuarios {
+        max-height: 5000px;
+    }
+
+    #lfu-inicio-panel-body-topusuarios {
+        max-height: 4957px;
+    }
+
+}
+
 /* FIN DE ESTILOS PARA EL MÓDULO "INICIO" */
 
 
@@ -224,9 +357,7 @@ body {
     font-size: 14px;
 }
 
-.panel-primary.panel-footer.sin-texto {
-    height: 40px; /*Se le da una altura, ya que no contiene texto.*/
-}
+
 
 #nombre, #apellido, #nickname, #email, #password, #password-repeat {
     text-align: center;
@@ -295,16 +426,46 @@ body {
 }
 
 #lfu-perfil-panel-datos {
-    height:350px;
-    margin-bottom:0px;
+    overflow: hidden;
+    min-height: 350px;
+    max-height: 350px;
+    margin-bottom: 0px;
 }
+
+#lfu-perfil-panel-body-datos {
+    overflow: auto;
+    min-height: 307px;
+    max-height: 307px;
+    padding-bottom: 15px;
+}
+
 #lfu-perfil-panel-opciones {
-    height:150px;
-    margin-bottom:0px;
+    overflow: hidden;
+    min-height: 150px;
+    max-height: 150px;
+    margin-bottom: 0px;
 }
+
+#lfu-perfil-panel-body-opciones {
+    overflow: auto;
+    min-height: 107px;
+    max-height: 107px;
+    padding-bottom: 15px;
+}
+
 #lfu-perfil-panel-letras {
-    height:500px;
+    overflow: hidden;
+    min-height: 500px;
+    max-height: 500px;
 }
+
+#lfu-perfil-panel-body-letras{
+    overflow: auto;
+    min-height: 457px;
+    max-height: 457px;
+    padding-bottom: 15px;
+}
+
 .lfu-separador-comentarios {
     margin-top:0px;
     margin-bottom:13px;
@@ -404,6 +565,31 @@ a[href="#lfu-panel-collapse-comentarios"] {
         border-top-left-radius: 0px;
         border-top-right-radius: 0px;
     }
+
+    #lfu-perfil-panel-datos {
+        max-height: 5000px;
+    }
+
+    #lfu-perfil-panel-body-datos {
+        max-height: 4957px;
+    }
+
+    #lfu-perfil-panel-opciones {
+        max-height: 5000px;
+    }
+
+    #lfu-perfil-panel-body-opciones {
+        max-height: 4957px;
+    }
+
+
+    #lfu-perfil-panel-letras {
+        max-height: 5000px;
+    }
+
+    #lfu-perfil-panel-body-letras{
+        max-height: 4957px;
+    }
 }
 
 /* FIN DE ESTILOS PARA EL SUBMÓDULO "PERFIL DE USUARIO" */
@@ -426,27 +612,45 @@ a[href="#lfu-panel-collapse-comentarios"] {
 }
 
 #lfu-configuracion-panel-imagen {
-    height:250px;
-    margin-bottom:0px;
-}
-
-#lfu-configuracion-panel-password {
-    height:250px;
-    margin-bottom:0px;
-}
-
-#lfu-configuracion-panel-datos {
-    height: 500px;
     overflow: hidden;
+    max-height:250px;
+    min-height:250px;
+    margin-bottom:0px;
 }
 
-#lfu-configuracion-panel-body-datos{
-    overflow:auto;
-    height:457px;
+#lfu-configuracion-panel-body-imagen {
+    overflow: auto;
+    min-height: 207px;
+    max-height: 207px;
     padding-bottom: 15px;
 }
 
-/* visible|hidden|scroll|auto|initial|inherit; */
+#lfu-configuracion-panel-password {
+    overflow: hidden;
+    max-height:250px;
+    min-height:250px;
+    margin-bottom:0px;
+}
+
+#lfu-configuracion-panel-body-password {
+    overflow: auto;
+    min-height: 207px;
+    max-height: 207px;
+    padding-bottom: 15px;
+}
+
+#lfu-configuracion-panel-datos {
+    overflow: hidden;
+    min-height: 500px;
+    max-height: 500px;
+}
+
+#lfu-configuracion-panel-body-datos {
+    overflow: auto;
+    min-height: 457px;
+    max-height: 457px;
+    padding-bottom: 15px;
+}
 
 .lfu-separador-comentarios {
     margin-top:0px;
@@ -505,6 +709,31 @@ a[href="#lfu-panel-collapse-comentarios"] {
     #lfu-configuracion-panel-imagen, #lfu-configuracion-panel-heading-imagen {
         border-radius: 0px;
     }
+
+    #lfu-configuracion-panel-datos {
+        max-height: 5000px;
+    }
+
+    #lfu-configuracion-panel-body-datos {
+        max-height: 4957px;
+    }
+
+    #lfu-configuracion-panel-imagen {
+        max-height: 5000px;
+    }
+
+    #lfu-configuracion-panel-body-imagen {
+        max-height: 4957px;
+    }
+
+    #lfu-configuracion-panel-password {
+        max-height: 5000px;
+    }
+
+    #lfu-configuracion-panel-body-password {
+        max-height: 4957px;
+    }
+
 }
 
 

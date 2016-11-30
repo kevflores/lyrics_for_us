@@ -165,10 +165,26 @@ class UsuarioController extends Controller
         // Actualizar los datos del usuario autenticado.
     }    
 
-    public function verFavoritos($id_usuario)
+    public function verFavoritos($nickname)
     {
         // Mostrar los favoritos (artistas, discos y canciones) de un usuario.
-        return view('userview.usuario.ver_favoritos', ['usuario' => Auth::User()]);
+
+        // Mostrar los favoritos de un usuario.        
+        $usuarioFavoritos = DB::table('usuarios')->where('nickname', $nickname)->first();
+
+        // Si el usuario existe, entonces se muestran sus favoritos (si tiene)...
+        if ($usuarioFavoritos){
+
+            return view ('userview.usuario.ver_favoritos', [
+                            'usuario' => Auth::User(),
+                            'usuarioFavoritos' => $usuarioFavoritos,
+                            
+                        ]);
+        } 
+        // Sino...
+        else {
+            echo 'Mostrar vista con mensaje de "Usuario No Existe", por ende no hay favoritos que ver.';
+        }
     }
 
     public function escribirMensaje($id_usuario)

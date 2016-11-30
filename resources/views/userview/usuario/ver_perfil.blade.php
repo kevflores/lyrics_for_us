@@ -14,42 +14,54 @@
 	    		{{-- Sección de Datos --}}
 		    	<div class="panel panel-primary" id="lfu-perfil-panel-datos">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-datos">Datos</div>
-					<div class="panel-body">
-						<ul>
-							@if ( $usuarioPerfil->id == Auth::User()->id )
-								<li><a href="#">Editar</a></li>
-							@endif
-							<li>Nickname: {{ $usuarioPerfil->nickname}}</li>
-							<li>Foto:</li>
-							<li>Nombre: {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}}</li>
-							<li>Dirección URL:</li>
-							<li>Puntos obtenidos:</li>
-						</ul>
+					<div class="panel-body" id="lfu-perfil-panel-body-datos">
+						@if ( $usuarioPerfil->id == Auth::User()->id )
+							<a href="#">Editar</a>
+						@endif
+						Nickname: {{ $usuarioPerfil->nickname}}
+						Foto:
+						Nombre: {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}}
+						Dirección URL:
+						Puntos obtenidos:
+						<hr>
+						@for($i=0;$i<100;$i++)
+					        Dato N° {{$i+1}}
+					        <br>
+				    	@endfor
+				    	<hr>
 					</div>
 			    </div>
 			    {{-- Sección de Opciones --}}
 		    	<div class="panel panel-primary perfil-seccion-opciones" id="lfu-perfil-panel-opciones">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-opciones">Opciones</div>
-					<div class="panel-body">
-						<ul>
-							<li><a href="#">Ver favoritos de <b>{{ $usuarioPerfil->nickname}}</b></a></li>
-							@if ( $usuarioPerfil->id != Auth::User()->id )
-								<li><a href="#">Enviar mensaje privado</a></li>
-								<li><a href="#">Reportar</a></li>
-							@endif
-						</ul>
+					<div class="panel-body" id="lfu-perfil-panel-body-opciones">
+						<a href="{{ route('usuario.ver_favoritos', ['nickname' => $usuarioPerfil->nickname]) }}">Ver favoritos de <b>{{ $usuarioPerfil->nickname}}</b></a>
+						@if ( $usuarioPerfil->id != Auth::User()->id )
+							<a href="#">Enviar mensaje privado</a>
+							<a href="#">Reportar</a>
+						@endif
+						<hr>
+						@for($i=0;$i<100;$i++)
+					        Opción N° {{$i+1}}
+					        <br>
+				    	@endfor
+				    	<hr>
 					</div>
 			    </div>		    
 	    	</div>
 
-	    	<div class="lfu-seccion-dividida col-xs-12 col-sm-8" style="">
+	    	<div class="lfu-seccion-dividida col-xs-12 col-sm-8"  style="">
 	    		{{-- Sección de Letras --}}
 		    	<div class="panel panel-primary perfil-seccion-letras" id="lfu-perfil-panel-letras" style="">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-letras">Letras</div>
-					<div class="panel-body">
-					<ul>
-						<li>Ver listado de canciones cuyas letras fueron provistas por el usuario.</li>
-					</ul>
+					<div class="panel-body" id="lfu-perfil-panel-body-letras">
+						Ver listado de canciones cuyas letras fueron provistas por el usuario.
+						<hr>
+						@for($i=0;$i<100;$i++)
+					        Canción N° {{$i+1}}
+					        <br>
+				    	@endfor
+				    	<hr>
 					</div>
 				</div>
 	    	</div>
@@ -120,36 +132,47 @@
 	    		{{-- Sección de Datos --}}
 		    	<div class="panel panel-primary" id="lfu-perfil-panel-datos">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-datos">Datos</div>
-					<div class="panel-body">
-						<ul>
-							<li>Nickname: {{ $usuarioPerfil->nickname}}</li>
-							<li>Foto:</li>
-							<li>Nombre: {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}}</li>
-							<li>Dirección URL:</li>
-							<li>Puntos obtenidos:</li>
-						</ul>
+					<div class="panel-body" id="lfu-perfil-panel-body-datos">
+						Nickname: {{ $usuarioPerfil->nickname}}
+						Foto:
+						Nombre: {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}}
+						Dirección URL:
+						Puntos obtenidos:
+						<hr>
+						@for($i=0;$i<100;$i++)
+					        Dato N° {{$i+1}}
+					        <br>
+				    	@endfor
+				    	<hr>
 					</div>
 			    </div>
-
-		    	{{-- Sección de Opciones --}}
+			    {{-- Sección de Opciones --}}
 		    	<div class="panel panel-primary perfil-seccion-opciones" id="lfu-perfil-panel-opciones">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-opciones">Opciones</div>
-					<div class="panel-body">
-						<ul>
-                            <li><a href="#">Ver favoritos de <b>{{ $usuarioPerfil->nickname}}</b></a></li>
-						</ul>
+					<div class="panel-body" id="lfu-perfil-panel-body-opciones">
+						<a href="{{ route('usuario.ver_favoritos', ['nickname' => $usuarioPerfil->nickname]) }}">Ver favoritos de <b>{{ $usuarioPerfil->nickname}}</b></a>
+						<hr>
+						@for($i=0;$i<100;$i++)
+					        Opción N° {{$i+1}}
+					        <br>
+				    	@endfor
+				    	<hr>
 					</div>
 			    </div>		    
 	    	</div>
 
-	    	<div class="lfu-seccion-dividida col-xs-12 col-sm-8" style="">
+	    	<div class="lfu-seccion-dividida col-xs-12 col-sm-8"  style="">
 	    		{{-- Sección de Letras --}}
 		    	<div class="panel panel-primary perfil-seccion-letras" id="lfu-perfil-panel-letras" style="">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-letras">Letras</div>
-					<div class="panel-body">
-					<ul>
-						<li>Ver listado de canciones cuyas letras fueron provistas por el usuario.</li>
-					</ul>
+					<div class="panel-body" id="lfu-perfil-panel-body-letras">
+						Ver listado de canciones cuyas letras fueron provistas por el usuario.
+						<hr>
+						@for($i=0;$i<100;$i++)
+					        Canción N° {{$i+1}}
+					        <br>
+				    	@endfor
+				    	<hr>
 					</div>
 				</div>
 	    	</div>
@@ -166,6 +189,7 @@
 				<div id="lfu-panel-collapse-comentarios" class="panel-collapse collapse">
 					<div class="panel-body">
 						<div class="media" id="lfu-comentarios">
+							
 							<div class="media-left">
 								<img src="{{ asset('images\eunjung_avatar.jpg') }}" class="img-circle media-object lfu-comentario-avatar">
 							</div>

@@ -13,12 +13,14 @@
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-datos">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-datos">Configuración</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-datos" style="">
-					@for($i=0;$i<600;$i++)
-				        A{{$i+1}}
-				    @endfor
-				    <br><br>
+					<hr>
+					@for($i=0;$i<5;$i++)
+				        Dato N° {{$i+1}}
+				        <br>
+			    	@endfor
+				    <br>
 					<button type="submit" class="btn btn-primary">Actualizar datos</button>
-					<br><br>
+					<hr>
 				</div>
 			</div>
     	</div>
@@ -27,15 +29,27 @@
     		{{-- Sección de config. imagen de perfil --}}
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-imagen">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-imagen">Imagen de perfil</div>
-				<div class="panel-body">
+				<div class="panel-body" id="lfu-configuracion-panel-body-imagen">
+					@for($i=0;$i<5;$i++)
+				        Imagen N° {{$i+1}}
+				        <br>
+			    	@endfor
+				    <br>
 					<button type="submit" class="btn btn-primary">Subir nueva imagen</button>
+					<hr>
 				</div>
 		    </div>
 		    {{-- Sección de config. de contraseña --}}
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-password">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-password">Contraseña</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-password">
+					@for($i=0;$i<5;$i++)
+				        Contraseña N° {{$i+1}}
+				        <br>
+			    	@endfor
+				    <br>
 					<button type="submit" class="btn btn-primary">Actualizar contraseña</button>
+					<hr>
 				</div>
 		    </div>		    
     	</div>

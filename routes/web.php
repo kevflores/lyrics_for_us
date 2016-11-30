@@ -81,7 +81,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/usuario/{nickname}', 'UsuarioController@mostrarPerfil')->name('usuario.perfil');
     Route::post('/usuario/{id_usuario}/comentar', 'UsuarioController@comentar')->name('usuario.comentar');
     Route::post('/usuario/{id_usuario}/reportar', 'UsuarioController@reportar')->name('usuario.reportar');
-    Route::get('/usuario/{id_usuario}/favoritos', 'UsuarioController@verFavoritos')->name('usuario.ver_favoritos');
+    Route::get('/usuario/{nickname}/favoritos', 'UsuarioController@verFavoritos')->name('usuario.ver_favoritos');
 
 
     # MI CUENTA
