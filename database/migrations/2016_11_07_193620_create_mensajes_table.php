@@ -18,6 +18,9 @@ class CreateMensajesTable extends Migration
             $table->string('asunto', 100);
             $table->text('descripcion');
             $table->dateTime('fecha');
+            $table->boolean('estado_receptor')->default(true); // Es FALSE si el receptor elimina el mensaje.
+            $table->boolean('estado_emisor')->default(true); // Es FALSE si el emisor elimina el mensaje.
+            $table->boolean('visto')->default(false); // Es TRUE después de que el receptor consulta el mensaje.
             $table->integer('usuario_receptor_id')->unsigned();
             $table->integer('usuario_emisor_id')->unsigned();
             $table->timestamps();

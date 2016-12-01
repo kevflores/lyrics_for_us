@@ -15,12 +15,14 @@ class CreateSolicitudesTable extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('titulo', 50);
             $table->text('descripcion');
             $table->integer('tipo_solicitud_id')->unsigned();
             $table->integer('usuario_solicitante_id')->unsigned();
             $table->dateTime('fecha_solicitud');
             $table->integer('usuario_admin_id')->unsigned()->nullable();
             $table->dateTime('fecha_atencion')->nullable();
+            $table->boolean('estado')->nullable(); //TRUE: Aceptada, FALSE: Rechazada.
             $table->timestamps();
 
             // Llaves foráneas

@@ -15,11 +15,13 @@
 		    	<div class="panel panel-primary" id="lfu-perfil-panel-datos">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-datos">Datos</div>
 					<div class="panel-body" id="lfu-perfil-panel-body-datos">
+						
+						<img class="img-responsive" src="{{ asset($usuarioPerfil->imagen) }}" alt="Imagen">	
+
 						@if ( $usuarioPerfil->id == Auth::User()->id )
 							<a href="#">Editar</a>
 						@endif
 						Nickname: {{ $usuarioPerfil->nickname}}
-						Foto:
 						Nombre: {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}}
 						Dirección URL:
 						Puntos obtenidos:

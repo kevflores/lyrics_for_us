@@ -98,6 +98,11 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        
+        'password-repeat' => [
+            'required' => 'La contraseña repetida es obligatoria.',
+            'same' => 'Las contraseñas no coinciden.',
+        ],
     ],
 
     /*
@@ -111,6 +116,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email' => 'correo electrónico',
+        'login' => 'nickname/correo electrónico',
+        'password' => 'contraseña',
+    ],
 
 ];

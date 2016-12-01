@@ -357,8 +357,6 @@ body {
     font-size: 14px;
 }
 
-
-
 #nombre, #apellido, #nickname, #email, #password, #password-repeat {
     text-align: center;
 }
@@ -426,14 +424,16 @@ body {
 }
 
 #lfu-perfil-panel-datos {
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
     min-height: 350px;
     max-height: 350px;
     margin-bottom: 0px;
 }
 
 #lfu-perfil-panel-body-datos {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     min-height: 307px;
     max-height: 307px;
     padding-bottom: 15px;

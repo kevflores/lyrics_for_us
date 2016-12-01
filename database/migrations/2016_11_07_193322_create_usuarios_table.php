@@ -20,6 +20,7 @@ class CreateUsuariosTable extends Migration
             $table->string('apellido', 45);
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('resumen', 255)->nullable();
             $table->string('url')->nullable();
             $table->string('imagen')->nullable();
             $table->boolean('estado')->default(false);
