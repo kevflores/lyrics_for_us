@@ -16,7 +16,11 @@
 					<div class="panel-heading" id="lfu-perfil-panel-heading-datos">Datos</div>
 					<div class="panel-body" id="lfu-perfil-panel-body-datos">
 						
-						<img class="img-responsive" src="{{ asset($usuarioPerfil->imagen) }}" alt="Imagen">	
+						@if ( $usuarioPerfil->imagen )
+							<span><img class="img-responsive" src="{{ asset($usuarioPerfil->imagen) }}" alt="Imagen de Perfil"></span>
+						@else
+							<span class="text-center"><img class="img-responsive" src="{{ asset('images\lfu-default-avatar.png') }}" alt="Imagen de Perfil"></span>
+						@endif
 
 						@if ( $usuarioPerfil->id == Auth::User()->id )
 							<a href="#">Editar</a>

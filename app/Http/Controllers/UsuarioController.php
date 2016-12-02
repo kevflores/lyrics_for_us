@@ -166,7 +166,7 @@ class UsuarioController extends Controller
         $mensaje = "Este es un mensaje de prueba por la actualización.";
         
         // El withInput() debería afectar sólo a la Sección de Datos (Quizá)
-        return redirect()->back()->withInput()->with(['mensajePrueba' => $mensaje]);
+        return redirect()->back()->withInput($request->except('nombre'),$request->except('apellido'))->with(['mensajePrueba' => $mensaje]);
     }
 
     public function actualizarImagen(Request $request)

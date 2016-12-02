@@ -76,6 +76,13 @@ body {
     display:block;
 }
 
+.lfu-avatar {
+    margin: 0 auto;
+    height: 200px;
+    width: 200px;
+    margin-bottom: 15px;
+}
+
 /* FIN DE ESTILOS GENERALES */
 
 
@@ -616,53 +623,68 @@ a[href="#lfu-panel-collapse-comentarios"] {
     border-top-left-radius: 0px;
 }
 
+#lfu-configuracion-panel-datos {
+    overflow: hidden;
+    max-height:385px;
+    min-height:385px;
+}
+
+#lfu-configuracion-panel-body-datos {
+    overflow: auto;
+    min-height: 342px;
+    max-height: 342px;
+    padding-bottom: 15px;
+}
+
+#lfu-configuracion-panel-correo {
+    overflow: hidden;
+    max-height:270px;
+    min-height:270px;
+}
+
+#lfu-configuracion-panel-body-correo {
+    overflow: auto;
+    min-height: 227px;
+    max-height: 227px;
+    padding-bottom: 15px;
+}
+
 #lfu-configuracion-panel-imagen {
     overflow: hidden;
-    max-height:350px;
-    min-height:350px;
+    max-height:385px;
+    min-height:385px;
     margin-bottom:0px;
 }
 
 #lfu-configuracion-panel-body-imagen {
     overflow: auto;
-    min-height: 307px;
-    max-height: 307px;
+    min-height: 342px;
+    max-height: 342px;
     padding-bottom: 15px;
 }
 
 #lfu-configuracion-panel-password {
     overflow: hidden;
-    max-height:350px;
-    min-height:350px;
-    margin-bottom:0px;
+    max-height: 270px;
+    min-height: 270px;
+    margin-bottom: 0px;
 }
 
 #lfu-configuracion-panel-body-password {
     overflow: auto;
-    min-height: 307px;
-    max-height: 307px;
+    min-height: 227px;
+    max-height: 227px;
     padding-bottom: 15px;
 }
 
-#lfu-configuracion-panel-datos {
-    overflow: hidden;
-    min-height: 700px;
-    max-height: 700px;
-}
-
-#lfu-configuracion-panel-body-datos {
-    overflow: auto;
-    min-height: 657px;
-    max-height: 657px;
-    padding-bottom: 15px;
-}
 
 .lfu-separador-comentarios {
     margin-top:0px;
     margin-bottom:13px;
 }
 
-#lfu-configuracion-panel-datos, #lfu-configuracion-panel-password, #lfu-configuracion-panel-imagen {
+#lfu-configuracion-panel-datos, #lfu-configuracion-panel-password, 
+#lfu-configuracion-panel-imagen, #lfu-configuracion-panel-correo {
     border-color: rgba(68, 154, 208, 1);
     //border-radius: 0px;
     border-bottom-right-radius: 0px; 
@@ -670,27 +692,27 @@ a[href="#lfu-panel-collapse-comentarios"] {
     margin-bottom:0px;
 }
 
-#lfu-configuracion-panel-password, #lfu-panel-comentarios {
+#lfu-configuracion-panel-password, #lfu-panel-comentarios, #lfu-configuracion-panel-correo {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
 
 #lfu-configuracion-panel-heading-imagen, #lfu-configuracion-panel-heading-datos,
-#lfu-configuracion-panel-heading-password {
+#lfu-configuracion-panel-heading-password, #lfu-configuracion-panel-heading-correo {
     background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
     font-size: 14px;
 }
 
-#lfu-configuracion-panel-heading-password {
+#lfu-configuracion-panel-heading-password, #lfu-configuracion-panel-heading-correo {
     border-radius: 0px;
 }
 
 @media (min-width: 768px) {
     /* Para no mostrar 'doble borde' entre paneles adyacentes*/
-    #lfu-configuracion-panel-datos {
+    #lfu-configuracion-panel-datos, #lfu-configuracion-panel-correo {
         border-right: none;
     }
-    #lfu-configuracion-panel-password {
+    #lfu-configuracion-panel-password, #lfu-configuracion-panel-correo  {
         border-top: none;
     }
 
@@ -707,7 +729,7 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
 @media (max-width: 767px) {
     /* Para no mostrar 'doble borde' entre paneles adyacentes*/
-    #lfu-configuracion-panel-imagen, #lfu-configuracion-panel-password {
+    #lfu-configuracion-panel-imagen, #lfu-configuracion-panel-password, #lfu-configuracion-panel-correo  {
         border-top: none;
     }
 
@@ -736,6 +758,14 @@ a[href="#lfu-panel-collapse-comentarios"] {
     }
 
     #lfu-configuracion-panel-body-password {
+        max-height: 4957px;
+    }
+
+    #lfu-configuracion-panel-correo {
+        max-height: 5000px;
+    }
+
+    #lfu-configuracion-panel-body-correo {
         max-height: 4957px;
     }
 
