@@ -160,10 +160,32 @@ class UsuarioController extends Controller
         return view ('userview.usuario.ver_configuracion', ['usuario' => Auth::User()]);
     }
 
-    public function editarDatos(Request $request)
+    public function actualizarDatos(Request $request)
     {
         // Actualizar los datos del usuario autenticado.
-    }    
+        $mensaje = "Este es un mensaje de prueba por la actualización.";
+        
+        // El withInput() debería afectar sólo a la Sección de Datos (Quizá)
+        return redirect()->back()->withInput()->with(['mensajePrueba' => $mensaje]);
+    }
+
+    public function actualizarImagen(Request $request)
+    {
+        // Actualizar la imagen del usuario autenticado.
+        $mensaje = "Éste es un mensaje de prueba por la actualización.";
+
+        // El withInput() debería afectar sólo a la Sección de Imagen (Quizá)
+        return redirect()->back()->withInput()->with(['mensajePrueba' => $mensaje]);
+    }
+
+    public function actualizarPassword(Request $request)
+    {
+        // Actualizar la contraseña del usuario autenticado.
+        $mensaje = "Este es un mensaje de prueba por la actualización.";
+
+        // El withInput() debería afectar sólo a la Sección de Contraseña (Quizá)
+        return redirect()->back()->withInput()->with(['mensajePrueba' => $mensaje]);
+    } 
 
     public function verFavoritos($nickname)
     {

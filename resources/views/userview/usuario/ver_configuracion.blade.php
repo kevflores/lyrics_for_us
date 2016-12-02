@@ -6,20 +6,53 @@
 
 @section('contenido')
     
+	@include('includes.bloque_de_mensajes')
+
 	<div class="lfu-seccion-completa col-xs-12">
     	
 		<div class="lfu-seccion-dividida col-xs-12 col-sm-8" style="">
     		{{-- Sección de configuración de datos --}}
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-datos">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-datos">Configuración</div>
-				<div class="panel-body" id="lfu-configuracion-panel-body-datos" style="">
-					<hr>
-					@for($i=0;$i<5;$i++)
-				        Dato N° {{$i+1}}
-				        <br>
-			    	@endfor
-				    <br>
-					<button type="submit" class="btn btn-primary">Actualizar datos</button>
+				<div class="panel-body" id="lfu-configuracion-panel-body-datos">
+					{!! Form::open(['url' => route('usuario.actualizar_datos'), 'method' => 'post']) !!}
+
+						<div class="form-group col-md-6 {{ $errors->has('nombre') ? 'has-error' : '' }}">
+							{!! Form::label('nombre','Nombre', array('class'=>'label-izquierda')) !!}
+							{!! Form::text('nombre', $usuario->nombre, ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
+							<span class="text-danger">{{ $errors->first('nombre') }}</span>
+						</div>
+
+						<div class="form-group col-md-6 {{ $errors->has('apellido') ? 'has-error' : '' }}">
+							{!! Form::label('apellido','Apellido', array('class'=>'label-izquierda')) !!}
+							{!! Form::text('apellido', $usuario->apellido, ['class'=>'form-control','style' => 'text-align:left;']) !!}
+							<span class="text-danger">{{ $errors->first('apellido') }}</span>
+						</div>
+
+						<div class="form-group col-md-6 {{ $errors->has('nickname') ? 'has-error' : '' }}">
+							{!! Form::label('nickname','Nickname', array('class'=>'label-izquierda')) !!}
+							{!! Form::text('nickname', $usuario->nickname, ['class'=>'form-control','style' => 'text-align:left;']) !!}
+							<span class="text-danger">{{ $errors->first('nickname') }}</span>
+						</div>
+
+						<div class="form-group col-md-6 {{ $errors->has('url') ? 'has-error' : '' }}">
+							{!! Form::label('url','URL', array('class'=>'label-izquierda')) !!}
+							{!! Form::text('url', $usuario->url, ['class'=>'form-control','style' => 'text-align:left;']) !!}
+							<span class="text-danger">{{ $errors->first('url') }}</span>
+						</div>
+
+						<div class="form-group col-md-12 {{ $errors->has('resumen') ? 'has-error' : '' }}">
+							{!! Form::label('resumen','Resumen', array('class'=>'label-izquierda')) !!}
+							{!! Form::textarea('resumen', $usuario->resumen, ['class'=>'form-control', 'placeholder'=>'Cuenta un poco sobre ti.', 'style' => 'resize: none;']) !!}
+							<span class="text-danger">{{ $errors->first('resumen') }}</span>
+						</div>
+
+						<div class="form-group">
+							<button class="btn btn-primary">Actualizar datos</button>
+						</div>
+
+					{!! Form::close() !!}
+
 					<hr>
 				</div>
 			</div>

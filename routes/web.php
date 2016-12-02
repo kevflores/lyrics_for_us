@@ -89,7 +89,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/cuenta/configuracion', 'UsuarioController@verConfiguracion')->name('usuario.configuracion');
-        Route::get('/cuenta/configuracion/editar-datos', 'UsuarioController@editarDatos')->name('usuario.editar_datos');
+        Route::post('/cuenta/configuracion/actualizar-datos', 'UsuarioController@actualizarDatos')->name('usuario.actualizar_datos');
         Route::get('/cuenta/mensajes-recibidos', 'MensajeController@verMensajesRecibidos')->name('mensajes_recibidos');
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}', 'MensajeController@verMensajeRecibido')->name('ver_mensaje_recibido');
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}/borrar', 'MensajeController@borrarMensajeRecibido')->name('borrar_mensaje_recibido');

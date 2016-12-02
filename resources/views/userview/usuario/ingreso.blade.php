@@ -22,7 +22,7 @@
 
                     <div class="col-xs-12 form-group {{ $errors->has('login') ? 'has-error' : '' }}">
                         <label for="login">Nickname o Correo Electrónico</label>
-                        <input class="form-control" type="text" name="login" id="login" value="{{ Request::old('login') }}" autofocus>
+                        <input class="form-control texto-centrado" type="text" name="login" id="login" value="{{ Request::old('login') }}" autofocus>
                     </div>
                     <div class="col-xs-12 form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                         <label for="password">Contraseña</label>

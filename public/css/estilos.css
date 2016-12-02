@@ -71,6 +71,11 @@ body {
     margin-bottom:13px;
 }
 
+.label-izquierda {
+    text-align:left;
+    display:block;
+}
+
 /* FIN DE ESTILOS GENERALES */
 
 
@@ -613,42 +618,42 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
 #lfu-configuracion-panel-imagen {
     overflow: hidden;
-    max-height:250px;
-    min-height:250px;
+    max-height:350px;
+    min-height:350px;
     margin-bottom:0px;
 }
 
 #lfu-configuracion-panel-body-imagen {
     overflow: auto;
-    min-height: 207px;
-    max-height: 207px;
+    min-height: 307px;
+    max-height: 307px;
     padding-bottom: 15px;
 }
 
 #lfu-configuracion-panel-password {
     overflow: hidden;
-    max-height:250px;
-    min-height:250px;
+    max-height:350px;
+    min-height:350px;
     margin-bottom:0px;
 }
 
 #lfu-configuracion-panel-body-password {
     overflow: auto;
-    min-height: 207px;
-    max-height: 207px;
+    min-height: 307px;
+    max-height: 307px;
     padding-bottom: 15px;
 }
 
 #lfu-configuracion-panel-datos {
     overflow: hidden;
-    min-height: 500px;
-    max-height: 500px;
+    min-height: 700px;
+    max-height: 700px;
 }
 
 #lfu-configuracion-panel-body-datos {
     overflow: auto;
-    min-height: 457px;
-    max-height: 457px;
+    min-height: 657px;
+    max-height: 657px;
     padding-bottom: 15px;
 }
 
