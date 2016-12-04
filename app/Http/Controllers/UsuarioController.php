@@ -163,20 +163,97 @@ class UsuarioController extends Controller
     public function actualizarDatos(Request $request)
     {
         // Actualizar los datos del usuario autenticado.
-        $mensaje = "Este es un mensaje de prueba por la actualización.";
+
+        $usuario = Auth::User();
+
+        if ($usuario->nickname === $request['nickname']) {
+            $this->validate($request, [
+                'nombre' => 'required|string|max:45',
+                'apellido' => 'required|string|max:45',
+                'nickname' => 'required|min:5|max:20',
+                'url' => 'url',
+                'resumen' => 'string|max:255'
+            ]);
+        } else {
+            $this->validate($request, [
+                'nombre' => 'required|string|max:45',
+                'apellido' => 'required|string|max:45',
+                'nickname' => 'required|unique:usuarios|min:5|max:20',
+                'url' => 'url',
+                'resumen' => 'string|max:255'
+            ]);
+        }
+
+        // Validar los datos del formulario de configuración.
+        $nickname = $request['nickname'];
+        $nombre = $request['nombre'];
+        $apellido = $request['apellido'];
+        $url = $request['url'];
+        $resumen = $request['resumen'];
+
+        $usuario->nickname = $nickname;
+        $usuario->nombre = $nombre;
+        $usuario->apellido = $apellido;
+        $usuario->url = $url;
+        $usuario->resumen = $resumen;
+
+        $usuario->save();
+
+        $mensaje = "Los datos han sido actualizados.";
         
         // El withInput() debería afectar sólo a la Sección de Datos (Quizá)
-        return redirect()->back()->withInput($request->except('nombre'),$request->except('apellido'))->with(['mensajePrueba' => $mensaje]);
+        return redirect()->back()->withInput(
+            $request->except('email'),
+            $request->except('email-repeat'),
+            $request->except('password-new'),
+            $request->except('password-repeat')
+                                            )->with(['mensaje' => $mensaje]);
     }
 
     public function actualizarImagen(Request $request)
     {
         // Actualizar la imagen del usuario autenticado.
-        $mensaje = "Éste es un mensaje de prueba por la actualización.";
+                
+        $this->validate($request, ['imagen' => 'required|mimes:jpg,jpeg,bmp,png|max:5000']);
+
+        $usuario = Auth::User();
+        $imagen = $request->file('imagen');
+
+        // Para obtener la extensión (formato) de la imagen subida.
+        $imagenInfo = getimagesize($imagen);
+        $extension = image_type_to_extension($imagenInfo[2]);
+
+        // Se establece el nombre de la imagen (ID de usuario seguido de la extensión de la imagen).
+        $imagenNombre = $usuario->id.$extension;
+        $imagenUbicacion = 'avatars/'.$imagenNombre;
+        $imagenAlmacenada = Storage::put($imagenUbicacion, file_get_contents($imagen->getRealPath()));
+
+        if($imagenAlmacenada){
+            // Su la imagen fue almacenada, entonces su nombre es registrado en la BD.
+            $usuario->imagen = $imagenNombre;
+            $usuario->save();
+        }
+
+        $mensaje = "La imagen de perfil ha sido actualizada.";
 
         // El withInput() debería afectar sólo a la Sección de Imagen (Quizá)
-        return redirect()->back()->withInput()->with(['mensajePrueba' => $mensaje]);
+        return redirect()->back()->withInput()->with(['mensaje' => $mensaje]);
     }
+
+    public function getAvatar($imagenNombre)
+    {
+        $avatar = Storage::disk('avatars')->get($imagenNombre);
+        return new Response($avatar, 200);
+    }
+
+    public function actualizarCorreo(Request $request)
+    {
+        // Actualizar la contraseña del usuario autenticado.
+        $mensaje = "Este es un mensaje de prueba por la actualización.";
+
+        // El withInput() debería afectar sólo a la Sección de Correo (Quizá)
+        return redirect()->back()->withInput()->with(['mensajePrueba' => $mensaje]);
+    } 
 
     public function actualizarPassword(Request $request)
     {

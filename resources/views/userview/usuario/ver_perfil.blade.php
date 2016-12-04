@@ -17,7 +17,9 @@
 					<div class="panel-body" id="lfu-perfil-panel-body-datos">
 						
 						@if ( $usuarioPerfil->imagen )
-							<span><img class="img-responsive" src="{{ asset($usuarioPerfil->imagen) }}" alt="Imagen de Perfil"></span>
+							@if (Storage::disk('avatars')->has($usuarioPerfil->imagen))
+					            <span><img src="{{ route('usuario.avatar', ['imagenNombre' => $usuarioPerfil->imagen]) }}" alt="{{ $usuarioPerfil->nickname }}" class="img-responsive img-rounded lfu-avatar"></span>
+					   		@endif
 						@else
 							<span class="text-center"><img class="img-responsive" src="{{ asset('images\lfu-default-avatar.png') }}" alt="Imagen de Perfil"></span>
 						@endif

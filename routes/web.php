@@ -79,8 +79,8 @@ Route::group(['middleware' => ['web']], function () {
     # USUARIO
 
     Route::get('/usuario/{nickname}', 'UsuarioController@mostrarPerfil')->name('usuario.perfil');
-    Route::post('/usuario/{id_usuario}/comentar', 'UsuarioController@comentar')->name('usuario.comentar');
-    Route::post('/usuario/{id_usuario}/reportar', 'UsuarioController@reportar')->name('usuario.reportar');
+    Route::post('/usuario/{id_usuario}/comentar', 'UsuarioController@comentar')->name('usuario.comentar')->middleware('auth');;
+    Route::post('/usuario/{id_usuario}/reportar', 'UsuarioController@reportar')->name('usuario.reportar')->middleware('auth');;
     Route::get('/usuario/{nickname}/favoritos', 'UsuarioController@verFavoritos')->name('usuario.ver_favoritos');
 
 
@@ -90,6 +90,10 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('/cuenta/configuracion', 'UsuarioController@verConfiguracion')->name('usuario.configuracion');
         Route::post('/cuenta/configuracion/actualizar-datos', 'UsuarioController@actualizarDatos')->name('usuario.actualizar_datos');
+        Route::post('/cuenta/configuracion/actualizar-imagen', 'UsuarioController@actualizarImagen')->name('usuario.actualizar_imagen');
+        Route::get('/avatar/{imagenNombre}', 'UsuarioController@getAvatar')->name('usuario.avatar');
+        Route::post('/cuenta/configuracion/actualizar-correo', 'UsuarioController@actualizarCorreo')->name('usuario.actualizar_correo');
+        Route::post('/cuenta/configuracion/actualizar-password', 'UsuarioController@actualizarPassword')->name('usuario.actualizar_password');
         Route::get('/cuenta/mensajes-recibidos', 'MensajeController@verMensajesRecibidos')->name('mensajes_recibidos');
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}', 'MensajeController@verMensajeRecibido')->name('ver_mensaje_recibido');
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}/borrar', 'MensajeController@borrarMensajeRecibido')->name('borrar_mensaje_recibido');

@@ -26,25 +26,21 @@
 						<div class="form-group col-md-6 {{ $errors->has('apellido') ? 'has-error' : '' }}">
 							{!! Form::label('apellido','Apellido', array('class'=>'label-izquierda')) !!}
 							{!! Form::text('apellido', $usuario->apellido, ['class'=>'form-control','style' => 'text-align:left;']) !!}
-							<span class="text-danger">{{ $errors->first('apellido') }}</span>
 						</div>
 
 						<div class="form-group col-md-6 {{ $errors->has('nickname') ? 'has-error' : '' }}">
 							{!! Form::label('nickname','Nickname', array('class'=>'label-izquierda')) !!}
 							{!! Form::text('nickname', $usuario->nickname, ['class'=>'form-control','style' => 'text-align:left;']) !!}
-							<span class="text-danger">{{ $errors->first('nickname') }}</span>
 						</div>
 
 						<div class="form-group col-md-6 {{ $errors->has('url') ? 'has-error' : '' }}">
 							{!! Form::label('url','URL', array('class'=>'label-izquierda')) !!}
 							{!! Form::text('url', $usuario->url, ['class'=>'form-control','style' => 'text-align:left;']) !!}
-							<span class="text-danger">{{ $errors->first('url') }}</span>
 						</div>
 
 						<div class="form-group col-md-12 {{ $errors->has('resumen') ? 'has-error' : '' }}">
 							{!! Form::label('resumen','Resumen', array('class'=>'label-izquierda')) !!}
 							{!! Form::textarea('resumen', $usuario->resumen, ['class'=>'form-control', 'placeholder'=>'Cuenta un poco sobre ti.', 'style' => 'resize: none; height: 75px;']) !!}
-							<span class="text-danger">{{ $errors->first('resumen') }}</span>
 						</div>
 
 						<div class="form-group">
@@ -59,17 +55,17 @@
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-correo">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-correo">Correo electrónico</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-correo">
-					{!! Form::open(['url' => route('usuario.actualizar_datos'), 'method' => 'post']) !!}
+					{!! Form::open(['url' => route('usuario.actualizar_correo'), 'method' => 'post']) !!}
 
 						<div class="form-group col-md-6 col-md-offset-3 {{ $errors->has('email') ? 'has-error' : '' }}">
 							{!! Form::label('email','Correo Electrónico', array('class'=>'label-izquierda')) !!}
-							{!! Form::text('email', $usuario->email, ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
+							{!! Form::email('email', $usuario->email, ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
 							<span class="text-danger">{{ $errors->first('email') }}</span>
 						</div>
 
 						<div class="form-group col-md-6 col-md-offset-3 {{ $errors->has('email-repeat') ? 'has-error' : '' }}">
 							{!! Form::label('email-repeat','Repetir Correo Electrónico', array('class'=>'label-izquierda')) !!}
-							{!! Form::text('email-repeat', old('email-repeat'), ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
+							{!! Form::email('email-repeat', old('email-repeat'), ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
 							<span class="text-danger">{{ $errors->first('email-repeat') }}</span>
 						</div>
 
@@ -87,30 +83,47 @@
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-imagen">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-imagen">Imagen de perfil</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-imagen">
-					@if ( $usuario->imagen )
-						<img class="img-responsive img-rounded lfu-avatar" src="{{ asset($usuario->imagen) }}" alt="$usuario->nickname">
-					@else
-						<img class="img-responsive img-rounded lfu-avatar" src="{{ asset('images\lfu-default-avatar.png') }}" alt="$usuario->nickname" >
-					@endif
-					<button type="submit" class="btn btn-primary">Subir nueva imagen</button>
-					<a style="display:block;margin-top:15px;"><button class="btn btn-primary">Borrar imagen</button></a>
+					{!! Form::open(['url' => route('usuario.actualizar_imagen'), 'method' => 'post', 'files' => true]) !!}
+
+						@if ( $usuario->imagen )
+							@if (Storage::disk('avatars')->has($usuario->imagen))
+					            <img src="{{ route('usuario.avatar', ['imagenNombre' => $usuario->imagen]) }}" alt="{{ $usuario->nickname }}" class="img-responsive img-rounded lfu-avatar">
+					   		@endif
+						@else
+							<img class="img-responsive img-rounded lfu-avatar" src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" >
+						@endif
+						<div class="form-group col-md-12 {{ $errors->has('imagen') ? 'has-error' : '' }}">
+							{!! Form::file('imagen', ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
+        				</div>
+
+	        			{!! Form::token() !!}
+						<button type="submit" class="btn btn-primary">Subir nueva imagen</button>
+						{{--
+						@if ( $usuario->imagen )
+						<a style="display:block;margin-top:15px;"><button class="btn btn-primary">Borrar imagen</button></a>
+						@endif
+						--}}
+					{!! Form::close() !!}
 				</div>
 		    </div>
 		    {{-- Sección de config. de contraseña --}}
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-password">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-password">Contraseña</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-password">
-					<div class="form-group col-md-12 {{ $errors->has('password-new') ? 'has-error' : '' }}">
-						{!! Form::label('password-new','Nueva Contraseña', array('class'=>'label-izquierda')) !!}
-						{!! Form::text('password-new', old('password-new'), ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
-						<span class="text-danger">{{ $errors->first('password-new') }}</span>
-					</div>
-					<div class="form-group col-md-12 {{ $errors->has('password-repeat') ? 'has-error' : '' }}">
-						{!! Form::label('password-repeat','Repetir Nueva Contraseña', array('class'=>'label-izquierda')) !!}
-						{!! Form::text('password-repeat', old('password-repeat'), ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
-						<span class="text-danger">{{ $errors->first('password-repeat') }}</span>
-					</div>
-					<button type="submit" class="btn btn-primary">Actualizar contraseña</button>
+					{!! Form::open(['url' => route('usuario.actualizar_password'), 'method' => 'post']) !!}
+
+						<div class="form-group col-md-12 {{ $errors->has('password-new') ? 'has-error' : '' }}">
+							{!! Form::label('password-new','Nueva Contraseña', array('class'=>'label-izquierda')) !!}
+							{!! Form::password('password-new', ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
+							<span class="text-danger">{{ $errors->first('password-new') }}</span>
+						</div>
+						<div class="form-group col-md-12 {{ $errors->has('password-repeat') ? 'has-error' : '' }}">
+							{!! Form::label('password-repeat','Repetir Nueva Contraseña', array('class'=>'label-izquierda')) !!}
+							{!! Form::password('password-repeat', ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
+							<span class="text-danger">{{ $errors->first('password-repeat') }}</span>
+						</div>
+						<button type="submit" class="btn btn-primary">Actualizar contraseña</button>
+					{!! Form::close() !!}
 				</div>
 		    </div>		    
     	</div>

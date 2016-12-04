@@ -2,6 +2,10 @@
 
 return [
 
+    'carpetaArtistas' => 'artistas',
+    'carpetaDiscos' => 'discos',
+    'carpetaCanciones' => 'canciones',
+    
     /*
     |--------------------------------------------------------------------------
     | Application Name
