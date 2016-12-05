@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
@@ -31,30 +32,22 @@ class UsuarioController extends Controller
         ]);
 
         // Validar que las contraseñas coincidan.
-        $this->validate($request, [
-            'password-repeat' => 'same:password'
-        ]);
-
-        $nickname = $request['nickname'];
-        $nombre = $request['nombre'];
-        $apellido = $request['apellido'];
-        $email = $request['email'];
-        $password = bcrypt($request['password']);
-        $remember_token = $request['_token'];
+        $this->validate($request, ['password-repeat' => 'same:password']);
 
         $usuario = new Usuario();
 
-        $usuario->nickname = $nickname;
-        $usuario->nombre = $nombre;
-        $usuario->apellido = $apellido;
-        $usuario->email = $email;
-        $usuario->password = $password;
+        $usuario->nickname = $request['nickname'];
+        $usuario->nombre = $request['nombre'];
+        $usuario->apellido = $request['apellido'];
+        $usuario->email = $request['email'];
+        $usuario->password = bcrypt($request['password']);
         $usuario->categoria_usuario_id = 2; // Categoría = Usuario.
-        $usuario->remember_token = $remember_token;
+        $usuario->remember_token = $request['_token'];
 
         $usuario->save();
 
-        Auth::login($usuario); // Línea provisional.
+        Auth::login($usuario);  // Después de registrarse, el usuario es autenticado automáticamente 
+                                // para configurar todos sus datos en el submódulo "Configuración".
 
         return redirect()->route('usuario.configuracion');
     }
@@ -67,8 +60,7 @@ class UsuarioController extends Controller
     
     public function indexIngreso()
     {
-        // Mostrar vista para el ingreso al sistema.
-
+        // Mostrar vista para el ingreso del usuario al sistema.
         return view ('userview.usuario.ingreso', ['usuario' => Auth::User()]);
     }
 
@@ -166,55 +158,33 @@ class UsuarioController extends Controller
 
         $usuario = Auth::User();
 
-        if ($usuario->nickname === $request['nickname']) {
-            $this->validate($request, [
-                'nombre' => 'required|string|max:45',
-                'apellido' => 'required|string|max:45',
-                'nickname' => 'required|min:5|max:20',
-                'url' => 'url',
-                'resumen' => 'string|max:255'
-            ]);
-        } else {
-            $this->validate($request, [
-                'nombre' => 'required|string|max:45',
-                'apellido' => 'required|string|max:45',
-                'nickname' => 'required|unique:usuarios|min:5|max:20',
-                'url' => 'url',
-                'resumen' => 'string|max:255'
-            ]);
-        }
-
         // Validar los datos del formulario de configuración.
-        $nickname = $request['nickname'];
-        $nombre = $request['nombre'];
-        $apellido = $request['apellido'];
-        $url = $request['url'];
-        $resumen = $request['resumen'];
+        $this->validate($request, [
+            'nombre' => 'required|string|max:45',
+            'apellido' => 'required|string|max:45',
+            'url' => 'url',
+            'ubicacion' => 'required|string',
+            'resumen' => 'string|max:255'
+        ]);
 
-        $usuario->nickname = $nickname;
-        $usuario->nombre = $nombre;
-        $usuario->apellido = $apellido;
-        $usuario->url = $url;
-        $usuario->resumen = $resumen;
+        $usuario->nombre = $request['nombre'];
+        $usuario->apellido = $request['apellido'];
+        $usuario->ubicacion = $request['ubicacion'];
+        $usuario->url = $request['url'];
+        $usuario->resumen = $request['resumen'];
 
         $usuario->save();
 
         $mensaje = "Los datos han sido actualizados.";
         
-        // El withInput() debería afectar sólo a la Sección de Datos (Quizá)
-        return redirect()->back()->withInput(
-            $request->except('email'),
-            $request->except('email-repeat'),
-            $request->except('password-new'),
-            $request->except('password-repeat')
-                                            )->with(['mensaje' => $mensaje]);
+        return redirect()->back()->withInput()->with(['mensaje' => $mensaje]);
     }
 
     public function actualizarImagen(Request $request)
     {
         // Actualizar la imagen del usuario autenticado.
                 
-        $this->validate($request, ['imagen' => 'required|mimes:jpg,jpeg,bmp,png|max:5000']);
+        $this->validate($request, ['imagen' => 'required|mimes:jpg,jpeg,bmp,png|max:1000']);
 
         $usuario = Auth::User();
         $imagen = $request->file('imagen');
@@ -226,6 +196,15 @@ class UsuarioController extends Controller
         // Se establece el nombre de la imagen (ID de usuario seguido de la extensión de la imagen).
         $imagenNombre = $usuario->id.$extension;
         $imagenUbicacion = 'avatars/'.$imagenNombre;
+
+        // Si el usuario tiene una imagen almacenada, entonces dicha imagen es eliminada.
+        if ($usuario->imagen) {
+            Storage::Delete('avatars/'.$usuario->imagen);
+            $usuario->imagen = null;
+            $usuario->save();
+        }
+       
+        // Se almacena la nueva imagen del usuario.
         $imagenAlmacenada = Storage::put($imagenUbicacion, file_get_contents($imagen->getRealPath()));
 
         if($imagenAlmacenada){
@@ -236,33 +215,91 @@ class UsuarioController extends Controller
 
         $mensaje = "La imagen de perfil ha sido actualizada.";
 
-        // El withInput() debería afectar sólo a la Sección de Imagen (Quizá)
         return redirect()->back()->withInput()->with(['mensaje' => $mensaje]);
-    }
-
-    public function getAvatar($imagenNombre)
-    {
-        $avatar = Storage::disk('avatars')->get($imagenNombre);
-        return new Response($avatar, 200);
     }
 
     public function actualizarCorreo(Request $request)
     {
-        // Actualizar la contraseña del usuario autenticado.
-        $mensaje = "Este es un mensaje de prueba por la actualización.";
+        // Actualizar el correo electrónico del usuario autenticado.
+        $usuario = Auth::User();
+        
+        if ( $usuario->email === $request['email'] ) {
 
-        // El withInput() debería afectar sólo a la Sección de Correo (Quizá)
-        return redirect()->back()->withInput()->with(['mensajePrueba' => $mensaje]);
+            $mensaje = "El correo electrónico introducido es su correo electrónico actual.";
+            return redirect()->back()->withInput()->with(['mensajeError' => $mensaje, 'correoActual' => '1']);
+
+        } else {
+            // Validar el correo electrónico insertado del formulario de configuración.
+            $this->validate($request, [
+                'email' => 'required|email|unique:usuarios',
+                'email-repeat' => 'required|same:email',
+            ]);
+
+            $usuario->email = $request['email'];
+            
+            $usuario->save();
+        }
+
+        $mensaje = "El correo electrónico ha sido actualizado.";
+        return redirect()->back()->with(['mensaje' => $mensaje]);
     } 
 
     public function actualizarPassword(Request $request)
     {
         // Actualizar la contraseña del usuario autenticado.
-        $mensaje = "Este es un mensaje de prueba por la actualización.";
+        $usuario = Auth::User();
+        
+        $this->validate($request, [
+                'password-actual' => 'required',
+                'password-new' => 'required|min:4',
+                'password-repeat' => 'required',
+            ]);
+                                    
+        // Se valida que la contraseña actual ingresada sea correcta...
+        if (Hash::check($request['password-actual'], $usuario->password)) {
 
-        // El withInput() debería afectar sólo a la Sección de Contraseña (Quizá)
-        return redirect()->back()->withInput()->with(['mensajePrueba' => $mensaje]);
-    } 
+            // Validar que las nuevas contraseñas coincidan.
+            $this->validate($request, ['password-repeat' => 'same:password-new']);
+
+            $usuario->password = bcrypt($request['password-new']);
+  
+            $usuario->save();
+            
+        } else {
+
+            $mensaje = "La contraseña actual ingresada es incorrecta.";
+            return redirect()->back()->withInput()->with(['mensajeError' => $mensaje]);
+            
+        }
+
+        $mensaje = "La contraseña ha sido actualizada.";
+        return redirect()->back()->with(['mensaje' => $mensaje]);
+    }
+
+    public function getAvatarUsuario($imagenNombre)
+    {
+        // Se obtiene el avatar/imagen de perfil para mostrarla en pantalla.
+        $avatar = Storage::disk('avatars')->get($imagenNombre);
+        return new Response($avatar, 200);
+    }
+
+    public function eliminarAvatarUsuario(Request $request)
+    {
+        // Borrar la imagen de perfil del usuario.
+
+        if ($request['_token']) {
+            // Si la petición proviene del formulario de Configuración.
+            $usuario = Auth::User();
+            Storage::Delete('avatars/'.$usuario->imagen);
+            $usuario->imagen = null;
+            $usuario->save();
+            $mensaje = "La imagen de perfil ha sido eliminada.";
+            return redirect()->back()->with(['mensaje' => $mensaje]);
+        } else {
+            $mensaje = "La imagen de perfil no puede ser eliminada.";
+            return redirect()->back()->with(['mensajeError' => $mensaje]);
+        }
+    }
 
     public function verFavoritos($nickname)
     {

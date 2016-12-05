@@ -80,7 +80,7 @@ return [
     'state'                => 'El estado no es válido para el país seleccionado.',
     'string'               => 'El campo :attribute debe contener solo caracteres.',
     'timezone'             => 'El campo :attribute debe contener una zona válida.',
-    'unique'               => 'El elemento :attribute ya está en uso.',
+    'unique'               => 'El :attribute ya está en uso.',
     'url'                  => 'El formato de :attribute no corresponde con el de una URL válida.',
 
     /*
@@ -98,10 +98,25 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+
+        'password-new' => [
+            'required' => 'El campo de la nueva contraseña es obligatorio.',
+            'min' => 'El campo de la nueva contraseña debe contener al menos :min caracteres.',
+        ],
         
         'password-repeat' => [
-            'required' => 'La contraseña repetida es obligatoria.',
+            'required' => 'El campo de la contraseña repetida es obligatorio.',
             'same' => 'Las contraseñas no coinciden.',
+        ],
+
+        'password-actual' => [
+            'required' => 'El campo de la contraseña actual es obligatorio.',
+            'same' => 'Las contraseñas no coinciden.',
+        ],
+
+        'email-repeat' => [
+            'required' => 'El campo correo electrónico repetido es obligatorio.',
+            'same' => 'Los correos electrónicos no coinciden.',
         ],
     ],
 

@@ -104,6 +104,11 @@ return [
             'required' => 'The password repeated is required.',
             'same' => 'The passwords must match.',
         ],
+
+        'email-repeat' => [
+            'required' => 'The email repeated is required.',
+            'same' => 'The emails must match.',
+        ],
     ],
 
     /*

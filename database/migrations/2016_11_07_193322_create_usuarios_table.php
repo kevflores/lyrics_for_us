@@ -22,6 +22,7 @@ class CreateUsuariosTable extends Migration
             $table->string('password');
             $table->string('resumen', 255)->nullable();
             $table->string('url')->nullable();
+            $table->string('ubicacion')->nullable();
             $table->string('imagen')->nullable();
             $table->boolean('estado')->default(false);
             $table->boolean('permiso')->default(true);

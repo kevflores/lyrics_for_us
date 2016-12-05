@@ -37,6 +37,10 @@ body {
     display: table;
 }
 
+.row {
+    display: inherit;
+}
+
 .botones-bienvenida {
     position: absolute;
     top: 50%;
@@ -578,28 +582,11 @@ a[href="#lfu-panel-collapse-comentarios"] {
         border-top-right-radius: 0px;
     }
 
-    #lfu-perfil-panel-datos {
+    #lfu-perfil-panel-datos, #lfu-perfil-panel-opciones, #lfu-perfil-panel-letras {
         max-height: 5000px;
     }
 
-    #lfu-perfil-panel-body-datos {
-        max-height: 4957px;
-    }
-
-    #lfu-perfil-panel-opciones {
-        max-height: 5000px;
-    }
-
-    #lfu-perfil-panel-body-opciones {
-        max-height: 4957px;
-    }
-
-
-    #lfu-perfil-panel-letras {
-        max-height: 5000px;
-    }
-
-    #lfu-perfil-panel-body-letras{
+    #lfu-perfil-panel-body-datos, #lfu-perfil-panel-body-opciones, #lfu-perfil-panel-body-letras {
         max-height: 4957px;
     }
 }
@@ -678,11 +665,6 @@ a[href="#lfu-panel-collapse-comentarios"] {
 }
 
 
-.lfu-separador-comentarios {
-    margin-top:0px;
-    margin-bottom:13px;
-}
-
 #lfu-configuracion-panel-datos, #lfu-configuracion-panel-password, 
 #lfu-configuracion-panel-imagen, #lfu-configuracion-panel-correo {
     border-color: rgba(68, 154, 208, 1);
@@ -737,35 +719,13 @@ a[href="#lfu-panel-collapse-comentarios"] {
         border-radius: 0px;
     }
 
-    #lfu-configuracion-panel-datos {
+    #lfu-configuracion-panel-datos, #lfu-configuracion-panel-imagen,
+    #lfu-configuracion-panel-password, #lfu-configuracion-panel-correo {
         max-height: 5000px;
     }
 
-    #lfu-configuracion-panel-body-datos {
-        max-height: 4957px;
-    }
-
-    #lfu-configuracion-panel-imagen {
-        max-height: 5000px;
-    }
-
-    #lfu-configuracion-panel-body-imagen {
-        max-height: 4957px;
-    }
-
-    #lfu-configuracion-panel-password {
-        max-height: 5000px;
-    }
-
-    #lfu-configuracion-panel-body-password {
-        max-height: 4957px;
-    }
-
-    #lfu-configuracion-panel-correo {
-        max-height: 5000px;
-    }
-
-    #lfu-configuracion-panel-body-correo {
+    #lfu-configuracion-panel-body-datos, #lfu-configuracion-panel-body-imagen,
+    #lfu-configuracion-panel-body-password, #lfu-configuracion-panel-body-correo {
         max-height: 4957px;
     }
 

@@ -11,16 +11,17 @@
 	<div class="lfu-seccion-completa col-xs-12">
     	
 		<div class="lfu-seccion-dividida col-xs-12 col-sm-8" style="">
+    		
     		{{-- Sección de configuración de datos --}}
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-datos">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-datos">Configuración</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-datos">
-					{!! Form::open(['url' => route('usuario.actualizar_datos'), 'method' => 'post']) !!}
+					{!! Form::open(['url' => route('usuario.actualizar_datos'), 'method' => 'post', 'id' => 'lfu-form-config-datos']) !!}
 
 						<div class="form-group col-md-6 {{ $errors->has('nombre') ? 'has-error' : '' }}">
 							{!! Form::label('nombre','Nombre', array('class'=>'label-izquierda')) !!}
 							{!! Form::text('nombre', $usuario->nombre, ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
-							<span class="text-danger">{{ $errors->first('nombre') }}</span>
+							{{-- <span class="text-danger">{{ $errors->first('nombre') }}</span> --}}
 						</div>
 
 						<div class="form-group col-md-6 {{ $errors->has('apellido') ? 'has-error' : '' }}">
@@ -28,9 +29,9 @@
 							{!! Form::text('apellido', $usuario->apellido, ['class'=>'form-control','style' => 'text-align:left;']) !!}
 						</div>
 
-						<div class="form-group col-md-6 {{ $errors->has('nickname') ? 'has-error' : '' }}">
-							{!! Form::label('nickname','Nickname', array('class'=>'label-izquierda')) !!}
-							{!! Form::text('nickname', $usuario->nickname, ['class'=>'form-control','style' => 'text-align:left;']) !!}
+						<div class="form-group col-md-6 {{ $errors->has('ubicacion') ? 'has-error' : '' }}">
+							{!! Form::label('ubicacion','Ubicación', array('class'=>'label-izquierda')) !!}
+							{!! Form::text('ubicacion', $usuario->ubicacion, ['class'=>'form-control','style' => 'text-align:left;']) !!}
 						</div>
 
 						<div class="form-group col-md-6 {{ $errors->has('url') ? 'has-error' : '' }}">
@@ -51,22 +52,21 @@
 
 				</div>
 			</div>
+			
 			{{-- Sección de configuración de correo electrónico --}}
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-correo">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-correo">Correo electrónico</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-correo">
-					{!! Form::open(['url' => route('usuario.actualizar_correo'), 'method' => 'post']) !!}
+					{!! Form::open(['url' => route('usuario.actualizar_correo'), 'method' => 'post',  'novalidate' => true, 'id' => 'lfu-form-config-correo']) !!}
 
-						<div class="form-group col-md-6 col-md-offset-3 {{ $errors->has('email') ? 'has-error' : '' }}">
-							{!! Form::label('email','Correo Electrónico', array('class'=>'label-izquierda')) !!}
+						<div class="form-group col-md-6 col-md-offset-3 {{ $errors->has('email') ? 'has-error' : '' }} <?php if (Session::has('correoActual')) { echo "has-error"; } ?>">
+							{!! Form::label('email','Correo electrónico', array('class'=>'label-izquierda')) !!}
 							{!! Form::email('email', $usuario->email, ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
-							<span class="text-danger">{{ $errors->first('email') }}</span>
 						</div>
 
-						<div class="form-group col-md-6 col-md-offset-3 {{ $errors->has('email-repeat') ? 'has-error' : '' }}">
-							{!! Form::label('email-repeat','Repetir Correo Electrónico', array('class'=>'label-izquierda')) !!}
+						<div class="form-group col-md-6 col-md-offset-3 {{ $errors->has('email-repeat') ? 'has-error' : ''}}">
+							{!! Form::label('email-repeat','Repetir correo electrónico', array('class'=>'label-izquierda')) !!}
 							{!! Form::email('email-repeat', old('email-repeat'), ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
-							<span class="text-danger">{{ $errors->first('email-repeat') }}</span>
 						</div>
 
 						<div class="form-group">
@@ -79,50 +79,91 @@
     	</div>
 
     	<div class="lfu-seccion-dividida col-xs-12 col-sm-4">
+    		
     		{{-- Sección de config. imagen de perfil --}}
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-imagen">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-imagen">Imagen de perfil</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-imagen">
-					{!! Form::open(['url' => route('usuario.actualizar_imagen'), 'method' => 'post', 'files' => true]) !!}
+					
+					@if ( $usuario->imagen )
+						@if (Storage::disk('avatars')->has($usuario->imagen))
+				            <img src="{{ route('usuario.avatar', ['imagenNombre' => $usuario->imagen]) }}" alt="{{ $usuario->nickname }}" class="img-responsive img-rounded lfu-avatar" id="lfu-avatar-editable" href="#" data-toggle="popover">
+				   		@endif
 
-						@if ( $usuario->imagen )
-							@if (Storage::disk('avatars')->has($usuario->imagen))
-					            <img src="{{ route('usuario.avatar', ['imagenNombre' => $usuario->imagen]) }}" alt="{{ $usuario->nickname }}" class="img-responsive img-rounded lfu-avatar">
-					   		@endif
-						@else
-							<img class="img-responsive img-rounded lfu-avatar" src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" >
-						@endif
-						<div class="form-group col-md-12 {{ $errors->has('imagen') ? 'has-error' : '' }}">
+						<div id="popover-content" class="hide">
+						    {!! Form::open(['url' => route('usuario.eliminar_avatar')]) !!}
+								<div class="form-group">
+									<button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button> 
+								</div>
+							{!! Form::close() !!}
+						</div>
+				   		
+
+					@else
+						<img class="img-responsive img-rounded lfu-avatar" src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" >
+					@endif
+
+					{!! Form::open(['url' => route('usuario.actualizar_imagen'), 'method' => 'post', 'files' => true, 'id' => 'lfu-form-config-imagen']) !!}
+
+						<div class="form-group col-xs-12 {{ $errors->has('imagen') ? 'has-error' : '' }}">
 							{!! Form::file('imagen', ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
         				</div>
 
 	        			{!! Form::token() !!}
 						<button type="submit" class="btn btn-primary">Subir nueva imagen</button>
+
 						{{--
 						@if ( $usuario->imagen )
-						<a style="display:block;margin-top:15px;"><button class="btn btn-primary">Borrar imagen</button></a>
+						<a href="{{ route('usuario.eliminar_avatar') }}" title="Eliminar Imagen"><span class="glyphicon glyphicon-remove"></span></a>
 						@endif
 						--}}
 					{!! Form::close() !!}
+
+					
+					
+
 				</div>
 		    </div>
+		    
 		    {{-- Sección de config. de contraseña --}}
 	    	<div class="panel panel-primary" id="lfu-configuracion-panel-password">
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-password">Contraseña</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-password">
-					{!! Form::open(['url' => route('usuario.actualizar_password'), 'method' => 'post']) !!}
+					{!! Form::open(['url' => route('usuario.actualizar_password'), 'method' => 'post', 'id' => 'lfu-form-config-password']) !!}
 
-						<div class="form-group col-md-12 {{ $errors->has('password-new') ? 'has-error' : '' }}">
-							{!! Form::label('password-new','Nueva Contraseña', array('class'=>'label-izquierda')) !!}
-							{!! Form::password('password-new', ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
-							<span class="text-danger">{{ $errors->first('password-new') }}</span>
-						</div>
-						<div class="form-group col-md-12 {{ $errors->has('password-repeat') ? 'has-error' : '' }}">
-							{!! Form::label('password-repeat','Repetir Nueva Contraseña', array('class'=>'label-izquierda')) !!}
-							{!! Form::password('password-repeat', ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
-							<span class="text-danger">{{ $errors->first('password-repeat') }}</span>
-						</div>
-						<button type="submit" class="btn btn-primary">Actualizar contraseña</button>
+						<div class="col-xs-12 form-group {{ $errors->has('password-new') ? 'has-error' : '' }}">
+	                        <label for="password-new" class="label-izquierda">Nueva contraseña</label>
+	                        <input class="form-control texto-centrado" type="password" name="password-new" id="password-new" value="{{ Request::old('password-new') }}" style="text-align:left;">
+	                    </div>
+
+						<div class="col-xs-12 form-group {{ $errors->has('password-repeat') ? 'has-error' : '' }}">
+	                        <label for="password-repeat" class="label-izquierda">Repetir nueva contraseña</label>
+	                        <input class="form-control texto-centrado" type="password" name="password-repeat" id="password-new" value="{{ Request::old('password-repeat') }}" style="text-align:left;">
+	                    </div>
+
+						<a class="btn btn-primary" id="lfu-actualizarPassword">Actualizar contraseña</a>
+
+						<!-- Modal para crear comentario en el perfil del usuario -->
+						<div class="modal fade" id="actualizarPasswordModal" role="dialog">
+							<div class="modal-dialog">
+							<!-- Contenido del Modal-->
+								<div class="modal-content">
+									<div class="modal-header" >
+										<button type="button" class="close cerrar_modal_actpass" data-dismiss="modal">&times;</button>
+										<h4><span class="glyphicon glyphicon-check"></span> Confirmar cambio de contraseña</h4>
+									</div>
+									<div class="modal-body" >
+										<div class="col-xs-12 form-group {{ $errors->has('password-actual') ? 'has-error' : '' }} ">
+											<label for="password-actual" class="label-izquierda">Contraseña actual</label>
+	                        				<input class="form-control texto-centrado" type="password" name="password-actual" id="password-actual" style="text-align:left;">
+										</div>
+										<button type="button" class="btn btn-danger" id="cancelar-actualizacion" data-dismiss="modal">Cancelar</button>
+										<button class="btn btn-primary" id="enviarNuevaPassword" >Enviar</button>
+									</div>
+								</div>
+							</div>
+						</div> 
+
 					{!! Form::close() !!}
 				</div>
 		    </div>		    

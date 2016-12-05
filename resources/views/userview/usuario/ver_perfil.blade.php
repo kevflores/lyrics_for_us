@@ -25,7 +25,7 @@
 						@endif
 
 						@if ( $usuarioPerfil->id == Auth::User()->id )
-							<a href="#">Editar</a>
+							<a href="{{ route('usuario.configuracion') }}">Editar</a>
 						@endif
 						Nickname: {{ $usuarioPerfil->nickname}}
 						Nombre: {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}}
@@ -110,7 +110,7 @@
 		</div>
 
 		<!-- Modal para crear comentario en el perfil del usuario -->
-		<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal fade" id="comentarModal" role="dialog">
 			<div class="modal-dialog">
 			<!-- Contenido del Modal-->
 				<div class="modal-content">
