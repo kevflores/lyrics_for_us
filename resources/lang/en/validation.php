@@ -99,16 +99,18 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-        
         'password-repeat' => [
             'required' => 'The password repeated is required.',
             'same' => 'The passwords must match.',
         ],
-
         'email-repeat' => [
             'required' => 'The email repeated is required.',
             'same' => 'The emails must match.',
         ],
+        'imagen' => [
+            'required' => 'There\'s no image uploaded.'
+        ],
+        
     ],
 
     /*

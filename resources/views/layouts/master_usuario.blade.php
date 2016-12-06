@@ -100,6 +100,26 @@
                 $(".cerrar_modal_actpass").click(function(){
                     $("#lfu-password-actual").val('');
                 });
+                
+                // Al presionar "Eliminar imagen" se muestra el Modal para confirmar la eliminación.
+                $("#lfu-eliminar-imagen").click(function(){
+                    $("#eliminarImagenModal").modal();
+                });
+                // Al momento de presionar "Eliminar" en el Modal.
+                $("#confirmarEliminacionImagen").click(function(){
+                    $("lfu-form-eliminar-imagen").submit(); 
+                    $("#eliminarImagenModal").modal('hide'); // Se oculta el modal
+                });
+                // Al presionar "Cancelar" la actualización de la contraseña. 
+                $("#cancelar-actualizacion").click(function(){
+                    $("#password-actual").val('');
+                });
+                // Al presionar "X" de cerrar la actualización de la contraseña,
+                // el campo de la contraseña actual debe quedar en blanco.
+                $(".cerrar_modal_actpass").click(function(){
+                    $("#lfu-password-actual").val('');
+                });
+
                 // Para no permitir que se los datos de los formularios del submódulo "Configuración" se
                 // envíen al presionar "ENTER" (sólo se permite presionar el BOTÓN respectivo).
                 $('#lfu-form-config-datos').on('keyup keypress', function(e) {
@@ -130,13 +150,15 @@
                         return false;
                     }
                 });
-                // Para mostrar botón de eliminar (PROVISIONAL)
-                $('[data-toggle="popover"]').popover({ 
-                    html : true,
-                    content: function() {
-                      return $("#popover-content").html();
+                $('#lfu-form-eliminar-imagen').on('keyup keypress', function(e) {
+                    var keyCode = e.keyCode || e.which;
+                    if (keyCode === 13) { 
+                        e.preventDefault();
+                        return false;
                     }
                 });
+
+
             });
         </script>
 

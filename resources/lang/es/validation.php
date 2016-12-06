@@ -103,20 +103,20 @@ return [
             'required' => 'El campo de la nueva contraseña es obligatorio.',
             'min' => 'El campo de la nueva contraseña debe contener al menos :min caracteres.',
         ],
-        
         'password-repeat' => [
             'required' => 'El campo de la contraseña repetida es obligatorio.',
             'same' => 'Las contraseñas no coinciden.',
         ],
-
         'password-actual' => [
             'required' => 'El campo de la contraseña actual es obligatorio.',
             'same' => 'Las contraseñas no coinciden.',
         ],
-
         'email-repeat' => [
             'required' => 'El campo correo electrónico repetido es obligatorio.',
             'same' => 'Los correos electrónicos no coinciden.',
+        ],
+        'imagen' => [
+            'required' => 'No se ha seleccionado ninguna imagen.'
         ],
     ],
 

@@ -16,16 +16,18 @@
 					<div class="panel-heading" id="lfu-perfil-panel-heading-datos">Datos</div>
 					<div class="panel-body" id="lfu-perfil-panel-body-datos">
 						
-						@if ( $usuarioPerfil->imagen )
-							@if (Storage::disk('avatars')->has($usuarioPerfil->imagen))
-					            <span><img src="{{ route('usuario.avatar', ['imagenNombre' => $usuarioPerfil->imagen]) }}" alt="{{ $usuarioPerfil->nickname }}" class="img-responsive img-rounded lfu-avatar"></span>
-					   		@endif
+						@if (Storage::disk('avatars')->has($usuarioPerfil->imagen))
+				            <div class="imagen-perfil" style="margin-bottom:15px;">
+				            	<span><img src="{{ route('usuario.avatar', ['imagenNombre' => $usuarioPerfil->imagen]) }}" alt="{{ $usuarioPerfil->nickname }}" class="img-responsive img-rounded lfu-avatar"></span>
+				            </div> 
 						@else
 							<span class="text-center"><img class="img-responsive" src="{{ asset('images\lfu-default-avatar.png') }}" alt="Imagen de Perfil"></span>
 						@endif
 
 						@if ( $usuarioPerfil->id == Auth::User()->id )
-							<a href="{{ route('usuario.configuracion') }}">Editar</a>
+							<div class="enlace-editar"  style="margin-bottom:8px;">
+								<a href="{{ route('usuario.configuracion') }}">Editar</a> 
+							</div>
 						@endif
 						Nickname: {{ $usuarioPerfil->nickname}}
 						Nombre: {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}}

@@ -85,24 +85,42 @@
 				<div class="panel-heading" id="lfu-configuracion-panel-heading-imagen">Imagen de perfil</div>
 				<div class="panel-body" id="lfu-configuracion-panel-body-imagen">
 					
-					@if ( $usuario->imagen )
-						@if (Storage::disk('avatars')->has($usuario->imagen))
-				            <img src="{{ route('usuario.avatar', ['imagenNombre' => $usuario->imagen]) }}" alt="{{ $usuario->nickname }}" class="img-responsive img-rounded lfu-avatar" id="lfu-avatar-editable" href="#" data-toggle="popover">
-				   		@endif
+					{{-- Si el usuario tiene una imagen de perfil registrada en la BD --}}
+					@if (Storage::disk('avatars')->has($usuario->imagen))
+						{!! Form::open(['url' => route('usuario.eliminar_avatar'), 'method' => 'post', 'id' => 'lfu-form-eliminar-imagen']) !!}
 
-						<div id="popover-content" class="hide">
-						    {!! Form::open(['url' => route('usuario.eliminar_avatar')]) !!}
-								<div class="form-group">
-									<button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button> 
+						<div class="container-img">
+							<img src="{{ route('usuario.avatar', ['imagenNombre' => $usuario->imagen]) }}" alt="{{ $usuario->nickname }}" class="img-responsive img-rounded lfu-avatar" id="lfu-avatar-editable">
+							<span class="enlace-sobre-avatar img-rounded" id="lfu-eliminar-imagen">
+								Eliminar imagen
+							</span>
+
+							<!-- Modal para confirmar la eliminación de la imagen de perfil -->
+							<div class="modal fade" id="eliminarImagenModal" role="dialog">
+								<div class="modal-dialog">
+								<!-- Contenido del Modal-->
+									<div class="modal-content">
+										<div class="modal-header" >
+											<button type="button" class="close cerrar_modal_actpass" data-dismiss="modal">&times;</button>
+											<h4>Presione "Eliminar" para confirmar la eliminación de la imagen</h4>
+										</div>
+										<div class="modal-body" >
+											<button type="button" class="btn btn-danger" id="cancelar-actualizacion" data-dismiss="modal">Cancelar</button>
+											<button class="btn btn-primary" id="confirmarEliminacionImagen" >Eliminar</button>
+										</div>
+									</div>
 								</div>
-							{!! Form::close() !!}
-						</div>
-				   		
+							</div> 
 
+						</div>
+
+						{!! Form::close() !!}
+					{{-- Sino, sólo se muestra una imagen de perfil por defecto --}}
 					@else
-						<img class="img-responsive img-rounded lfu-avatar" src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" >
+						<img class="img-responsive img-rounded lfu-avatar" src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" style="margin-bottom:15px;">
 					@endif
 
+					{{-- Formulario para subir una nueva imagen --}}
 					{!! Form::open(['url' => route('usuario.actualizar_imagen'), 'method' => 'post', 'files' => true, 'id' => 'lfu-form-config-imagen']) !!}
 
 						<div class="form-group col-xs-12 {{ $errors->has('imagen') ? 'has-error' : '' }}">
@@ -112,15 +130,7 @@
 	        			{!! Form::token() !!}
 						<button type="submit" class="btn btn-primary">Subir nueva imagen</button>
 
-						{{--
-						@if ( $usuario->imagen )
-						<a href="{{ route('usuario.eliminar_avatar') }}" title="Eliminar Imagen"><span class="glyphicon glyphicon-remove"></span></a>
-						@endif
-						--}}
 					{!! Form::close() !!}
-
-					
-					
 
 				</div>
 		    </div>
@@ -176,13 +186,5 @@
 			<div class="panel-primary panel-footer sin-texto panel-footer-configuracion" id="lfu-panel-footer"></div>
 		</div>
 	</div>
-
-    {{-- Prueba para el front-end --}}
-    <h6 class="col-xs-12">Resolución: 
-        <div class="visible-xs">Extra-Small</div>
-        <div class="visible-sm">Small</div>
-        <div class="visible-md">Medium</div>
-        <div class="visible-lg">Large</div>
-    </h6>
 
 @endsection
