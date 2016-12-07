@@ -80,14 +80,6 @@ body {
     display:block;
 }
 
-.container-img {
-    margin: 0 auto;
-    position: relative;
-    height: 200px; /* Eliminar este atributo si se desea mantener la imagen responsive */
-    width: 200px; /* Eliminar este atributo si se desea mantener la imagen responsive */
-    margin-bottom: 15px; /* Para que la imagen mantenga distancia con el campo de texto de abajo */
-}
-
 .lfu-avatar {
     margin: 0 auto;
     height: 200px; /* Eliminar este atributo si se desea mantener la imagen responsive */
@@ -96,31 +88,28 @@ body {
     transition: ease 0.2s all;
 }
 
-.enlace-sobre-avatar {
+.seleccionarImagen {
+    position: relative;
+    overflow: hidden;
+}
+.seleccionarImagen input.subirImagen {
     position: absolute;
-    text-align: center;
-    width: 100%;
-    bottom: 0px; /* Para que el botón se mantenga en el pie de la imagen de perfil */
-    background-color: rgba(49, 123, 176, 1);
-    color: white;
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-    display: none;
-    left: 0px; /* Para evitar que el botón se desplace a la derecha */
-    border: rgba(68, 154, 208, 1) solid 1px;
-    border-top: none;
-    transition: ease 0.2s all;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
     cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
 
-.container-img:hover .lfu-avatar {
-    /* Al hacer hover en el container de la imagen de perfil, dicha imagen se oscurece*/
-    filter: brightness(60%);
-}
-
-.container-img:hover .enlace-sobre-avatar {
-    /* Al hacer hover en el container de la imagen de perfil, se muestra el enlace de "Eliminar imagen"*/
-    display: block;
+.focusedInput {
+    border-color: rgba(82,168,236,.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -moz-box-shadow: 0 0 8px rgba(82,168,236,.6);
+    box-shadow: 0 0 8px rgba(82,168,236,.6) !important;
 }
 
 /* FIN DE ESTILOS GENERALES */
@@ -765,6 +754,41 @@ a[href="#lfu-panel-collapse-comentarios"] {
         max-height: 4957px;
     }
 
+}
+
+.container-img {
+    margin: 0 auto;
+    position: relative;
+    height: 200px; /* Eliminar este atributo si se desea mantener la imagen responsive */
+    width: 200px; /* Eliminar este atributo si se desea mantener la imagen responsive */
+    margin-bottom: 15px; /* Para que la imagen mantenga distancia con el campo de texto de abajo */
+}
+
+.enlace-sobre-avatar {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 0px; /* Para que el botón se mantenga en el pie de la imagen de perfil */
+    background-color: rgba(49, 123, 176, 1);
+    color: white;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    display: none;
+    left: 0px; /* Para evitar que el botón se desplace a la derecha */
+    border: rgba(68, 154, 208, 1) solid 1px;
+    border-top: none;
+    transition: ease 0.2s all;
+    cursor: pointer;
+}
+
+.container-img:hover .lfu-avatar {
+    /* Al hacer hover en el container de la imagen de perfil, dicha imagen se oscurece*/
+    filter: brightness(60%);
+}
+
+.container-img:hover .enlace-sobre-avatar {
+    /* Al hacer hover en el container de la imagen de perfil, se muestra el enlace de "Eliminar imagen"*/
+    display: block;
 }
 
 

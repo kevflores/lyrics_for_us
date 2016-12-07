@@ -124,7 +124,10 @@
 					{!! Form::open(['url' => route('usuario.actualizar_imagen'), 'method' => 'post', 'files' => true, 'id' => 'lfu-form-config-imagen']) !!}
 
 						<div class="form-group col-xs-12 {{ $errors->has('imagen') ? 'has-error' : '' }}">
-							{!! Form::file('imagen', ['class'=>'form-control', 'style' => 'text-align:left;']) !!}
+							<div class="form-control seleccionarImagen">
+							    <span class="spanImagen">Seleccionar imagen</span>
+							    <input type="file" name="imagen" class="subirImagen"/>
+							</div>
         				</div>
 
 	        			{!! Form::token() !!}

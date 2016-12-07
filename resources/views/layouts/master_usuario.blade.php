@@ -158,6 +158,16 @@
                     }
                 });
 
+                // Al hacer HOVER sobre el campo "Seleccionar imagen", se le añade la clase "focusedInput".
+                $(".seleccionarImagen").hover(function(){
+                    $(this).toggleClass("focusedInput");
+                });
+
+                // Al seleccionar una imagen, se muestra el nombre de dicha imagen.
+                $(".subirImagen").change(function(e) {
+                    var fileName = e.target.files[0].name;
+                    $(".spanImagen").text('Imagen: "' + fileName + '"');
+                });
 
             });
         </script>

@@ -19,9 +19,9 @@ class UsuarioController extends Controller
         return view('userview.usuario.registro', ['usuario' => Auth::User()]);
     }
 
+    // Método para registrar un nuevo usuario convencional.
     public function registrar(Request $request)
     {
-        // Validar el registro de usuario.
         $this->validate($request, [
             'nombre' => 'required|string|max:45',
             'apellido' => 'required|string|max:45',
@@ -48,7 +48,6 @@ class UsuarioController extends Controller
 
         Auth::login($usuario);  // Después de registrarse, el usuario es autenticado automáticamente 
                                 // para configurar todos sus datos en el submódulo "Configuración".
-
         return redirect()->route('usuario.configuracion');
     }
     
@@ -64,6 +63,7 @@ class UsuarioController extends Controller
         return view ('userview.usuario.ingreso', ['usuario' => Auth::User()]);
     }
 
+    // Método para permitir el ingreso de un usuario al sistema.
     public function ingresar(Request $request)
     {
         if ($request == null) {
@@ -111,20 +111,15 @@ class UsuarioController extends Controller
         // Almacenar nueva password del usuario.
     }
 
+    // Método para mostrar el perfil de un usuario.        
     public function mostrarPerfil($nickname)
     {
-        // Mostrar el perfil de un usuario.        
         $usuarioPerfil = DB::table('usuarios')->where('nickname', $nickname)->first();
 
         // Si el usuario existe...
         if ($usuarioPerfil){
-
-
-            return view ('userview.usuario.ver_perfil', [
-                            'usuario' => Auth::User(),
-                            'usuarioPerfil' => $usuarioPerfil,
-                            
-                        ]);
+            return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User(),
+                                                         'usuarioPerfil' => $usuarioPerfil]);
         } 
         // Sino...
         else {
@@ -133,7 +128,6 @@ class UsuarioController extends Controller
         }
         
     }
-
 
     public function comentar(Request $request, $id_usuario)
     {
@@ -147,18 +141,16 @@ class UsuarioController extends Controller
     }
 
     public function verConfiguracion(){
-        // Mostrar toda la información del usuario autenticado, de modo que éste pueda
-        // modificar lo que crea conveniente.
+        /* Mostrar toda la información del usuario autenticado, de modo que éste pueda
+           modificar lo que crea conveniente. */
         return view ('userview.usuario.ver_configuracion', ['usuario' => Auth::User()]);
     }
 
+    // Método para actualizar los datos del usuario autenticado.
     public function actualizarDatos(Request $request)
     {
-        // Actualizar los datos del usuario autenticado.
-
         $usuario = Auth::User();
 
-        // Validar los datos del formulario de configuración.
         $this->validate($request, [
             'nombre' => 'required|string|max:45',
             'apellido' => 'required|string|max:45',
@@ -180,11 +172,10 @@ class UsuarioController extends Controller
         return redirect()->back()->withInput()->with(['mensaje' => $mensaje]);
     }
 
+    // Método para actualizar la imagen del usuario autenticado.
     public function actualizarImagen(Request $request)
     {
-        // Actualizar la imagen del usuario autenticado.
-                
-        $this->validate($request, ['imagen' => 'required|mimes:jpg,jpeg,bmp,png|max:1000']);
+        $this->validate($request, ['imagen' => 'required|mimes:jpg,jpeg,bmp,png|max:5000']);
 
         $usuario = Auth::User();
         $imagen = $request->file('imagen');
@@ -197,7 +188,7 @@ class UsuarioController extends Controller
         $imagenNombre = $usuario->id.$extension;
         $imagenUbicacion = 'avatars/'.$imagenNombre;
 
-        // Si el usuario tiene una imagen almacenada, entonces dicha imagen es eliminada.
+        // Si el usuario ya posee una imagen almacenada, entonces dicha imagen es eliminada.
         if ($usuario->imagen) {
             Storage::Delete('avatars/'.$usuario->imagen);
             $usuario->imagen = null;
@@ -208,7 +199,7 @@ class UsuarioController extends Controller
         $imagenAlmacenada = Storage::put($imagenUbicacion, file_get_contents($imagen->getRealPath()));
 
         if($imagenAlmacenada){
-            // Su la imagen fue almacenada, entonces su nombre es registrado en la BD.
+            // Si la imagen fue almacenada, entonces su nombre es registrado en la BD.
             $usuario->imagen = $imagenNombre;
             $usuario->save();
         }
@@ -218,9 +209,9 @@ class UsuarioController extends Controller
         return redirect()->back()->withInput()->with(['mensaje' => $mensaje]);
     }
 
+    // Método para actualizar el correo electrónico del usuario autenticado.
     public function actualizarCorreo(Request $request)
     {
-        // Actualizar el correo electrónico del usuario autenticado.
         $usuario = Auth::User();
         
         if ( $usuario->email === $request['email'] ) {
@@ -236,17 +227,16 @@ class UsuarioController extends Controller
             ]);
 
             $usuario->email = $request['email'];
-            
             $usuario->save();
         }
 
         $mensaje = "El correo electrónico ha sido actualizado.";
         return redirect()->back()->with(['mensaje' => $mensaje]);
-    } 
+    }
 
+    // Método para actualizar la contraseña del usuario autenticado.
     public function actualizarPassword(Request $request)
     {
-        // Actualizar la contraseña del usuario autenticado.
         $usuario = Auth::User();
         
         $this->validate($request, [
@@ -257,19 +247,14 @@ class UsuarioController extends Controller
                                     
         // Se valida que la contraseña actual ingresada sea correcta...
         if (Hash::check($request['password-actual'], $usuario->password)) {
-
             // Validar que las nuevas contraseñas coincidan.
             $this->validate($request, ['password-repeat' => 'same:password-new']);
 
             $usuario->password = bcrypt($request['password-new']);
-  
             $usuario->save();
-            
         } else {
-
             $mensaje = "La contraseña actual ingresada es incorrecta.";
             return redirect()->back()->withInput()->with(['mensajeError' => $mensaje]);
-            
         }
 
         $mensaje = "La contraseña ha sido actualizada.";
@@ -283,10 +268,9 @@ class UsuarioController extends Controller
         return new Response($avatar, 200);
     }
 
+    // Método para borrar la imagen de perfil del usuario.
     public function eliminarAvatarUsuario(Request $request)
     {
-        // Borrar la imagen de perfil del usuario.
-
         if ($request['_token']) {
             // Si la petición proviene del formulario de Configuración.
             $usuario = Auth::User();
@@ -331,9 +315,9 @@ class UsuarioController extends Controller
         // MensajeController.
     }
 
+    // Método para permitir el cierre de la sesión del usuario autenticado.
     public function salir()
     {
-        // Permitir el cierre de la sesión del usuario autenticado.
         Auth::logout();
         return redirect()->route('userhome');
     }
