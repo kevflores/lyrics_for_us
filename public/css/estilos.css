@@ -490,8 +490,14 @@ body {
 }
 
 .lfu-separador {
-    margin-top:13px;
-    margin-bottom:13px;
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+.lfu-separador-cancion-misma-fecha {
+    border-top: 0px; 
+    margin-bottom: 3px;
+    margin-top: 3px;
 }
 
 .lfu-separador-comentarios {

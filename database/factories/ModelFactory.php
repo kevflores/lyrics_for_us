@@ -28,7 +28,7 @@ $factory->define(App\Usuario::class, function (Faker\Generator $faker) {
         'nombre' => $faker->firstName,
         'apellido' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt(str_random(10)),
+        'password' => bcrypt('1234'), //'password' => bcrypt(str_random(10)),
         'url' => $faker->url,
         'ubicacion' => $faker->country,
         //'imagen' => $faker->imageUrl($width = 640, $height = 480),

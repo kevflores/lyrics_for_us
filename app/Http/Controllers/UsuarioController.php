@@ -127,6 +127,8 @@ class UsuarioController extends Controller
             ->join('artistas', 'canciones_artistas.artista_id', '=', 'artistas.id')
             ->where('usuarios.id', $usuarioPerfil->id)
             ->select('usuarios.nombre as nombreUsuario', 'canciones.*', 'artistas.*')
+            ->orderBy('fecha_letra', 'desc')
+            ->orderBy('canciones.titulo', 'asc')
             ->get();
 
             return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User(),

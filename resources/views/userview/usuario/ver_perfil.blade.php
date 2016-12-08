@@ -23,7 +23,9 @@
 				            	<span><img src="{{ route('usuario.avatar', ['imagenNombre' => $usuarioPerfil->imagen]) }}" alt="{{ $usuarioPerfil->nickname }}" class="img-responsive img-rounded lfu-avatar"></span>
 				            </div> 
 						@else
-							<span class="text-center"><img class="img-responsive" src="{{ asset('images\lfu-default-avatar.png') }}" alt="Imagen de Perfil"></span>
+						 	<div class="imagen-perfil" style="margin-bottom:15px;">
+								<span><img src="{{ asset('images\lfu-default-avatar.png') }}" class="img-responsive img-rounded lfu-avatar"></span>
+							</div> 
 						@endif
 
 						@if ( $usuarioPerfil->id == Auth::User()->id )
@@ -71,21 +73,65 @@
 					<div class="panel-heading" id="lfu-perfil-panel-heading-letras">Contribuciones</div>
 					<div class="panel-body" id="lfu-perfil-panel-body-letras">
 						
-				    	<hr class="lfu-separador">
-				    	
 				    	@if ( $letrasProvistas->count() > 0 )
+				    		<hr class="lfu-separador">
+				    		@if ( $letrasProvistas->count() > 1 )
+				    			@if ( $usuarioPerfil->id === Auth::User()->id )
+				    				Tú has provisto las letras de las siguientes canciones:
+				    			@else
+				    				<strong>{{ $usuarioPerfil->nickname }}</strong> ha provisto las letras de las siguientes canciones:
+				    			@endif
+				    		@else
+				    			@if ( $usuarioPerfil->id === Auth::User()->id )
+				    				Tú has provisto la letra de una canción:
+				    			@else
+				    				<strong>{{ $usuarioPerfil->nickname }}</strong> ha provisto la letra de una canción:
+				    			@endif
+				    		@endif
+				    		<hr class="lfu-separador">
+
+				    		<?php $fecha = null; ?>
+
 					    	@foreach ( $letrasProvistas as $letraProvista )
-					        <li class="list-group-item">
-					            "{{ $letraProvista->titulo }}" de {{ $letraProvista->nombre }} <span class="label label-info">{{ $letraProvista->visitas }} visitas</span>
-					            {{--{{dd($letraProvista)}}--}}
-					        </li>
+
+					    		@if ( $fecha == null )
+
+					    			<span class="label label-info">{{ date('d/m/Y', strtotime($letraProvista->fecha_letra)) }}</span>
+					    			<hr class="lfu-separador" style="border-top: 0px;">
+					    			"{{ $letraProvista->titulo }}" de {{ $letraProvista->nombre }}
+
+					    		@else
+
+					    			@if ( $fecha == $letraProvista->fecha_letra )
+					    				<hr class="lfu-separador-cancion-misma-fecha">
+					    				"{{ $letraProvista->titulo }}" de {{ $letraProvista->nombre }} 
+
+					    			@else
+					    				<hr class="lfu-separador" >
+					    				<span class="label label-info">{{ date('d/m/Y', strtotime($letraProvista->fecha_letra)) }}</span>
+						    			<hr class="lfu-separador" style="border-top: 0px;">
+						    			"{{ $letraProvista->titulo }}" de {{ $letraProvista->nombre }}
+
+					    			@endif
+
+					    		@endif
+
+					            <?php $fecha = $letraProvista->fecha_letra; ?>
+
 					        @endforeach
+					        <hr class="lfu-separador">
 					    @else
-					    	<strong>{{ $usuarioPerfil->nickname }}</strong> aún no ha provisto letras a canciones.
+					    	<hr class="lfu-separador">
+					    	@if ( $usuarioPerfil->id === Auth::User()->id )
+			    				Aún no has provisto letras a canciones.
+			    			@else
+			    				<strong>{{ $usuarioPerfil->nickname }}</strong> aún no ha provisto letras a canciones.
+			    			@endif
 					    	{{-- Mostrar Imagen --}}
+					    	<hr class="lfu-separador">
 				        @endif
 
-				    	<hr class="lfu-separador">
+				    	{{--<hr class="lfu-separador">--}}
 					</div>
 				</div>
 	    	</div>
