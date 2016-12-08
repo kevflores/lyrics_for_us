@@ -88,29 +88,11 @@ body {
     transition: ease 0.2s all;
 }
 
-.seleccionarImagen {
-    position: relative;
-    overflow: hidden;
-}
-.seleccionarImagen input.subirImagen {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0);
+.lfu-fa-icon {
+    color: #84848B;
 }
 
-.focusedInput {
-    border-color: rgba(82,168,236,.8);
-    outline: 0;
-    outline: thin dotted \9;
-    -moz-box-shadow: 0 0 8px rgba(82,168,236,.6);
-    box-shadow: 0 0 8px rgba(82,168,236,.6) !important;
-}
+
 
 /* FIN DE ESTILOS GENERALES */
 
@@ -467,16 +449,16 @@ body {
 #lfu-perfil-panel-datos {
     overflow-y: hidden;
     overflow-x: hidden;
-    min-height: 350px;
-    max-height: 350px;
+    min-height: 550px;
+    max-height: 550px;
     margin-bottom: 0px;
 }
 
 #lfu-perfil-panel-body-datos {
     overflow-y: auto;
     overflow-x: hidden;
-    min-height: 307px;
-    max-height: 307px;
+    min-height: 507px;
+    max-height: 507px;
     padding-bottom: 15px;
 }
 
@@ -496,15 +478,20 @@ body {
 
 #lfu-perfil-panel-letras {
     overflow: hidden;
-    min-height: 500px;
-    max-height: 500px;
+    min-height: 700px;
+    max-height: 700px;
 }
 
 #lfu-perfil-panel-body-letras{
     overflow: auto;
-    min-height: 457px;
-    max-height: 457px;
+    min-height: 657px;
+    max-height: 657px;
     padding-bottom: 15px;
+}
+
+.lfu-separador {
+    margin-top:13px;
+    margin-bottom:13px;
 }
 
 .lfu-separador-comentarios {
@@ -572,10 +559,46 @@ a[href="#lfu-panel-collapse-comentarios"] {
     border-bottom-left-radius:5px;
 }
 
-/* Se muestran losS borders-bottom del panel heading "Ver Comentarios"*/
+/* Se muestran los borders-bottom del panel heading "Ver Comentarios"*/
 #lfu-panel-heading-comentarios {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+}
+
+.seleccionarImagen {
+    position: relative;
+    overflow: hidden;
+}
+.seleccionarImagen input.subirImagen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.focusedInput {
+    border-color: rgba(82,168,236,.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -moz-box-shadow: 0 0 8px rgba(82,168,236,.6);
+    box-shadow: 0 0 8px rgba(82,168,236,.6) !important;
+}
+
+.perfil-dato-usuario, .perfil-opcion-usuario {
+    margin-bottom: 7px;
+}
+
+.perfil-opcion-usuario:last-child {
+    margin-bottom: 0px;
+}
+
+.resumen-usuario {
+    font-style: italic;
 }
 
 @media (min-width: 768px) {
@@ -593,7 +616,16 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
     #lfu-perfil-panel-letras, #lfu-perfil-panel-heading-letras {
         border-top-left-radius: 0px;
-    } 
+    }
+
+    /* Para no permitir que nombres (de usuario) largos sobrepasen el panel*/
+    #lfu-perfil-panel-heading-datos, #lfu-perfil-panel-heading-letras,
+    #lfu-perfil-panel-heading-opciones, #lfu-panel-heading-comentarios {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        /* max-height: 40px; */
+    }
 }
 
 @media (max-width: 767px) {

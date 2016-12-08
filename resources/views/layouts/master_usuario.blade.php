@@ -12,7 +12,7 @@
         -->
 
         <!-- CDN de Font-Awesome
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         -->
         <link rel="stylesheet" href="{{ URL::to('font-awesome/css/font-awesome.css') }}">
 

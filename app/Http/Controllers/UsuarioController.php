@@ -23,8 +23,8 @@ class UsuarioController extends Controller
     public function registrar(Request $request)
     {
         $this->validate($request, [
-            'nombre' => 'required|string|max:45',
-            'apellido' => 'required|string|max:45',
+            'nombre' => 'required|string|max:25',
+            'apellido' => 'required|string|max:25',
             'nickname' => 'required|unique:usuarios|min:5|max:20',
             'email' => 'required|email|unique:usuarios',
             'password' => 'required|min:4',
@@ -115,11 +115,23 @@ class UsuarioController extends Controller
     public function mostrarPerfil($nickname)
     {
         $usuarioPerfil = DB::table('usuarios')->where('nickname', $nickname)->first();
-
+        
         // Si el usuario existe...
         if ($usuarioPerfil){
+
+            // Se consulta el listado de canciones, cuyas letras fueron provistas por el usuario del perfil.
+
+            $letrasProvistas = DB::table('usuarios')
+            ->join('canciones', 'usuarios.id', '=', 'canciones.usuario_id')
+            ->join('canciones_artistas', 'canciones.id', '=', 'canciones_artistas.cancion_id')
+            ->join('artistas', 'canciones_artistas.artista_id', '=', 'artistas.id')
+            ->where('usuarios.id', $usuarioPerfil->id)
+            ->select('usuarios.nombre as nombreUsuario', 'canciones.*', 'artistas.*')
+            ->get();
+
             return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User(),
-                                                         'usuarioPerfil' => $usuarioPerfil]);
+                                                         'usuarioPerfil' => $usuarioPerfil,
+                                                         'letrasProvistas' => $letrasProvistas]);
         } 
         // Sino...
         else {
@@ -152,8 +164,8 @@ class UsuarioController extends Controller
         $usuario = Auth::User();
 
         $this->validate($request, [
-            'nombre' => 'required|string|max:45',
-            'apellido' => 'required|string|max:45',
+            'nombre' => 'required|string|max:25',
+            'apellido' => 'required|string|max:25',
             'url' => 'url',
             'ubicacion' => 'required|string',
             'resumen' => 'string|max:255'
