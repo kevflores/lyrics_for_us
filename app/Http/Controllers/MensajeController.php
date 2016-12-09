@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
+use App\Mensaje;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class MensajeController extends Controller
 {
@@ -20,6 +22,7 @@ class MensajeController extends Controller
     public function verMensajeRecibido($id_mensaje)
     {
         // Mostrar un mensaje en específico de la lista de mensajes recibidos por el usuario autenticado.
+        // Sólo lo puede ver el usuario emisor
         return view('userview.mensajes.ver_mensaje_recibido', ['usuario' => Auth::User()]);
     }
     
@@ -49,7 +52,7 @@ class MensajeController extends Controller
         // Cambiar el valor del atributo 'visto' a "true" en los registros respectivos de la tabla 'mensajes'.
     }
 
-    public function verMensajesEnviados()
+    public function verMensajesEnviados($mensajePantalla=null)
     {
         // Mostrar lista de mensajes enviados por el usuario autenticado.
         return view('userview.mensajes.ver_lista_mensajes_enviados', ['usuario' => Auth::User()]);
@@ -58,6 +61,7 @@ class MensajeController extends Controller
     public function verMensajeEnviado($id_mensaje)
     {
         // Mostrar un mensaje en específico de la lista de mensajes enviados por el usuario autenticado.
+        // Sólo lo puede ver el usuario emisor
         return view('userview.mensajes.ver_mensaje_enviado', ['usuario' => Auth::User()]);
     }
     
@@ -79,8 +83,38 @@ class MensajeController extends Controller
         return view('userview.mensajes.escribir_mensaje.blade.php', ['usuario' => Auth::User()]);
     }
 
-    public function enviarMensaje(Request $request)
+    public function enviarMensaje(Request $request, $id_receptor, $origen)
     {
         // Almanacenar el mensaje (escrito por el usuario autenticado) dirigido a otro usuario.
+
+        $this->validate($request, [
+            'asunto' => 'required|string|max:100',
+            'descripcion' => 'required|string'
+        ]);
+
+        $emisor = Auth::User();
+
+        $mensaje = new Mensaje();
+
+        $mensaje->asunto = $request['asunto'];
+        $mensaje->descripcion = $request['descripcion'];
+        $mensaje->fecha = new DateTime;
+        $mensaje->usuario_receptor_id = $id_receptor;
+        $mensaje->usuario_emisor_id = $emisor->id; 
+
+        $mensaje->save();
+
+        $idMensaje = $mensaje->id;
+        $mensajePantalla = "El <a href='{{ route('ver_mensaje_enviado', ['id_mensaje' => $idMensaje]) }}'>mensaje</a> ha sido enviado.";
+
+        if ( $origen === "vista_de_nuevo_mensaje" ) {
+            // Enviar a vista...
+            return view ('userview.mensajes.ver_lista_mensajes_enviados', ['usuario' => Auth::User(),
+                                                         'mensaje' => $mensajePantalla]);
+            // ...o enviar a método verMensajesEnviados() (?)
+            return redirect()->action('MensajeController@verMensajesEnviados', ['mensajePantalla' => $mensajePantalla]);
+        } else {
+            return redirect()->back()->with(['mensaje' => $mensajePantalla]);
+        }
     }
 }

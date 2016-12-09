@@ -104,7 +104,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/cuenta/mensajes-enviados/{id_mensaje}/borrar', 'MensajeController@borrarMensajeEnviado')->name('borrar_mensaje_recibido');
         Route::get('/cuenta/mensajes-enviados/borrar-marcados/{mensajes}', 'MensajeController@borrarMensajesEnviadosMarcados')->name('borrar_mensajes_enviados');
         Route::get('/cuenta/nuevo-mensaje', 'MensajeController@escribirMensaje')->name('nuevo_mensaje');
-        Route::post('/cuenta/nuevo-mensaje/enviar', 'MensajeController@enviarMensaje')->name('enviar_mensaje');
+        Route::post('/cuenta/nuevo-mensaje/enviar/{id_receptor}/origen/{origen}', 'MensajeController@enviarMensaje')->name('enviar_mensaje');
         Route::get('/cuenta/mis-solicitudes', 'SolicitudController@verLista')->name('usuario.solicitudes');
         Route::get('/cuenta/mis-solicitudes/{id_solicitud}', 'SolicitudController@verSolicitud')->name('usuario.ver_solicitud');
         Route::get('/cuenta/nueva-solicitud', 'SolicitudController@nuevaSolicitud')->name('usuario.nueva_solicitud');
