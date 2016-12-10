@@ -1,6 +1,6 @@
 /* ESTILOS GENERALES */
 
-.modal-header, h4, .cerrar_modal {
+.modal-header, h4, .cerrar_modal, .estilo-cerrar-modal {
   background-color: rgba(49, 123, 176, 1);
   color:white !important;
   text-align: center;
@@ -91,8 +91,6 @@ body {
 .lfu-fa-icon {
     color: #84848B;
 }
-
-
 
 /* FIN DE ESTILOS GENERALES */
 

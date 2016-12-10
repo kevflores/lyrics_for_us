@@ -76,6 +76,36 @@
                 $(".cerrar_modal").click(function(){
                     $("#lfu-textarea-comentario").val('');
                 });
+
+
+
+
+                // Al presionar "Enviar mensaje a usuario" se muestra el Modal para escribir el mensaje.
+                $("#lfu-escribir-mensaje-desde-perfil").click(function(){
+                    $("#enviarMensajeDesdePerfilModal").modal();
+                });
+                // Al momento de presionar "Enviar" comentario.
+                $(".modal-body").on('click', '#enviar-mensaje-desde-perfil', function (e) {
+                    $(this.form).submit();              // Se envía el comentario
+                    //$("#lfu-asunto-mensaje").val(''); // El campo queda en blanco
+                    //$("#lfu-textarea-mensaje").val(''); // El campo queda en blanco
+                    $("#enviarMensajeDesdePerfilModal").modal('hide');        // Se oculta el modal
+                });
+                // Al presionar "Cancelar", el campo del textarea debe quedar en blanco.
+                $("#cancelar-envio-mensaje").click(function(){
+                    $("#lfu-asunto-mensaje").val('');
+                    $("#lfu-textarea-mensaje").val('');
+                });
+                // Al presionar "X" de cerrar, el campo del textarea debe quedar en blanco.
+                $(".cerrar_modal_envio_mensaje").click(function(){
+                    $("#lfu-asunto-mensaje").val('');
+                    $("#lfu-textarea-mensaje").val('');
+                });
+
+
+
+
+
                 // Para desaparecer los espacios 'responsive' del mensaje de bienvenida.
                 $(".close").click(function(){
                     $(".mensaje-bienvenida").fadeOut(1000); 
@@ -109,15 +139,6 @@
                 $("#confirmarEliminacionImagen").click(function(){
                     $("lfu-form-eliminar-imagen").submit(); 
                     $("#eliminarImagenModal").modal('hide'); // Se oculta el modal
-                });
-                // Al presionar "Cancelar" la actualización de la contraseña. 
-                $("#cancelar-actualizacion").click(function(){
-                    $("#password-actual").val('');
-                });
-                // Al presionar "X" de cerrar la actualización de la contraseña,
-                // el campo de la contraseña actual debe quedar en blanco.
-                $(".cerrar_modal_actpass").click(function(){
-                    $("#lfu-password-actual").val('');
                 });
 
                 // Para no permitir que se los datos de los formularios del submódulo "Configuración" se

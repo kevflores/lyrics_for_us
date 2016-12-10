@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use DateTime;
 
 class MensajeController extends Controller
 {
@@ -98,23 +99,21 @@ class MensajeController extends Controller
 
         $mensaje->asunto = $request['asunto'];
         $mensaje->descripcion = $request['descripcion'];
-        $mensaje->fecha = new DateTime;
+        $mensaje->fecha = new DateTime();
         $mensaje->usuario_receptor_id = $id_receptor;
         $mensaje->usuario_emisor_id = $emisor->id; 
 
         $mensaje->save();
 
         $idMensaje = $mensaje->id;
-        $mensajePantalla = "El <a href='{{ route('ver_mensaje_enviado', ['id_mensaje' => $idMensaje]) }}'>mensaje</a> ha sido enviado.";
 
         if ( $origen === "vista_de_nuevo_mensaje" ) {
             // Enviar a vista...
-            return view ('userview.mensajes.ver_lista_mensajes_enviados', ['usuario' => Auth::User(),
-                                                         'mensaje' => $mensajePantalla]);
+            //return view ('userview.mensajes.ver_lista_mensajes_enviados', ['usuario' => Auth::User(), 'mensaje' => $mensajePantalla]);
             // ...o enviar a método verMensajesEnviados() (?)
             return redirect()->action('MensajeController@verMensajesEnviados', ['mensajePantalla' => $mensajePantalla]);
         } else {
-            return redirect()->back()->with(['mensaje' => $mensajePantalla]);
+            return redirect()->back()->with(['mensajeEnviado' => $idMensaje]);
         }
     }
 }
