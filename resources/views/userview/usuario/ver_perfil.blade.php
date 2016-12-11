@@ -8,6 +8,12 @@
 
 	@include('includes.bloque_de_mensajes')
 
+	@if ( $usuarioPerfil->id !== Auth::User()->id )
+		@include('includes.modal_crear_comentario')
+		@include('includes.modal_enviar_mensaje_desde_perfil')
+		@include('includes.modal_reportar_usuario')
+	@endif
+
 	@if ($usuario) {{-- Si un usuario autenticado está accediendo al perfil --}}
 
 		<div class="lfu-seccion-completa col-xs-12">
@@ -58,16 +64,18 @@
 							<div class="perfil-opcion-usuario"><i class="fa fa-star lfu-fa-icon" aria-hidden="true"></i> 
 							<a href="{{ route('usuario.ver_favoritos', ['nickname' => $usuarioPerfil->nickname]) }}">Ver mis favoritos</a></div>
 						@else
-							<div class="perfil-opcion-usuario"><i class="fa fa-star lfu-fa-icon" aria-hidden="true"></i> 
-							<a href="{{ route('usuario.ver_favoritos', ['nickname' => $usuarioPerfil->nickname]) }}">Ver favoritos de <b>{{ $usuarioPerfil->nickname}}</b></a></div>
-							
-								<div class="perfil-opcion-usuario">
-									<i class="fa fa-paper-plane lfu-fa-icon" aria-hidden="true"></i> 
-									<a id="lfu-escribir-mensaje-desde-perfil" style="cursor:pointer">Enviar mensaje privado</a>
-								</div>
-
-							<div class="perfil-opcion-usuario"><i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> 
-							<a href="">Reportar usuario</a></div>
+							<div class="perfil-opcion-usuario">
+								<i class="fa fa-star lfu-fa-icon" aria-hidden="true"></i> 
+								<a href="{{ route('usuario.ver_favoritos', ['nickname' => $usuarioPerfil->nickname]) }}">Ver favoritos de <b>{{ $usuarioPerfil->nickname}}</b></a>
+							</div>
+							<div class="perfil-opcion-usuario">
+								<i class="fa fa-paper-plane lfu-fa-icon" aria-hidden="true"></i> 
+								<a id="lfu-escribir-mensaje-desde-perfil" style="cursor:pointer">Enviar mensaje privado</a>
+							</div>
+							<div class="perfil-opcion-usuario">
+								<i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> 
+								<a id="lfu-reportar-usuario" style="cursor:pointer">Reportar usuario</a>
+							</div>
 						@endif
 					</div>
 			    </div>		    
@@ -145,35 +153,41 @@
 				</div>
 				<div id="lfu-panel-collapse-comentarios" class="panel-collapse collapse">
 					<div class="panel-body">
-						<a id="lfu-comentar" style="cursor:pointer">Comentar</a>
+						@if ( $usuarioPerfil->id !== Auth::User()->id )
+							<a id="lfu-comentar" style="cursor:pointer">Comentar</a>
+						@endif
 						<div class="media" id="lfu-comentarios">
-							
-							<div class="media-left">
-								<img src="{{ asset('images\eunjung_avatar.jpg') }}" class="img-circle media-object lfu-comentario-avatar">
-							</div>
-							<div class="media-body lfu-comentario-individual">
-								<strong class="media-heading lfu-comentario-autor">Nickname de usuario (fecha)</strong>
-								<p id="lfu-comentario-descripcion">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-							</div>
+						@if ( $comentariosUsuario->count() > 0 )
+							@foreach($comentariosUsuario as $comentario)
+								<div class="media-left lfu-container-avatar-comentario">
+									@if (Storage::disk('avatars')->has($comentario->imagen_usuario))
+							            <img src="{{ route('usuario.avatar', ['imagenNombre' => $comentario->imagen_usuario]) }}" alt="{{ $comentario->nickname }}" class="img-circle media-object lfu-comentario-avatar">
+									@else
+										<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $comentario->nickname }}" class="img-circle media-object lfu-comentario-avatar" >
+									@endif
+								</div>
+
+								<div class="media-body lfu-comentario-individual">
+									<strong class="media-heading lfu-comentario-autor">{{$comentario->nickname}} </strong> 
+									<span style="font-style:italic;font-size:12px;">(El {{ date('d/m/Y', strtotime($comentario->fecha)) }} a las {{ date('H:m:s', strtotime($comentario->fecha)) }})</span>
+									<p id="lfu-comentario-descripcion">{{ $comentario->descripcion }}</p>
+								</div>
+
+								<hr class="lfu-separador-comentarios">
+							@endforeach
+							<i class="fa fa-circle-o lfu-fa-icon" aria-hidden="true"></i>
+						@else
+							<p>No hay comentarios</p>
 							<hr class="lfu-separador-comentarios">
-							<div class="media-left">
-								<img src="{{ asset('images\siwon_avatar.png') }}" class="img-circle media-object lfu-comentario-avatar">
-							</div>
-							<div class="media-body lfu-comentario-individual">
-								<strong class="media-heading lfu-comentario-autor">Nickname de usuario (fecha)</strong>
-								<p id="lfu-comentario-descripcion">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-							</div>
+						@endif
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Modal para crear comentario en el perfil del usuario -->
-		@include('includes.modal_crear_comentario')
-		<!-- Modal para enviar mensaje a usuario desde su perfil -->
-		@include('includes.modal_enviar_mensaje_desde_perfil')		
-		
+
+
 	@else {{-- Sino, un guest/invitado está accediendo al perfil de un usuario  --}}
 
 		<div class="lfu-seccion-completa col-xs-12">

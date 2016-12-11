@@ -10,8 +10,8 @@
 			<div class="modal-body" >
 				<form action="{{ route('usuario.comentar', ['id_usuario' => $usuarioPerfil->id]) }}" method="post">
 					{!! csrf_field() !!}
-					<div class="form-group">
-						<textarea rows="8" cols="50" id="lfu-textarea-comentario" placeholder="Ingresar comentario..."></textarea>
+					<div class="form-group col-xs-12 {{ $errors->has('descripcion-comentario') ? 'has-error' : '' }}">
+						<textarea class="form-control" rows="8" cols="50" id="lfu-textarea-comentario" name="descripcion-comentario" placeholder="Ingresar mensaje..." style="resize: none;" autofocus>{{ old('descripcion-comentario') }}</textarea>
 					</div>
 					<button type="button" class="btn btn-danger" id="cancelar-comentario" data-dismiss="modal">Cancelar</button>
 					<button type="submit" class="btn btn-primary" id="enviar-comentario" >Enviar</button>

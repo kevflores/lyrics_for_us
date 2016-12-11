@@ -15,8 +15,8 @@
 							{!! Form::label('asunto','Asunto', array('class'=>'label-izquierda', )) !!}
 							{!! Form::text('asunto', old('asunto'), ['class'=>'form-control','style' => 'text-align:left;', 'id' => 'lfu-asunto-mensaje']) !!}
 						</div>
-					<div class="form-group col-xs-12 {{ $errors->has('descripcion') ? 'has-error' : '' }}">
-						<textarea class="form-control" rows="8" cols="50" id="lfu-textarea-mensaje" name="descripcion" placeholder="Ingresar mensaje...">{{ old('descripcion') }}</textarea>
+					<div class="form-group col-xs-12 {{ $errors->has('descripcion-mensaje') ? 'has-error' : '' }}">
+						<textarea class="form-control" rows="8" cols="50" id="lfu-textarea-mensaje" name="descripcion-mensaje" placeholder="Ingresar mensaje..." style="resize: none;">{{ old('descripcion-mensaje') }}</textarea>
 					</div>
 					<button type="button" class="btn btn-danger" id="cancelar-envio-mensaje" data-dismiss="modal">Cancelar</button>
 					<button type="submit" class="btn btn-primary" id="enviar-mensaje-desde-perfil" >Enviar mensaje</button>

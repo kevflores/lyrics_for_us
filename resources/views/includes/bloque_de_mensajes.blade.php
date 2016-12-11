@@ -36,7 +36,7 @@
             <div class="alert alert-success alert-dismissable">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 
-                <strong> El <a href="{{ route('ver_mensaje_enviado', ['id_mensaje' => Session::get('mensajeEnviado')]) }}">mensaje</b></a> ha sido enviado correctamente. </strong>
+                <strong> El <a href="{{ route('ver_mensaje_enviado', ['id_mensaje' => Session::get('mensajeEnviado')]) }}">mensaje</b></a> ha sido enviado exitosamente. </strong>
 
             </div>
         </div>

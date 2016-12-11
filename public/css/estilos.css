@@ -75,6 +75,10 @@ body {
     margin-bottom:13px;
 }
 
+.lfu-container-avatar-comentario {
+    padding-bottom:13px;
+}
+
 .label-izquierda {
     text-align:left;
     display:block;

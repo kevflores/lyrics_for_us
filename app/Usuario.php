@@ -156,4 +156,17 @@ class Usuario extends Authenticatable
                                     ->withPivot('descripcion', 'fecha_reporte', 'usuario_reportante_id', 'fecha_atencion'); // Comprobar si se debe añadir 'id'.
     }
 
+    // Un usuario puede tener comentarios enviados.
+    public function comentariosRecibidos()
+    {
+        //
+    }
+
+    // Un usuario puede tener comentarios recibidos.
+    public function comentariosEnviados()
+    {
+        //
+    }
+
+
 }

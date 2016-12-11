@@ -90,7 +90,7 @@ class MensajeController extends Controller
 
         $this->validate($request, [
             'asunto' => 'required|string|max:100',
-            'descripcion' => 'required|string'
+            'descripcion-mensaje' => 'required|string'
         ]);
 
         $emisor = Auth::User();
@@ -98,7 +98,7 @@ class MensajeController extends Controller
         $mensaje = new Mensaje();
 
         $mensaje->asunto = $request['asunto'];
-        $mensaje->descripcion = $request['descripcion'];
+        $mensaje->descripcion = $request['descripcion-mensaje'];
         $mensaje->fecha = new DateTime();
         $mensaje->usuario_receptor_id = $id_receptor;
         $mensaje->usuario_emisor_id = $emisor->id; 

@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 use App\Usuario;
+use App\UsuarioReportado;
+use App\ComentarioUsuario;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -10,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use DateTime;
 
 class UsuarioController extends Controller
 {
@@ -120,7 +123,6 @@ class UsuarioController extends Controller
         if ($usuarioPerfil){
 
             // Se consulta el listado de canciones, cuyas letras fueron provistas por el usuario del perfil.
-
             $letrasProvistas = DB::table('usuarios')
             ->join('canciones', 'usuarios.id', '=', 'canciones.usuario_id')
             ->join('canciones_artistas', 'canciones.id', '=', 'canciones_artistas.cancion_id')
@@ -131,9 +133,18 @@ class UsuarioController extends Controller
             ->orderBy('canciones.titulo', 'asc')
             ->get();
 
+            // Se consultan todos los comentarios escritos en el perfil del usuario.
+            $comentariosUsuario = DB::table('comentarios_usuarios AS a')
+            ->join('usuarios AS b', 'a.usuario_emisor_id', '=', 'b.id')
+            ->where('a.usuario_receptor_id', $usuarioPerfil->id)
+            ->select('a.id', 'a.descripcion', 'a.fecha', 'a.usuario_emisor_id', 'b.nickname', 'b.nombre', 'b.apellido', 'b.imagen AS imagen_usuario')
+            ->orderBy('fecha', 'desc')
+            ->get();
+
             return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User(),
                                                          'usuarioPerfil' => $usuarioPerfil,
-                                                         'letrasProvistas' => $letrasProvistas]);
+                                                         'letrasProvistas' => $letrasProvistas,
+                                                         'comentariosUsuario' => $comentariosUsuario]);
         } 
         // Sino...
         else {
@@ -143,15 +154,46 @@ class UsuarioController extends Controller
         
     }
 
+    // Método para registrar el comentario realizado sobre un ususario.
     public function comentar(Request $request, $id_usuario)
     {
-        // Registrar el comentario realizado sobre un ususario.
-        echo "Agregar comentario";
+        $this->validate($request, ['descripcion-comentario' => 'required|string']);
+
+        $emisor = Auth::User();
+
+        $comentarioUsuario = new ComentarioUsuario();
+
+        $comentarioUsuario->descripcion = $request['descripcion-comentario'];
+        $comentarioUsuario->fecha = new DateTime();
+        $comentarioUsuario->usuario_receptor_id = $id_usuario;
+        $comentarioUsuario->usuario_emisor_id = $emisor->id; 
+
+        $comentarioUsuario->save();
+
+        $mensaje = "El comentario ha sido enviado exitosamente.";
+
+        return redirect()->back()->with(['mensaje' => $mensaje]);
     }
 
-    public function reportar($id_usuario)
+    // Método para registrar el reporte realizado sobre un usuario.
+    public function reportar(Request $request, $id_usuario)
     {
-        // Registrar el reporte realizado sobre un usuario.
+        $this->validate($request, ['descripcion-reporte' => 'required|string']);
+
+        $reportante = Auth::User();
+
+        $comentarioUsuario = new UsuarioReportado();
+
+        $reporteUsuario->descripcion = $request['descripcion-reporte'];
+        $reporteUsuario->fecha_reporte = new DateTime();
+        $reporteUsuario->usuario_reportado_id = $id_usuario;
+        $reporteUsuario->usuario_reportante_id = $reportante->id; 
+
+        $reporteUsuario->save();
+
+        $mensaje = "El reporte ha sido enviado exitosamente.";
+
+        return redirect()->back()->with(['mensaje' => $mensaje]);
     }
 
     public function verConfiguracion(){
