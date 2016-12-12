@@ -1,4 +1,4 @@
-<!-- Modal para enviar mensaje a usuario desde su perfil -->
+<!-- Modal para reportar a usuario -->
 <div class="modal fade" id="reportarUsuarioModal" role="dialog">
 	<div class="modal-dialog">
 	<!-- Contenido del Modal-->

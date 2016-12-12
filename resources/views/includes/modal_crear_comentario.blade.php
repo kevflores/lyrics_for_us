@@ -5,7 +5,13 @@
 		<div class="modal-content">
 			<div class="modal-header" >
 				<button type="button" class="close cerrar_modal" data-dismiss="modal">&times;</button>
-				<h4><span class="glyphicon glyphicon-pencil"></span> Comentar en el perfil de {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido }}</h4>
+				<h4><span class="glyphicon glyphicon-pencil"></span>
+				@if ( $usuarioPerfil->id !== Auth::User()->id )
+					 Comentar en el perfil de {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido }}
+				@else
+					 Comentar en tu propio perfil
+				@endif
+				</h4>
 			</div>
 			<div class="modal-body" >
 				<form action="{{ route('usuario.comentar', ['id_usuario' => $usuarioPerfil->id]) }}" method="post">

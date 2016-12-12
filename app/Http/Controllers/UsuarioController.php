@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+
+use Intervention\Image\Facades\Image; // Use this if you want facade style code
+//use Intervention\Image\ImageManager // Use this if you don't want facade style code
+
 use DateTime;
 
 class UsuarioController extends Controller
@@ -182,7 +186,7 @@ class UsuarioController extends Controller
 
         $reportante = Auth::User();
 
-        $comentarioUsuario = new UsuarioReportado();
+        $reporteUsuario = new UsuarioReportado();
 
         $reporteUsuario->descripcion = $request['descripcion-reporte'];
         $reporteUsuario->fecha_reporte = new DateTime();
@@ -247,6 +251,7 @@ class UsuarioController extends Controller
         // Si el usuario ya posee una imagen almacenada, entonces dicha imagen es eliminada.
         if ($usuario->imagen) {
             Storage::Delete('avatars/'.$usuario->imagen);
+            Storage::Delete('avatars/thumbnail_'.$usuario->imagen);
             $usuario->imagen = null;
             $usuario->save();
         }
@@ -254,8 +259,16 @@ class UsuarioController extends Controller
         // Se almacena la nueva imagen del usuario.
         $imagenAlmacenada = Storage::put($imagenUbicacion, file_get_contents($imagen->getRealPath()));
 
+        // Si la imagen fue almacenada...
         if($imagenAlmacenada){
-            // Si la imagen fue almacenada, entonces su nombre es registrado en la BD.
+            // Se crea el thumbnail de la imagen.
+            $thumbnail = Image::make($imagen->getRealPath()); // use this if you want facade style code
+            $thumbnail->resize(intval(100), null, function($constraint) {
+                 $constraint->aspectRatio();
+            });
+            $thumbnail->save(storage_path('app/avatars'). '/thumbnail_'.$imagenNombre);
+
+            // Se guarda el nombre de la imagen en la BD.
             $usuario->imagen = $imagenNombre;
             $usuario->save();
         }

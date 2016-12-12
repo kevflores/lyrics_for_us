@@ -8,10 +8,12 @@
 
 	@include('includes.bloque_de_mensajes')
 
-	@if ( $usuarioPerfil->id !== Auth::User()->id )
+	@if ($usuario) {{-- Si un usuario autenticado está accediendo al perfil --}}
 		@include('includes.modal_crear_comentario')
-		@include('includes.modal_enviar_mensaje_desde_perfil')
-		@include('includes.modal_reportar_usuario')
+		@if ( $usuarioPerfil->id !== Auth::User()->id )
+			@include('includes.modal_enviar_mensaje_desde_perfil')
+			@include('includes.modal_reportar_usuario')
+		@endif
 	@endif
 
 	@if ($usuario) {{-- Si un usuario autenticado está accediendo al perfil --}}
@@ -153,15 +155,13 @@
 				</div>
 				<div id="lfu-panel-collapse-comentarios" class="panel-collapse collapse">
 					<div class="panel-body">
-						@if ( $usuarioPerfil->id !== Auth::User()->id )
-							<a id="lfu-comentar" style="cursor:pointer">Comentar</a>
-						@endif
+						<a id="lfu-comentar" style="cursor:pointer">Comentar</a>
 						<div class="media" id="lfu-comentarios">
 						@if ( $comentariosUsuario->count() > 0 )
 							@foreach($comentariosUsuario as $comentario)
 								<div class="media-left lfu-container-avatar-comentario">
 									@if (Storage::disk('avatars')->has($comentario->imagen_usuario))
-							            <img src="{{ route('usuario.avatar', ['imagenNombre' => $comentario->imagen_usuario]) }}" alt="{{ $comentario->nickname }}" class="img-circle media-object lfu-comentario-avatar">
+							            <img src="{{ route('usuario.avatar', ['imagenNombre' => 'thumbnail_'.$comentario->imagen_usuario]) }}" alt="{{ $comentario->nickname }}" class="img-circle media-object lfu-comentario-avatar">
 									@else
 										<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $comentario->nickname }}" class="img-circle media-object lfu-comentario-avatar" >
 									@endif
