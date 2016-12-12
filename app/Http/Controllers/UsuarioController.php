@@ -360,19 +360,39 @@ class UsuarioController extends Controller
 
         // Mostrar los favoritos de un usuario.        
         $usuarioFavoritos = DB::table('usuarios')->where('nickname', $nickname)->first();
+        $usuarioPerfil = DB::table('usuarios')->where('nickname', $nickname)->first();
+        
+        // Si el usuario existe...
+        if ($usuarioPerfil){
 
-        // Si el usuario existe, entonces se muestran sus favoritos (si tiene)...
-        if ($usuarioFavoritos){
+            // Se consulta el listado de canciones, cuyas letras fueron provistas por el usuario del perfil.
+            $letrasProvistas = DB::table('usuarios')
+            ->join('canciones', 'usuarios.id', '=', 'canciones.usuario_id')
+            ->join('canciones_artistas', 'canciones.id', '=', 'canciones_artistas.cancion_id')
+            ->join('artistas', 'canciones_artistas.artista_id', '=', 'artistas.id')
+            ->where('usuarios.id', $usuarioPerfil->id)
+            ->select('usuarios.nombre as nombreUsuario', 'canciones.*', 'artistas.*')
+            ->orderBy('fecha_letra', 'desc')
+            ->orderBy('canciones.titulo', 'asc')
+            ->get();
 
-            return view ('userview.usuario.ver_favoritos', [
-                            'usuario' => Auth::User(),
-                            'usuarioFavoritos' => $usuarioFavoritos,
-                            
-                        ]);
+            // Se consultan todos los comentarios escritos en el perfil del usuario.
+            $comentariosUsuario = DB::table('comentarios_usuarios AS a')
+            ->join('usuarios AS b', 'a.usuario_emisor_id', '=', 'b.id')
+            ->where('a.usuario_receptor_id', $usuarioPerfil->id)
+            ->select('a.id', 'a.descripcion', 'a.fecha', 'a.usuario_emisor_id', 'b.nickname', 'b.nombre', 'b.apellido', 'b.imagen AS imagen_usuario')
+            ->orderBy('fecha', 'desc')
+            ->get();
+
+            return view ('userview.usuario.ver_favoritos', ['usuario' => Auth::User(),
+                                                         'usuarioPerfil' => $usuarioPerfil,
+                                                         'letrasProvistas' => $letrasProvistas,
+                                                         'comentariosUsuario' => $comentariosUsuario]);
         } 
         // Sino...
         else {
-            echo 'Mostrar vista con mensaje de "Usuario No Existe", por ende no hay favoritos que ver.';
+            echo 'Mostrar vista con mensaje de "Usuario No Existe"';
+            // return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User()]);
         }
     }
 

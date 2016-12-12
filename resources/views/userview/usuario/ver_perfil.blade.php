@@ -38,7 +38,7 @@
 							</div> 
 						@endif
 
-						@if ( $usuarioPerfil->id == Auth::User()->id )
+						@if ( $usuarioPerfil->id === Auth::User()->id )
 							<div class="enlace-editar"  style="margin-bottom:8px;">
 								<a href="{{ route('usuario.configuracion') }}">Editar perfil</a> 
 							</div>
@@ -160,16 +160,23 @@
 						@if ( $comentariosUsuario->count() > 0 )
 							@foreach($comentariosUsuario as $comentario)
 								<div class="media-left lfu-container-avatar-comentario">
+									<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $comentario->nickname]) }}">
 									@if (Storage::disk('avatars')->has($comentario->imagen_usuario))
 							            <img src="{{ route('usuario.avatar', ['imagenNombre' => 'thumbnail_'.$comentario->imagen_usuario]) }}" alt="{{ $comentario->nickname }}" class="img-circle media-object lfu-comentario-avatar">
 									@else
 										<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $comentario->nickname }}" class="img-circle media-object lfu-comentario-avatar" >
 									@endif
+									</a>
 								</div>
 
 								<div class="media-body lfu-comentario-individual">
-									<strong class="media-heading lfu-comentario-autor">{{$comentario->nickname}} </strong> 
-									<span style="font-style:italic;font-size:12px;">(El {{ date('d/m/Y', strtotime($comentario->fecha)) }} a las {{ date('H:m:s', strtotime($comentario->fecha)) }})</span>
+									<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $comentario->nickname]) }}">
+										<strong class="media-heading lfu-comentario-autor">{{$comentario->nickname}}</strong>
+									</a>
+									@if ($comentario->usuario_emisor_id === Auth::User()->id)
+									<strong>(Tú)</strong>
+									@endif
+									<span style="font-style:italic;font-size:12px;"> (El {{ date('d/m/Y', strtotime($comentario->fecha)) }} a las {{ date('H:m:s', strtotime($comentario->fecha)) }})</span>
 									<p id="lfu-comentario-descripcion">{{ $comentario->descripcion }}</p>
 								</div>
 
