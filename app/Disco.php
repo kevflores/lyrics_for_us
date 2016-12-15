@@ -32,7 +32,6 @@ class Disco extends Model
                                     ->withPivot('fecha'); // Comprobar si se debe añadir 'id'.
     }
 
-
     // Un disco puede tener muchos comentarios.
     public function comentarios()
     {

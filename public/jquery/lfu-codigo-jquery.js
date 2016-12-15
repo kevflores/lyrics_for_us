@@ -124,6 +124,59 @@ $(document).ready(function(){
         $("#eliminarImagenModal").modal('hide'); // Se oculta el modal
     });
 
+
+    // Al presionar el ícono de "Eliminar artista favorito" se muestra el Modal para confirmar la eliminación.
+    $(".eliminar-artista-favorito").click(function(event){
+        event.preventDefault();
+        var nombre = this.parentNode.dataset['nombreartista'];
+        var id_favorito = this.parentNode.dataset['idfavorito'];
+        console.log(nombre+" "+id_favorito);
+        $("#preguntaFavorito").text("¿Desea eliminar a "+nombre+" de sus artistas favoritos?");
+        $("input[name='tipo']").val("artista");
+        $("input[name='id_favorito']").val(id_favorito);
+        $("#eliminarFavoritoModal").modal();
+    });
+
+    // Al presionar el ícono de "Eliminar disco favorito" se muestra el Modal para confirmar la eliminación.
+    $(".eliminar-disco-favorito").click(function(event){
+        event.preventDefault();
+        var titulo = this.parentNode.dataset['titulodisco'];
+        var id_favorito = this.parentNode.dataset['idfavorito'];
+        console.log(titulo+" "+id_favorito);
+        $("#preguntaFavorito").text('¿Desea eliminar "'+titulo+'" de sus discos favoritos?');
+        $("input[name='tipo']").val("disco");
+        $("input[name='id_favorito']").val(id_favorito);
+        $("#eliminarFavoritoModal").modal();
+    });
+
+        // Al presionar el ícono de "Eliminar cancion favorita" se muestra el Modal para confirmar la eliminación.
+    $(".eliminar-cancion-favorita").click(function(event){
+        event.preventDefault();
+        var titulo = this.parentNode.dataset['titulocancion'];
+        var id_favorito = this.parentNode.dataset['idfavorito'];
+        console.log(titulo+" "+id_favorito);
+        $("#preguntaFavorito").text('¿Desea eliminar "'+titulo+'" de sus canciones favoritas?');
+        $("input[name='tipo']").val("cancion");
+        $("input[name='id_favorito']").val(id_favorito);
+        $("#eliminarFavoritoModal").modal();
+    });
+
+    // Al momento de presionar "Eliminar" en el Modal.
+    $("#confirmarEliminacionFavorito").click(function(){
+        $("formEliminarFavorito").submit(); 
+        $("#eliminarFavoritoModal").modal('hide'); // Se oculta el modal
+    });
+
+
+
+
+
+
+
+
+
+
+
     // Para no permitir que se los datos de los formularios del submódulo "Configuración" se
     // envíen al presionar "ENTER" (sólo se permite presionar el BOTÓN respectivo).
     $('#lfu-form-config-datos').on('keyup keypress', function(e) {
@@ -176,5 +229,22 @@ $(document).ready(function(){
         var fileName = e.target.files[0].name;
         $(".spanImagen").text('Imagen: "' + fileName + '"');
     });
+
+/*    
+    $('.eliminar-artista-favorito').on('click', function(event) {
+        event.preventDefault();
+        var tipoo = "artista";
+        var artista_favoritoo = this.parentNode.dataset['idfavorito'];
+        console.log(artista_favoritoo);
+        $.ajax({
+            method: 'POST',
+            url: url,
+            data: {tipo: tipoo, artista_favorito: artista_favoritoo, _token: token}
+        })
+        .done(function (msg) {
+            console.log(msg['message']);
+        });
+    });
+*/  
 
 });

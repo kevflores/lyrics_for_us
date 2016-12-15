@@ -16,6 +16,10 @@
     background-color: #f9f9f9;
 }
 
+.modal {
+    min-width: 200px;
+}
+
 html, body { 
     height: 100%; 
     margin:0;
@@ -101,8 +105,17 @@ body {
     color: #84848B;
 }
 
-.lfu-enlace-sin-decoracion, .lfu-enlace-sin-decoracion:hover {
+.lfu-enlace-sin-decoracion:link, .lfu-enlace-sin-decoracion:visited {
+    color: inherit;
     text-decoration: none;
+}
+
+.lfu-enlace-sin-decoracion:hover, .lfu-enlace-sin-decoracion:active {
+    color: rgba(49, 123, 176, 1);
+}
+
+.lfu-texto-italic {
+    font-style: italic;
 }
 
 /* FIN DE ESTILOS GENERALES */
@@ -756,6 +769,32 @@ a[href="#lfu-panel-collapse-comentarios"] {
     border-top: 0px; 
     margin-bottom: 3px;
     margin-top: 3px;
+}
+
+.panel-footer-favoritos {
+    border-color: rgba(68, 154, 208, 1);
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.eliminar-favorito {
+    display: none;
+}
+
+.lfu-artista-favorito:hover .eliminar-favorito,
+.lfu-disco-favorito:hover .eliminar-favorito,
+.lfu-cancion-favorita:hover .eliminar-favorito {
+    display: inline;
+}
+
+.eliminar-artista-favorito:visited, .eliminar-artista-favorito:hover, .eliminar-artista-favorito:active,
+.eliminar-disco-favorito:visited, .eliminar-disco-favorito:hover, .eliminar-disco-favorito:active,
+.eliminar-cancion-favorita:visited, .eliminar-cancion-favorita:hover, .eliminar-cancion-favorita:active {
+    text-decoration: none;
+}
+
+.eliminar-artista-favorito:hover, .eliminar-disco-favorito:hover, .eliminar-cancion-favorita:hover {
+    color: red;
 }
 
 @media (min-width: 768px) {

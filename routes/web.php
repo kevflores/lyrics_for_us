@@ -82,7 +82,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/usuario/{id_usuario}/comentar', 'UsuarioController@comentar')->name('usuario.comentar')->middleware('auth');
     Route::post('/usuario/{id_usuario}/reportar', 'UsuarioController@reportar')->name('usuario.reportar')->middleware('auth');
     Route::get('/usuario/{nickname}/favoritos', 'UsuarioController@verFavoritos')->name('usuario.ver_favoritos');
-
+    Route::post('/eliminar-favorito', 'UsuarioController@eliminarFavorito')->name('eliminar_favorito')->middleware('auth');
+   
 
     # MI CUENTA
 
@@ -129,11 +130,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/adminview/home', 'InicioController@indexAdmin')->name('adminhome');
 
 });
-
-function current_page($uri = "/") {
-    return strstr(request()->path(), $uri);
-    //return request()->path == $uri;
-}
 
 //Auth::routes();
 

@@ -83,7 +83,7 @@ class Usuario extends Authenticatable
                                     'artistas_favoritos', 
                                     'usuario_id', 
                                     'artista_id')
-                                    ->withPivot('fecha'); // Comprobar si se debe añadir 'id'.
+                                    ->withPivot('fecha','id'); // Comprobar si se debe añadir 'id'.
     }
 
     // Muchos usuarios pueden compartir sus discos favoritos.
@@ -93,7 +93,7 @@ class Usuario extends Authenticatable
                                     'discos_favoritos', 
                                     'usuario_id', 
                                     'disco_id')
-                                    ->withPivot('fecha'); // Comprobar si se debe añadir 'id'.
+                                    ->withPivot('fecha','id'); // Comprobar si se debe añadir 'id'.
     }
 
     // Muchos usuarios pueden compartir sus canciones favoritas.
@@ -103,7 +103,7 @@ class Usuario extends Authenticatable
                                     'canciones_favoritas', 
                                     'usuario_id', 
                                     'cancion_id')
-                                    ->withPivot('fecha'); // Comprobar si se debe añadir 'id'.
+                                    ->withPivot('fecha','id'); // Comprobar si se debe añadir 'id'.
     }
 
     // Muchos usuarios pueden hacer comentarios sobre artistas.

@@ -3,6 +3,12 @@ namespace App\Http\Controllers;
 use App\Usuario;
 use App\UsuarioReportado;
 use App\ComentarioUsuario;
+use App\Artista;
+use App\Disco;
+use App\Cancion;
+use App\ArtistaFavorito;
+use App\DiscoFavorito;
+use App\CancionFavorita;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -127,12 +133,9 @@ class UsuarioController extends Controller
         if ($usuarioPerfil){
 
             // Se consulta el listado de canciones, cuyas letras fueron provistas por el usuario del perfil.
-            $letrasProvistas = DB::table('usuarios')
-            ->join('canciones', 'usuarios.id', '=', 'canciones.usuario_id')
-            ->join('canciones_artistas', 'canciones.id', '=', 'canciones_artistas.cancion_id')
-            ->join('artistas', 'canciones_artistas.artista_id', '=', 'artistas.id')
-            ->where('usuarios.id', $usuarioPerfil->id)
-            ->select('usuarios.nombre as nombreUsuario', 'canciones.*', 'artistas.*')
+            $letrasProvistas = DB::table('canciones')
+            ->where('canciones.usuario_id', $usuarioPerfil->id)
+            ->select('canciones.*', 'canciones.id AS cancion_id')
             ->orderBy('fecha_letra', 'desc')
             ->orderBy('canciones.titulo', 'asc')
             ->get();
@@ -356,38 +359,30 @@ class UsuarioController extends Controller
 
     public function verFavoritos($nickname)
     {
-        // Mostrar los favoritos (artistas, discos y canciones) de un usuario.
-
-        // Mostrar los favoritos de un usuario.        
+        // Mostrar los favoritos (artistas, discos y canciones) de un usuario.  
         $usuarioFavoritos = DB::table('usuarios')->where('nickname', $nickname)->first();
-        $usuarioPerfil = DB::table('usuarios')->where('nickname', $nickname)->first();
         
         // Si el usuario existe...
-        if ($usuarioPerfil){
+        if ( count($usuarioFavoritos) ){
 
-            // Se consulta el listado de canciones, cuyas letras fueron provistas por el usuario del perfil.
-            $letrasProvistas = DB::table('usuarios')
-            ->join('canciones', 'usuarios.id', '=', 'canciones.usuario_id')
-            ->join('canciones_artistas', 'canciones.id', '=', 'canciones_artistas.cancion_id')
-            ->join('artistas', 'canciones_artistas.artista_id', '=', 'artistas.id')
-            ->where('usuarios.id', $usuarioPerfil->id)
-            ->select('usuarios.nombre as nombreUsuario', 'canciones.*', 'artistas.*')
-            ->orderBy('fecha_letra', 'desc')
-            ->orderBy('canciones.titulo', 'asc')
+            $artistasFavoritos = Usuario::find($usuarioFavoritos->id)->artistasFavoritos()->orderBy('nombre')->get();
+            
+            $discosFavoritos = DB::table('discos_favoritos AS a')
+            ->join('discos AS b', 'a.disco_id', '=', 'b.id')
+            ->join('artistas AS c', 'b.artista_id', '=', 'c.id')
+            ->where('a.usuario_id', $usuarioFavoritos->id)
+            ->select('a.id', 'b.id AS disco_id', 'b.titulo', 'c.nombre AS nombreArtista', 'c.id AS artista_id')
+            ->orderBy('b.titulo')
+            ->orderBy('c.nombre')
             ->get();
 
-            // Se consultan todos los comentarios escritos en el perfil del usuario.
-            $comentariosUsuario = DB::table('comentarios_usuarios AS a')
-            ->join('usuarios AS b', 'a.usuario_emisor_id', '=', 'b.id')
-            ->where('a.usuario_receptor_id', $usuarioPerfil->id)
-            ->select('a.id', 'a.descripcion', 'a.fecha', 'a.usuario_emisor_id', 'b.nickname', 'b.nombre', 'b.apellido', 'b.imagen AS imagen_usuario')
-            ->orderBy('fecha', 'desc')
-            ->get();
+            $cancionesFavoritas = Usuario::find($usuarioFavoritos->id)->cancionesFavoritas()->orderBy('titulo')->get();
 
             return view ('userview.usuario.ver_favoritos', ['usuario' => Auth::User(),
-                                                         'usuarioPerfil' => $usuarioPerfil,
-                                                         'letrasProvistas' => $letrasProvistas,
-                                                         'comentariosUsuario' => $comentariosUsuario]);
+                                                         'usuarioFavoritos' => $usuarioFavoritos,
+                                                         'artistasFavoritos' => $artistasFavoritos,
+                                                         'discosFavoritos' => $discosFavoritos,
+                                                         'cancionesFavoritas' => $cancionesFavoritas]);
         } 
         // Sino...
         else {
@@ -395,6 +390,82 @@ class UsuarioController extends Controller
             // return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User()]);
         }
     }
+
+    public function eliminarFavorito (Request $request, $tipo=null, $id_favorito=null)
+    {
+        $usuario = Auth::user();
+
+        $this->validate($request, ['tipo' => 'required', 'id_favorito' => 'required|integer']);
+
+        $tipo = $request['tipo'];
+        $id_favorito = $request['id_favorito'];
+
+        switch ($tipo) {
+            case "artista":
+                $artistaFavorito = ArtistaFavorito::find($id_favorito);
+                if ( $artistaFavorito->usuario_id === $usuario->id ) {
+                    $nombreArtista = Artista::find($artistaFavorito->artista_id);
+                    $artistaFavorito->delete();
+                    return redirect()->back()->with('mensaje', $nombreArtista->nombre.' ya no forma parte de sus artistas favoritos.');
+                } else {
+                    return redirect()->back()->with('mensajeError', 'Eliminación fallida.');
+                }
+                break;
+            case "disco":
+                $discoFavorito = DiscoFavorito::find($id_favorito);
+                if ( $discoFavorito->usuario_id === $usuario->id ) {
+                    $disco = Disco::find($discoFavorito->disco_id);
+                    $discoFavorito->delete();
+                    return redirect()->back()->with('mensaje', '"'.$disco->titulo.'" ya no forma parte de sus discos favoritos.');
+                } else {
+                    return redirect()->back()->with('mensajeError', 'Eliminación fallida.');
+                }
+                break;
+            case "cancion":
+                $cancionFavorita = CancionFavorita::find($id_favorito);
+                if ( $cancionFavorita->usuario_id === $usuario->id ) {
+                    $cancion = Cancion::find($cancionFavorita->cancion_id);
+                    $cancionFavorita->delete();
+                    return redirect()->back()->with('mensaje', '"'.$cancion->titulo.'" ya no forma parte de sus canciones favoritas.');
+                } else {
+                    return redirect()->back()->with('mensajeError', 'Eliminación fallida.');
+                }
+                break;
+        }
+
+        return redirect()->back()->with('mensajeError', 'Eliminación fallida.');
+
+        /*
+        $usuario = Auth::user();
+
+        $this->validate($request, [
+            'tipo' => 'required',
+            'artista' => 'required'
+        ]);
+
+        $tipo = $request['tipo'];
+        $id_favorito = $request['artista'];
+
+        switch ($tipo) {
+            case "artista":
+                $artistaFavorito = ArtistaFavorito::where('id', $id_favorito)->first();
+                if ( $artistaFavorito->usuario_id === $usuario->id ) {
+                    $artistaFavorito->delete();
+                } else {
+                    return redirect()->back();
+                }
+                break;
+            case "disco":
+                break;
+            case "cancion":
+                break;
+            default:
+                echo "Tipo?";
+        }
+        return response()->json(['message' => 'Eliminado'], 200);
+        */
+    }
+
 
     public function escribirMensaje($id_usuario)
     {

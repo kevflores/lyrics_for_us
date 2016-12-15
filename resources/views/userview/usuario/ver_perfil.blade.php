@@ -88,7 +88,7 @@
 		    	<div class="panel panel-primary perfil-seccion-letras" id="lfu-perfil-panel-letras" style="">
 					<div class="panel-heading" id="lfu-perfil-panel-heading-letras">Contribuciones</div>
 					<div class="panel-body" id="lfu-perfil-panel-body-letras">
-						
+
 				    	@if ( $letrasProvistas->count() > 0 )
 				    		<hr class="lfu-separador">
 				    		@if ( $letrasProvistas->count() > 1 )
@@ -105,28 +105,28 @@
 				    			@endif
 				    		@endif
 				    		<hr class="lfu-separador">
-				    		<?php $fecha = null; ?>
-
+				    		
+				    		<?php $fecha = null;?>
+				    		{{-- Se imprime el listado de las canciones, agrupándolas por fecha en la cual el usuario proveyó la letra --}}
 					    	@foreach ( $letrasProvistas as $letraProvista )
-					    		@if ( $fecha == null )
+					    		@if ( $fecha === null )
 					    			<span class="label label-info">{{ date('d/m/Y', strtotime($letraProvista->fecha_letra)) }}</span>
 					    			<hr class="lfu-separador" style="border-top: 0px;">
-					    			"{{ $letraProvista->titulo }}" de {{ $letraProvista->nombre }}
+					    			@include('includes.imprimir_listado_letras_provistas')
 					    		@else
-					    			@if ( $fecha == $letraProvista->fecha_letra )
+					    			@if ( $fecha === $letraProvista->fecha_letra )
 					    				<hr class="lfu-separador-cancion-misma-fecha">
-					    				"{{ $letraProvista->titulo }}" de {{ $letraProvista->nombre }} 
+					    				@include('includes.imprimir_listado_letras_provistas')
 					    			@else
 					    				<hr class="lfu-separador" >
 					    				<span class="label label-info">{{ date('d/m/Y', strtotime($letraProvista->fecha_letra)) }}</span>
 						    			<hr class="lfu-separador" style="border-top: 0px;">
-						    			"{{ $letraProvista->titulo }}" de {{ $letraProvista->nombre }}
+					    				@include('includes.imprimir_listado_letras_provistas')
 					    			@endif
 					    		@endif
 					            <?php $fecha = $letraProvista->fecha_letra; ?>
 					        @endforeach
 					        <hr class="lfu-separador">
-					        
 					    @else
 					    	<hr class="lfu-separador">
 					    	@if ( $usuarioPerfil->id === Auth::User()->id )
@@ -134,7 +134,7 @@
 			    			@else
 			    				<strong>{{ $usuarioPerfil->nickname }}</strong> aún no ha provisto letras a canciones.
 			    			@endif
-					    	{{-- Mostrar Imagen --}}
+					    	{{-- Mostrar Imagen alusiva a no haber colaborado con letras AQUÍ--}}
 					    	<hr class="lfu-separador">
 				        @endif
 

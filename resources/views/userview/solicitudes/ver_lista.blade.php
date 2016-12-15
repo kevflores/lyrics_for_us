@@ -6,6 +6,6 @@
 
 @section('contenido')
     
-	<h3>Mensajes enviados (Vista de Usuario)</h3>
+	<h3>Mis Solicitudes (Vista de Usuario)</h3>
     
 @endsection
