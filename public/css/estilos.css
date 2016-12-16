@@ -118,6 +118,11 @@ body {
     font-style: italic;
 }
 
+th {
+    text-align: center;
+    color: white;
+}
+
 /* FIN DE ESTILOS GENERALES */
 
 

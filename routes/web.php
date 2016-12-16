@@ -70,7 +70,7 @@ Route::group(['middleware' => ['web']], function () {
     # ACTIVACIÓN DE CUENTA Y RECUPERACIÓN DE PASSWORD
 
     Route::get('/activar-cuenta/{codigo}', 'UsuarioController@activarCuenta')->name('usuario.activar');
-    Route::get('/recuperar-password', 'UsuarioController@recuperarPassworld')->name('usuario.recuperar_password');
+    Route::get('/recuperar-password', 'UsuarioController@recuperarPassword')->name('usuario.recuperar_password');
     Route::post('/recuperar-password/validar', 'UsuarioController@validarRecuperacion')->name('usuario.validar_recuperacion');
     Route::get('/activar-recuperacion/{codigo}', 'UsuarioController@activarRecuperacion')->name('usuario.activar_recuperacion');
     Route::post('/generar-password/{id_usuario}', 'UsuarioController@generarPassword')->name('usuario.generar_password');
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}', 'MensajeController@verMensajeRecibido')->name('ver_mensaje_recibido');
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}/borrar', 'MensajeController@borrarMensajeRecibido')->name('borrar_mensaje_recibido');
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}/responder', 'MensajeController@responder')->name('responder_mensaje');
-        Route::get('/cuenta/mensajes-recibidos/borrar-marcados/{mensajes}', 'MensajeController@borrarMensajesRecibidosMarcados')->name('borrar_mensajes_recibidos');
+        Route::post('/cuenta/mensajes-recibidos/borrar-marcados/{mensajes?}', 'MensajeController@borrarMensajesRecibidosMarcados')->name('borrar_mensajes_recibidos');
         Route::get('/cuenta/mensajes-recibidos/marcar-leidos/{mensajes}', 'MensajeController@marcarComoLeidos')->name('marcar_como_leidos');
         Route::get('/cuenta/mensajes-enviados', 'MensajeController@verMensajesEnviados')->name('mensajes_enviados');
         Route::get('/cuenta/mensajes-enviados/{id_mensaje}', 'MensajeController@verMensajeEnviado')->name('ver_mensaje_enviado');

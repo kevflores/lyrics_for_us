@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Usuario;
 use App\Mensaje;
 
 use Illuminate\Http\Request;
@@ -16,8 +17,11 @@ class MensajeController extends Controller
 {
     public function verMensajesRecibidos()
     {
+        $usuario = Auth::User();
         // Mostrar lista de mensajes recibidos por el usuario autenticado.
-        return view('userview.mensajes.ver_lista_mensajes_recibidos', ['usuario' => Auth::User()]);
+        $mensajesRecibidos = Usuario::find($usuario->id)->mensajesDeReceptor()->orderBy("fecha","desc")->get();
+
+        return view('userview.mensajes.ver_lista_mensajes_recibidos', ['usuario' => $usuario, 'mensajes' => $mensajesRecibidos]);
     }
     
     public function verMensajeRecibido($id_mensaje)
@@ -42,10 +46,24 @@ class MensajeController extends Controller
         // en las vista "verMensajeRecibido".
     }
 
-    public function borrarMensajesRecibidosMarcados($mensajes)
+    public function borrarMensajesRecibidosMarcados(Request $request, $mensajes=null)
     {
         // Cambiar el valor del atributo 'estado_receptor' a "false" en los registros respectivos de la tabla
         // 'mensajes', de modo que el usuario autenticado no pueda acceder a éstos nuevamente. 
+        $marcados = $request['chk'];
+
+        $bloom = "inicio";
+
+        if ($marcados) {
+            foreach ($marcados as $mensaje){
+                $bloom = $bloom.' - '.$mensaje;
+            }
+            return redirect()->back()->with(['mensaje' => $bloom]);
+        } else {
+            return redirect()->back()->with(['mensajeError' => 'No ha marcado ningún mensaje para la prueba.']);
+        }
+
+        
     }
 
     public function marcarComoLeidos($mensajes)

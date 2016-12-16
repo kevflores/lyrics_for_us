@@ -106,7 +106,7 @@ class UsuarioController extends Controller
     public function recuperarPassword()
     {
         // Mostrar vista para ingresar el email o nickname del usuario que desea recuperar su password.
-        return view('userview.home', ['usuario' => Auth::User()]);
+        return view('userview.usuario.recuperar_password', ['usuario' => Auth::User()]);
     }
 
     public function validarRecuperacion(Request $request)

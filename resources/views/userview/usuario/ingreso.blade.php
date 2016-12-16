@@ -33,7 +33,7 @@
                 <input type="hidden" name="_token" value="{{ Session::token() }}">
                 
                 </div>
-                <div class="panel-primary panel-footer" id="lfu-panel-footer" style=""><a href="#" style="color:white;"> Olvidé mi contraseña </a></div>
+                <div class="panel-primary panel-footer" id="lfu-panel-footer" style=""><a href="{{ route('usuario.recuperar_password') }}" style="color:white;">Olvidé mi contraseña </a></div>
             </div>
 
         </form>
