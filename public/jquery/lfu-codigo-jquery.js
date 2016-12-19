@@ -168,14 +168,14 @@ $(document).ready(function(){
     });
 
 
+    // Para la vista de "Mensajes recibidos (Mis mensajes)"
+    $("#borrar-marcados").click(function(){
+        $('#formulario-mensajes-enviados').attr('action', urlBorrarMacados);
+    });
 
-
-
-
-
-
-
-
+    $("#marcar-como-leidos").click(function(){
+        $('#formulario-mensajes-enviados').attr('action', urlMarcarComoLeidos);
+    });
 
     // Para no permitir que se los datos de los formularios del submódulo "Configuración" se
     // envíen al presionar "ENTER" (sólo se permite presionar el BOTÓN respectivo).

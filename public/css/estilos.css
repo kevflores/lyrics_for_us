@@ -848,6 +848,49 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
 
 /* ESTILOS PARA EL SUBMÓDULO "MENSAJES" */
+
+#lfu-tabla-titulo {
+    border-color: rgba(68, 154, 208, 1);
+    margin-bottom: 0px;
+    border-bottom: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#lfu-tabla-titulo-heading {
+    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    font-size: 14px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#lfu-tabla-mensajes {
+    margin-bottom: 0px;
+}
+
+#lfu-tabla-body {
+    overflow: hidden;
+    min-height: 100px;
+    max-height: 100px;
+    border-color: rgba(68, 154, 208, 1);
+    background-color: white;
+}
+
+#lfu-tabla-mensajes th {
+    background-color: rgba(92, 180, 238, 1);
+    font-weight: normal;
+    border-bottom: none;
+}
+
+#lfu-tabla-mensajes tr:hover {
+    background-color: #D9E7FB;
+}
+
+#lfu-tabla-mensajes, #lfu-tabla-mensajes td, #lfu-tabla-mensajes th {
+   border-color: rgba(68, 154, 208, 1);
+   vertical-align: middle;
+}
+
 /* FIN DE ESTILOS PARA EL SUBMÓDULO "MENSAJES" */
 
 
@@ -921,7 +964,6 @@ a[href="#lfu-panel-collapse-comentarios"] {
 #lfu-configuracion-panel-datos, #lfu-configuracion-panel-password, 
 #lfu-configuracion-panel-imagen, #lfu-configuracion-panel-correo {
     border-color: rgba(68, 154, 208, 1);
-    //border-radius: 0px;
     border-bottom-right-radius: 0px; 
     border-bottom-left-radius: 0px;
     margin-bottom:0px;

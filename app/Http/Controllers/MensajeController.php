@@ -52,7 +52,7 @@ class MensajeController extends Controller
         // 'mensajes', de modo que el usuario autenticado no pueda acceder a éstos nuevamente. 
         $marcados = $request['chk'];
 
-        $bloom = "inicio";
+        $bloom = "Eliminar marcados: ";
 
         if ($marcados) {
             foreach ($marcados as $mensaje){
@@ -66,9 +66,21 @@ class MensajeController extends Controller
         
     }
 
-    public function marcarComoLeidos($mensajes)
+    public function marcarComoLeidos(Request $request, $mensajes=null)
     {
         // Cambiar el valor del atributo 'visto' a "true" en los registros respectivos de la tabla 'mensajes'.
+        $marcados = $request['chk'];
+
+        $bloom = "Marcar como leídos: ";
+
+        if ($marcados) {
+            foreach ($marcados as $mensaje){
+                $bloom = $bloom.' - '.$mensaje;
+            }
+            return redirect()->back()->with(['mensaje' => $bloom]);
+        } else {
+            return redirect()->back()->with(['mensajeError' => 'No ha marcado ningún mensaje para la prueba.']);
+        }
     }
 
     public function verMensajesEnviados($mensajePantalla=null)

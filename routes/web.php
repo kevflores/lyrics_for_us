@@ -99,7 +99,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}/borrar', 'MensajeController@borrarMensajeRecibido')->name('borrar_mensaje_recibido');
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}/responder', 'MensajeController@responder')->name('responder_mensaje');
         Route::post('/cuenta/mensajes-recibidos/borrar-marcados/{mensajes?}', 'MensajeController@borrarMensajesRecibidosMarcados')->name('borrar_mensajes_recibidos');
-        Route::get('/cuenta/mensajes-recibidos/marcar-leidos/{mensajes}', 'MensajeController@marcarComoLeidos')->name('marcar_como_leidos');
+        Route::post('/cuenta/mensajes-recibidos/marcar-leidos/{mensajes?}', 'MensajeController@marcarComoLeidos')->name('marcar_como_leidos');
         Route::get('/cuenta/mensajes-enviados', 'MensajeController@verMensajesEnviados')->name('mensajes_enviados');
         Route::get('/cuenta/mensajes-enviados/{id_mensaje}', 'MensajeController@verMensajeEnviado')->name('ver_mensaje_enviado');
         Route::get('/cuenta/mensajes-enviados/{id_mensaje}/borrar', 'MensajeController@borrarMensajeEnviado')->name('borrar_mensaje_recibido');
