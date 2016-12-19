@@ -6,33 +6,32 @@
 
 @section('contenido')
 
+<div class="btn-group lfu-botones-mensajes" style="margin-bottom:25px;">
+    <a href="{{ route('mensajes_recibidos') }}" class="btn btn-primary active"><strong>Mensajes recibidos</strong></a>
+    <a href="{{ route('mensajes_enviados') }}" class="btn btn-primary">Mensajes enviados</a>
+</div>
+
 @include('includes.bloque_de_mensajes')
     
     @if ( is_obj_empty($mensajes) )
-        <form action="" id="formulario-mensajes-enviados" method="post">
+
+    	@include('includes.modal_eliminar_mensaje')
+
+        <form action="" id="formulario-mensajes-recibidos" method="post">
 			{!! csrf_field() !!}
 
-			<div class="col-sm-4" style="border:dotted;text-align:left;padding:0px;">
+			<div class="col-xs-4" style="text-align:left;padding:0px;">
 				<button type="submit" class="btn btn-primary" id="escribir-mensaje" style="margin-bottom:5px;">Escribir mensaje</button>
 			</div>
-			<div class="col-sm-8" style="border:dotted;text-align:right;padding:0px;">
+			<div class="col-xs-8" style="text-align:right;padding:0px;">
 				<button type="submit" class="btn btn-primary" id="marcar-como-leidos" style="margin-bottom:5px;">Marcar como leídos</button>
 				<button type="submit" class="btn btn-primary" id="borrar-marcados" style="margin-bottom:5px;">Eliminar mensajes marcados</button>
 			</div>
 
-			<div class="lfu-seccion-completa col-xs-12" >
-				<div class="panel panel-primary" id="lfu-tabla-titulo">
-					<div class="panel-heading" id="lfu-tabla-titulo-heading" style="
-					border-bottom:0px;">
-						<strong>
-							Mensajes Recibidos
-						</strong>
-					</div>
-				</div>
-			</div>
-
-			<table class="table table-bordered" id="lfu-tabla-mensajes" style="">
-				<thead style="">
+			<table class="table table-bordered" id="lfu-tabla-mensajes" style="border-top-right-radius:5px;
+    border-top-left-radius:5px;">
+				<thead style="border-top-right-radius:5px;
+    border-top-left-radius:5px;">
 					<tr>
 						<th><input type="checkbox" onclick="marcar(this);" /></th>
 						<th>Asunto</th>
@@ -43,7 +42,7 @@
 				</thead>
 				<tbody id="lfu-tabla-body">
 					@foreach ($mensajes as $mensajeRecibido)
-						<tr>
+						<tr style="{{ $mensajeRecibido->visto === false ? 'font-weight:bold;' : '' }}" >
 							<td style="width:2%;" align="center"><input class="casilla_marcar" name ="chk[]" id="chk<?php $mensajeRecibido->id; ?>" type="checkbox" 
 							<?php
 							if (isset($this->seleccion[$mensajeRecibido->id])) {
@@ -60,8 +59,12 @@
 									{{ $mensajeRecibido->usuarioEmisor()->first()->nickname }}
 								</a>
 							</td>
-							<td style="width:25%;">{{ date('d/m/Y', strtotime($mensajeRecibido->fecha)) }} a las {{  date('H:m:s', strtotime($mensajeRecibido->fecha)) }}</td>
-							<td style="width:2%;"> <i class="fa fa-times" aria-hidden="true" title="Eliminar mensaje"></i> </td>
+							<td style="width:25%;">{{ date('d/m/Y', strtotime($mensajeRecibido->fecha)) }} a las {{  date('h:i A', strtotime($mensajeRecibido->fecha)) }}</td>
+							<td style="width:2%;"  data-idmensaje="{{ $mensajeRecibido->id }}" data-asunto="{{ $mensajeRecibido->asunto }}"> 
+								<a class="eliminar-mensaje" style="cursor: pointer;">
+								<i class="fa fa-times" aria-hidden="true" title="Eliminar mensaje"></i>
+								</a> 
+							</td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -92,8 +95,8 @@
 		}
 	}
 
-	var urlMarcarComoLeidos = '{{ route('marcar_como_leidos', ['mensajes' => null]) }}';
-	var urlBorrarMacados = '{{ route('borrar_mensajes_recibidos', ['mensajes' => null]) }}';
+	var urlMarcarComoLeidos = '{{ route('marcar_como_leidos') }}';
+	var urlBorrarMacados = '{{ route('borrar_mensajes_recibidos') }}';
 </script>
 
 @endsection

@@ -19,7 +19,11 @@ class MensajeController extends Controller
     {
         $usuario = Auth::User();
         // Mostrar lista de mensajes recibidos por el usuario autenticado.
-        $mensajesRecibidos = Usuario::find($usuario->id)->mensajesDeReceptor()->orderBy("fecha","desc")->get();
+        $mensajesRecibidos = Usuario::find($usuario->id)
+                                    ->mensajesDeReceptor()
+                                    ->where("estado_receptor", true)
+                                    ->orderBy("fecha","desc")
+                                    ->get();
 
         return view('userview.mensajes.ver_lista_mensajes_recibidos', ['usuario' => $usuario, 'mensajes' => $mensajesRecibidos]);
     }
@@ -31,10 +35,23 @@ class MensajeController extends Controller
         return view('userview.mensajes.ver_mensaje_recibido', ['usuario' => Auth::User()]);
     }
     
-    public function borrarMensajeRecibido($id_mensaje)
+    public function borrarMensajeRecibido(Request $request)
     {
         // Cambiar el valor del atributo 'estado_receptor' a "false" en el registro respectivo de la tabla
         // 'mensajes', de modo que el usuario autenticado no pueda acceder a éste nuevamente. 
+        $usuario = Auth::User();
+        $mensaje = Mensaje::find($request['id_mensaje']);
+
+        if ($mensaje->usuario_receptor_id === $usuario->id) {
+            $mensaje->estado_receptor = false;
+            if ( $mensaje->estado_emisor === false ) {
+                $mensaje->delete();
+            } else {
+                $mensaje->update();
+            }
+            return redirect()->back()->with(['mensaje' => 'El mensaje ha sido eliminado satisfactoriamente.']);
+        }
+        return redirect()->back()->with(['mensajeError' => 'Error. Eliminación fallida.']);
     }
     
     public function responder($id_mensaje)
@@ -46,28 +63,12 @@ class MensajeController extends Controller
         // en las vista "verMensajeRecibido".
     }
 
-    public function borrarMensajesRecibidosMarcados(Request $request, $mensajes=null)
+    public function borrarMensajesRecibidosMarcados(Request $request)
     {
         // Cambiar el valor del atributo 'estado_receptor' a "false" en los registros respectivos de la tabla
         // 'mensajes', de modo que el usuario autenticado no pueda acceder a éstos nuevamente. 
-        $marcados = $request['chk'];
-
-        $bloom = "Eliminar marcados: ";
-
-        if ($marcados) {
-            foreach ($marcados as $mensaje){
-                $bloom = $bloom.' - '.$mensaje;
-            }
-            return redirect()->back()->with(['mensaje' => $bloom]);
-        } else {
-            return redirect()->back()->with(['mensajeError' => 'No ha marcado ningún mensaje para la prueba.']);
-        }
-
         
-    }
 
-    public function marcarComoLeidos(Request $request, $mensajes=null)
-    {
         // Cambiar el valor del atributo 'visto' a "true" en los registros respectivos de la tabla 'mensajes'.
         $marcados = $request['chk'];
 
@@ -81,6 +82,26 @@ class MensajeController extends Controller
         } else {
             return redirect()->back()->with(['mensajeError' => 'No ha marcado ningún mensaje para la prueba.']);
         }
+
+    }
+
+    public function marcarComoLeidos(Request $request)
+    {
+        $usuario = Auth::User();
+        $idMensajesMarcados = $request['chk'];
+
+        if ($idMensajesMarcados) {
+            foreach ($idMensajesMarcados as $idMensajeMarcado){
+                $mensaje = Mensaje::find($idMensajeMarcado);
+                if ($mensaje->usuario_receptor_id === $usuario->id) {
+                    $mensaje->visto = true;
+                    $mensaje->update();
+                }
+            }
+            return redirect()->back();
+        }
+        return redirect()->back()->with(['mensajeError' => 'No se ha marcado ningún mensaje.']);
+
     }
 
     public function verMensajesEnviados($mensajePantalla=null)

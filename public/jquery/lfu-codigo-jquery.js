@@ -149,7 +149,7 @@ $(document).ready(function(){
         $("#eliminarFavoritoModal").modal();
     });
 
-        // Al presionar el ícono de "Eliminar cancion favorita" se muestra el Modal para confirmar la eliminación.
+    // Al presionar el ícono de "Eliminar cancion favorita" se muestra el Modal para confirmar la eliminación.
     $(".eliminar-cancion-favorita").click(function(event){
         event.preventDefault();
         var titulo = this.parentNode.dataset['titulocancion'];
@@ -168,14 +168,52 @@ $(document).ready(function(){
     });
 
 
+
+
+
+
+
+
+
+    // Al presionar el ícono de "Eliminar mensaje" se muestra el Modal para confirmar la eliminación.
+    $(".eliminar-mensaje").click(function(event){
+        event.preventDefault();
+        var asunto = this.parentNode.dataset['asunto'];
+        var id_mensaje = this.parentNode.dataset['idmensaje'];
+        $("#preguntaMensaje").text('¿Desea eliminar el mensaje "'+asunto+'"?');
+        $("input[name='id_mensaje']").val(id_mensaje);
+        $("#eliminarMensajeModal").modal();
+    });
+
+    // Al momento de presionar "Eliminar" en el Modal.
+    $("#confirmarEliminacionMensaje").click(function(){
+        $("#formEliminarMensaje").submit(); 
+        $("#eliminarMensajeModal").modal('hide'); // Se oculta el modal
+    });
+
     // Para la vista de "Mensajes recibidos (Mis mensajes)"
     $("#borrar-marcados").click(function(){
-        $('#formulario-mensajes-enviados').attr('action', urlBorrarMacados);
+        $('#formulario-mensajes-recibidos').attr('action', urlBorrarMacados);
     });
 
     $("#marcar-como-leidos").click(function(){
-        $('#formulario-mensajes-enviados').attr('action', urlMarcarComoLeidos);
+        $('#formulario-mensajes-recibidos').attr('action', urlMarcarComoLeidos);
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Para no permitir que se los datos de los formularios del submódulo "Configuración" se
     // envíen al presionar "ENTER" (sólo se permite presionar el BOTÓN respectivo).

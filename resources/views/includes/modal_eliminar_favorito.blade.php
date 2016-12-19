@@ -1,4 +1,4 @@
-<!-- Modal para confirmar la eliminación de la imagen de perfil -->
+<!-- Modal para confirmar la eliminación de un favorito del usuario -->
 <div class="modal fade" id="eliminarFavoritoModal" role="dialog">
 	<div class="modal-dialog">
 	<!-- Contenido del Modal-->

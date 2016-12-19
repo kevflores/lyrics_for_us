@@ -849,21 +849,6 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
 /* ESTILOS PARA EL SUBMÓDULO "MENSAJES" */
 
-#lfu-tabla-titulo {
-    border-color: rgba(68, 154, 208, 1);
-    margin-bottom: 0px;
-    border-bottom: 0px;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-}
-
-#lfu-tabla-titulo-heading {
-    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
-    font-size: 14px;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-}
-
 #lfu-tabla-mensajes {
     margin-bottom: 0px;
 }
@@ -878,7 +863,6 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
 #lfu-tabla-mensajes th {
     background-color: rgba(92, 180, 238, 1);
-    font-weight: normal;
     border-bottom: none;
 }
 
@@ -889,6 +873,15 @@ a[href="#lfu-panel-collapse-comentarios"] {
 #lfu-tabla-mensajes, #lfu-tabla-mensajes td, #lfu-tabla-mensajes th {
    border-color: rgba(68, 154, 208, 1);
    vertical-align: middle;
+}
+
+.eliminar-mensaje:visited, .eliminar-mensaje:hover, .eliminar-mensaje:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.eliminar-mensaje:hover {
+    color: red;
 }
 
 /* FIN DE ESTILOS PARA EL SUBMÓDULO "MENSAJES" */
