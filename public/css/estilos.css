@@ -851,6 +851,7 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
 #lfu-tabla-mensajes {
     margin-bottom: 0px;
+    border-radius: 4px;
 }
 
 #lfu-tabla-body {

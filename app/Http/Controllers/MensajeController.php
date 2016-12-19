@@ -68,21 +68,37 @@ class MensajeController extends Controller
         // Cambiar el valor del atributo 'estado_receptor' a "false" en los registros respectivos de la tabla
         // 'mensajes', de modo que el usuario autenticado no pueda acceder a éstos nuevamente. 
         
+        $usuario = Auth::User();
+        $idMensajesMarcados = $request['chk'];
 
-        // Cambiar el valor del atributo 'visto' a "true" en los registros respectivos de la tabla 'mensajes'.
-        $marcados = $request['chk'];
+        if ($idMensajesMarcados) {
+            $cantidad = 0;
+            foreach ($idMensajesMarcados as $idMensajeMarcado){
+                $mensaje = Mensaje::find($idMensajeMarcado);
 
-        $bloom = "Marcar como leídos: ";
-
-        if ($marcados) {
-            foreach ($marcados as $mensaje){
-                $bloom = $bloom.' - '.$mensaje;
+                if ($mensaje->usuario_receptor_id === $usuario->id) {
+                    $mensaje->estado_receptor = false;
+                    // Si el usuario emisor también eliminó el mensaje.
+                    if ( $mensaje->estado_emisor === false ) {
+                        // Entonces el registro del mensaje es eliminado de la BD.
+                        $mensaje->delete();
+                    } else {
+                        // Sino simplemente se cambia el estado del usuario receptor del mensaje.
+                        $mensaje->update();
+                    }
+                    $cantidad++;
+                }
             }
-            return redirect()->back()->with(['mensaje' => $bloom]);
-        } else {
-            return redirect()->back()->with(['mensajeError' => 'No ha marcado ningún mensaje para la prueba.']);
-        }
 
+            if ( $cantidad === 0 ) {
+                return redirect()->back();
+            } elseif ( $cantidad === 1 ) {
+                return redirect()->back()->with(['mensaje' => 'El mensaje ha sido eliminado satisfactoriamente.']);
+            } elseif ( $cantidad > 1 ) {
+                return redirect()->back()->with(['mensaje' => $cantidad.' mensajes han sido eliminados satisfactoriamente']);
+            }
+        }
+        return redirect()->back()->with(['mensajeError' => 'No se ha marcado ningún mensaje.']);
     }
 
     public function marcarComoLeidos(Request $request)

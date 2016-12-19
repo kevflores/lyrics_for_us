@@ -28,10 +28,8 @@
 				<button type="submit" class="btn btn-primary" id="borrar-marcados" style="margin-bottom:5px;">Eliminar mensajes marcados</button>
 			</div>
 
-			<table class="table table-bordered" id="lfu-tabla-mensajes" style="border-top-right-radius:5px;
-    border-top-left-radius:5px;">
-				<thead style="border-top-right-radius:5px;
-    border-top-left-radius:5px;">
+			<table class="table table-bordered" id="lfu-tabla-mensajes" style="">
+				<thead style="">
 					<tr>
 						<th><input type="checkbox" onclick="marcar(this);" /></th>
 						<th>Asunto</th>
