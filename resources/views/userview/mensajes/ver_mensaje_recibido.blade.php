@@ -12,8 +12,10 @@
 </div>
 
 @include('includes.bloque_de_mensajes')
+@include('includes.modal_eliminar_mensaje_recibido_lectura')
+@include('includes.modal_responder_mensaje')
 
-	<div class="col-xs-12" style="text-align:right;padding:0px;">
+	<div class="col-xs-12" style="text-align:right;padding:0px;" data-idmensaje="{{ $mensaje->id }}" data-nickname="{{ $mensaje->usuarioEmisor()->first()->nickname }}">
 		<button type="submit" class="btn btn-primary" id="eliminar-mensaje-recibido-boton" style="margin-bottom:5px;">Eliminar</button>
 		<button type="submit" class="btn btn-primary" id="responder-mensaje-recibido-boton" style="margin-bottom:5px;">Responder</button>
 	</div>
@@ -41,5 +43,5 @@
     <div class="col-xs-12" style="margin-top:25px;">
 		<a class="btn btn-primary" href="{{ URL::previous() }}">Volver</a>
     </div>
-    
+
 @endsection

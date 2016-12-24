@@ -96,8 +96,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/cuenta/configuracion/actualizar-password', 'UsuarioController@actualizarPassword')->name('usuario.actualizar_password');
         Route::get('/cuenta/mensajes-recibidos', 'MensajeController@verMensajesRecibidos')->name('mensajes_recibidos')->middleware('auth');
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}', 'MensajeController@verMensajeRecibido')->name('ver_mensaje_recibido');
+        Route::post('/cuenta/mensajes-recibidos/borrarleido', 'MensajeController@borrarMensajeRecibidoLeido')->name('borrar_mensaje_recibido_leido');
+        Route::post('/cuenta/mensajes-enviados/borrarleido', 'MensajeController@borrarMensajeEnviadoLeido')->name('borrar_mensaje_enviado_leido');
         Route::post('/cuenta/mensajes-recibidos/borrar', 'MensajeController@borrarMensajeRecibido')->name('borrar_mensaje_recibido');
-        Route::post('/cuenta/mensajes-recibidos/{id_mensaje}/responder', 'MensajeController@responder')->name('responder_mensaje');
+        Route::post('/cuenta/mensajes-recibidos/responder', 'MensajeController@responder')->name('responder_mensaje');
         Route::post('/cuenta/mensajes-recibidos/borrar-marcados', 'MensajeController@borrarMensajesRecibidosMarcados')->name('borrar_mensajes_recibidos');
         Route::post('/cuenta/mensajes-recibidos/marcar-leidos', 'MensajeController@marcarComoLeidos')->name('marcar_como_leidos');
         Route::get('/cuenta/mensajes-enviados', 'MensajeController@verMensajesEnviados')->name('mensajes_enviados');

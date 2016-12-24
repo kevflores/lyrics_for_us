@@ -232,12 +232,55 @@ $(document).ready(function(){
         $('#formulario-mensajes-enviados').attr('action', urlBorrarMacados);
     });
 
+    // Al presionar el botón de "Eliminar" desde la vista de un mensaje recibido se muestra el Modal
+    // para confirmar la eliminación.
+    $("#eliminar-mensaje-recibido-boton").click(function(event){
+        event.preventDefault();
+        var asunto = this.parentNode.dataset['asunto'];
+        var id_mensaje = this.parentNode.dataset['idmensaje'];
+        $("#preguntaMensaje").text('¿Desea eliminar el mensaje "'+asunto+'"?');
+        $("input[name='id_mensaje']").val(id_mensaje);
+        $("#eliminarMensajeRecibidoModal").modal();
+    });
 
+    // Al momento de presionar "Eliminar" en el Modal.
+    $("#confirmarEliminacionMensaje").click(function(){
+        $("#formEliminarMensaje").submit(); 
+        $("#eliminarMensajeRecibidoModal").modal('hide'); // Se oculta el modal
+    });
 
+    // Al presionar el botón de "Eliminar" desde la vista de un mensaje enviado se muestra el Modal
+    // para confirmar la eliminación.
+    $("#eliminar-mensaje-enviado-boton").click(function(event){
+        event.preventDefault();
+        var asunto = this.parentNode.dataset['asunto'];
+        var id_mensaje = this.parentNode.dataset['idmensaje'];
+        $("#preguntaMensaje").text('¿Desea eliminar el mensaje "'+asunto+'"?');
+        $("input[name='id_mensaje']").val(id_mensaje);
+        $("#eliminarMensajeEnviadoModal").modal();
+    });
 
+    // Al momento de presionar "Eliminar" en el Modal.
+    $("#confirmarEliminacionMensaje").click(function(){
+        $("#formEliminarMensaje").submit(); 
+        $("#eliminarMensajeEnviadoModal").modal('hide'); // Se oculta el modal
+    });
 
+    // Al presionar el botón de "Responder" desde la vista de un mensaje recibido se muestra el Modal
+    // para redactar el mensaje "respuesta".
+    $("#responder-mensaje-recibido-boton").click(function(event){
+        event.preventDefault();
+        var nickname = this.parentNode.dataset['nickname'];
+        var id_mensaje = this.parentNode.dataset['idmensaje'];
+        $("input[name='nickname']").val(nickname);
+        $("#responderMensajeModal").modal();
+    });
 
-
+    // Al momento de presionar "Enviar" en el Modal.
+    $("#enviar-mensaje-respuesta").click(function(){
+        $("#form-responder-mensaje").submit(); 
+        $("#responderMensajeModal").modal('hide'); // Se oculta el modal
+    });
 
 
 
