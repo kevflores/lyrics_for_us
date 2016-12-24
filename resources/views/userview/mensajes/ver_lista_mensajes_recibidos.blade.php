@@ -12,16 +12,17 @@
 </div>
 
 @include('includes.bloque_de_mensajes')
+@include('includes.modal_escribir_mensaje')
     
     @if ( is_obj_empty($mensajes) )
 
-    	@include('includes.modal_eliminar_mensaje')
+    	@include('includes.modal_eliminar_mensaje_recibido')
 
         <form action="" id="formulario-mensajes-recibidos" method="post">
 			{!! csrf_field() !!}
 
 			<div class="col-xs-4" style="text-align:left;padding:0px;">
-				<button type="submit" class="btn btn-primary" id="escribir-mensaje" style="margin-bottom:5px;">Escribir mensaje</button>
+				<a class="btn btn-primary" id="lfu-escribir-mensaje" style="margin-bottom:5px;">Escribir mensaje</a>
 			</div>
 			<div class="col-xs-8" style="text-align:right;padding:0px;">
 				<button type="submit" class="btn btn-primary" id="marcar-como-leidos" style="margin-bottom:5px;">Marcar como leídos</button>
@@ -48,7 +49,7 @@
 							}
 							?> value="<?php echo $mensajeRecibido->id ?>" /></td>
 							<td style="width:56%;">
-								<a class="lfu-enlace-sin-decoracion" href="{{ route('ver_mensaje_enviado', ['id_mensaje' => $mensajeRecibido->id]) }}">
+								<a class="lfu-enlace-sin-decoracion" href="{{ route('ver_mensaje_recibido', ['id_mensaje' => $mensajeRecibido->id]) }}">
 									{{ $mensajeRecibido->asunto }}
 								</a>
 							</td>
@@ -56,6 +57,11 @@
 								<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $mensajeRecibido->usuarioEmisor()->first()->nickname]) }}">
 									{{ $mensajeRecibido->usuarioEmisor()->first()->nickname }}
 								</a>
+								<?php
+									if ( $mensajeRecibido->usuarioEmisor()->first()->nickname === $usuario->nickname ) {
+										echo "(Tú)";
+									} 
+								?>
 							</td>
 							<td style="width:25%;">{{ date('d/m/Y', strtotime($mensajeRecibido->fecha)) }} a las {{  date('h:i A', strtotime($mensajeRecibido->fecha)) }}</td>
 							<td style="width:2%;"  data-idmensaje="{{ $mensajeRecibido->id }}" data-asunto="{{ $mensajeRecibido->asunto }}"> 
@@ -79,9 +85,17 @@
 
 		</form>
 
+
+
 	@else
-		No hay mensajes (vista de prueba).
+			
+		<div class="jumbotron info" style="margin:auto;">
+        	No hay mensajes.
+        	<a id="lfu-escribir-mensaje" style="display:block;margin-top:20px;cursor:pointer;">Presione aquí para escribir un mensaje</a>
+        </div>
 	@endif
+
+	{{ $mensajes->links() }}
 
 <script>
 	function marcar(source) {

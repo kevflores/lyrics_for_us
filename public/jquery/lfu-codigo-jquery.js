@@ -200,7 +200,37 @@ $(document).ready(function(){
         $('#formulario-mensajes-recibidos').attr('action', urlMarcarComoLeidos);
     });
 
+    // Al presionar "Enviar mensaje a usuario" se muestra el Modal para escribir el mensaje.
+    $("#lfu-escribir-mensaje").click(function(){
+        $("#enviarMensajeModal").modal();
+    });
 
+    // Al momento de presionar "Enviar" comentario.
+    $(".modal-body").on('click', '#enviar-mensaje', function (e) {
+        $(this.form).submit();              // Se envía el comentario
+        //$("#lfu-asunto-mensaje").val(''); // El campo queda en blanco
+        //$("#lfu-textarea-mensaje").val(''); // El campo queda en blanco
+        $("#enviarMensajeModal").modal('hide');        // Se oculta el modal
+    });
+
+    // Al presionar "Cancelar", el campo del textarea debe quedar en blanco.
+    $("#cancelar-envio-mensaje").click(function(){
+        $("#lfu-nickname-mensaje").val('');
+        $("#lfu-asunto-mensaje").val('');
+        $("#lfu-textarea-mensaje").val('');
+    });
+
+    // Al presionar "X" de cerrar, el campo del textarea debe quedar en blanco.
+    $(".cerrar_modal_envio_mensaje").click(function(){
+        $("#lfu-nickname-mensaje").val('');
+        $("#lfu-asunto-mensaje").val('');
+        $("#lfu-textarea-mensaje").val('');
+    });
+
+    // Para la vista de "Mensajes enviados (Mis mensajes)"
+    $("#borrar-enviados-marcados").click(function(){
+        $('#formulario-mensajes-enviados').attr('action', urlBorrarMacados);
+    });
 
 
 

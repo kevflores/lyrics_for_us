@@ -94,7 +94,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/cuenta/configuracion/actualizar-imagen', 'UsuarioController@actualizarImagen')->name('usuario.actualizar_imagen');
         Route::post('/cuenta/configuracion/actualizar-correo', 'UsuarioController@actualizarCorreo')->name('usuario.actualizar_correo');
         Route::post('/cuenta/configuracion/actualizar-password', 'UsuarioController@actualizarPassword')->name('usuario.actualizar_password');
-        Route::get('/cuenta/mensajes-recibidos', 'MensajeController@verMensajesRecibidos')->name('mensajes_recibidos');
+        Route::get('/cuenta/mensajes-recibidos', 'MensajeController@verMensajesRecibidos')->name('mensajes_recibidos')->middleware('auth');
         Route::get('/cuenta/mensajes-recibidos/{id_mensaje}', 'MensajeController@verMensajeRecibido')->name('ver_mensaje_recibido');
         Route::post('/cuenta/mensajes-recibidos/borrar', 'MensajeController@borrarMensajeRecibido')->name('borrar_mensaje_recibido');
         Route::post('/cuenta/mensajes-recibidos/{id_mensaje}/responder', 'MensajeController@responder')->name('responder_mensaje');
@@ -102,10 +102,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/cuenta/mensajes-recibidos/marcar-leidos', 'MensajeController@marcarComoLeidos')->name('marcar_como_leidos');
         Route::get('/cuenta/mensajes-enviados', 'MensajeController@verMensajesEnviados')->name('mensajes_enviados');
         Route::get('/cuenta/mensajes-enviados/{id_mensaje}', 'MensajeController@verMensajeEnviado')->name('ver_mensaje_enviado');
-        Route::post('/cuenta/mensajes-enviados/{id_mensaje}/borrar', 'MensajeController@borrarMensajeEnviado')->name('borrar_mensaje_enviado');
-        Route::post('/cuenta/mensajes-enviados/borrar-marcados/{mensajes}', 'MensajeController@borrarMensajesEnviadosMarcados')->name('borrar_mensajes_enviados');
+        Route::post('/cuenta/mensajes-enviados/borrar', 'MensajeController@borrarMensajeEnviado')->name('borrar_mensaje_enviado');
+        Route::post('/cuenta/mensajes-enviados/borrar-marcados', 'MensajeController@borrarMensajesEnviadosMarcados')->name('borrar_mensajes_enviados');
         Route::get('/cuenta/nuevo-mensaje', 'MensajeController@escribirMensaje')->name('nuevo_mensaje');
-        Route::post('/cuenta/nuevo-mensaje/enviar/{id_receptor}/origen/{origen}', 'MensajeController@enviarMensaje')->name('enviar_mensaje');
+        Route::post('/cuenta/nuevo-mensaje/enviar/{id_receptor?}/origen/{origen}', 'MensajeController@enviarMensaje')->name('enviar_mensaje');
         Route::get('/cuenta/mis-solicitudes', 'SolicitudController@verLista')->name('usuario.solicitudes');
         Route::get('/cuenta/mis-solicitudes/{id_solicitud}', 'SolicitudController@verSolicitud')->name('usuario.ver_solicitud');
         Route::get('/cuenta/nueva-solicitud', 'SolicitudController@nuevaSolicitud')->name('usuario.nueva_solicitud');

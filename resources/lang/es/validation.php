@@ -118,6 +118,9 @@ return [
         'imagen' => [
             'required' => 'No se ha seleccionado ninguna imagen.'
         ],
+        'nickname' => [
+            'exists' => 'El nickname ingresado no pertenece a ningún usuario.'
+        ],
     ],
 
     /*

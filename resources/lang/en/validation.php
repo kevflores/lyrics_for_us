@@ -110,6 +110,9 @@ return [
         'imagen' => [
             'required' => 'There\'s no image uploaded.'
         ],
+        'nickname' => [
+            'exists' => 'The nickname introduced does not belong to any user.'
+        ],
         
     ],
 

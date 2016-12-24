@@ -885,6 +885,20 @@ a[href="#lfu-panel-collapse-comentarios"] {
     color: red;
 }
 
+#lfu-panel-mensaje {
+    border-color: rgba(68, 154, 208, 1);
+    margin-bottom: 0px;
+}
+
+#lfu-panel-mensaje-heading {
+    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    font-size: 14px;
+}
+
+.info-mensaje {
+    font-style: italic;
+}
+
 /* FIN DE ESTILOS PARA EL SUBMÓDULO "MENSAJES" */
 
 
