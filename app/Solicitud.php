@@ -14,6 +14,7 @@ class Solicitud extends Model
     public function tipo()
     {
     	return $this->belongsTo('App\TipoSolicitud', 'tipo_solicitud_id', 'id');
+    }
     
     // Una solicitud es creada por un usuario.
     public function usuario()

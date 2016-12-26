@@ -35,12 +35,16 @@ class MensajeController extends Controller
         $mensajeRecibido = DB::table('mensajes')->where('id',$id_mensaje)->first();
 
         if ( $usuario->id === $mensajeRecibido->usuario_receptor_id ) {
-            $mensaje = Mensaje::find($mensajeRecibido->id);
-            if ( $mensajeRecibido->visto === false ){
-                $mensaje->visto = true;
-                $mensaje->update();
+            if ( $mensajeRecibido->estado_receptor === false ) {
+                return redirect()->action('MensajeController@verMensajesRecibidos');
+            } else {
+                $mensaje = Mensaje::find($mensajeRecibido->id);
+                if ( $mensajeRecibido->visto === false ){
+                    $mensaje->visto = true;
+                    $mensaje->update();
+                }
+                return view('userview.mensajes.ver_mensaje_recibido', ['usuario' => $usuario, 'mensaje' => $mensaje]);
             }
-            return view('userview.mensajes.ver_mensaje_recibido', ['usuario' => $usuario, 'mensaje' => $mensaje]);
         }
         return view('userview.home', ['usuario' => $usuario]);
     }
@@ -205,8 +209,12 @@ class MensajeController extends Controller
         $mensajeEnviado = DB::table('mensajes')->where('id',$id_mensaje)->first();
 
         if ( $usuario->id === $mensajeEnviado->usuario_emisor_id ) {
-            $mensaje = Mensaje::find($mensajeEnviado->id);
-            return view('userview.mensajes.ver_mensaje_enviado', ['usuario' => $usuario, 'mensaje' => $mensaje]);
+            if ( $mensajeEnviado->estado_emisor === false ) {
+                return redirect()->action('MensajeController@verMensajesEnviados');
+            } else {
+                $mensaje = Mensaje::find($mensajeEnviado->id);
+                return view('userview.mensajes.ver_mensaje_enviado', ['usuario' => $usuario, 'mensaje' => $mensaje]);
+            }
         }
         return view('userview.home', ['usuario' => $usuario]);
     }

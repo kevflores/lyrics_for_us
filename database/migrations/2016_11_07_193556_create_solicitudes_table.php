@@ -22,7 +22,7 @@ class CreateSolicitudesTable extends Migration
             $table->dateTime('fecha_solicitud');
             $table->integer('usuario_admin_id')->unsigned()->nullable();
             $table->dateTime('fecha_atencion')->nullable();
-            $table->boolean('estado')->nullable(); //TRUE: Aceptada, FALSE: Rechazada.
+            $table->boolean('estado')->nullable(); //NULL: En espera ; TRUE: Aceptada ; FALSE: Rechazada.
             $table->timestamps();
 
             // Llaves foráneas

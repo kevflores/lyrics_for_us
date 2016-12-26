@@ -39,9 +39,5 @@
 			</div>
 		</div>
 	</div>
-    
-    <div class="col-xs-12" style="margin-top:25px;">
-		<a class="btn btn-primary" href="{{ URL::previous() }}">Volver</a>
-    </div>
 
 @endsection

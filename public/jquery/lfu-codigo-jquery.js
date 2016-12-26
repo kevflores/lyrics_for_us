@@ -124,7 +124,6 @@ $(document).ready(function(){
         $("#eliminarImagenModal").modal('hide'); // Se oculta el modal
     });
 
-
     // Al presionar el ícono de "Eliminar artista favorito" se muestra el Modal para confirmar la eliminación.
     $(".eliminar-artista-favorito").click(function(event){
         event.preventDefault();
@@ -166,14 +165,6 @@ $(document).ready(function(){
         $("formEliminarFavorito").submit(); 
         $("#eliminarFavoritoModal").modal('hide'); // Se oculta el modal
     });
-
-
-
-
-
-
-
-
 
     // Al presionar el ícono de "Eliminar mensaje" se muestra el Modal para confirmar la eliminación.
     $(".eliminar-mensaje").click(function(event){
@@ -281,6 +272,52 @@ $(document).ready(function(){
         $("#form-responder-mensaje").submit(); 
         $("#responderMensajeModal").modal('hide'); // Se oculta el modal
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Al presionar "Realizar Nueva Solicitud" se muestra el Modal.
+    $("#lfu-realizar-solicitud").click(function(){
+        $("#realizarSolicitudModal").modal();
+    });
+
+    // Al momento de presionar "Enviar" solicitud.
+    $("#enviar-solicitud").click(function(){
+        $("#formRealizarSolicitud").submit(); 
+        $("#realizarSolicitudModal").modal('hide'); // Se oculta el modal
+    });
+
+    // Al presionar "Cancelar", los campos de texto deben quedar en blanco.
+    $("#cancelar-solicitud").click(function(){
+        $("#lfu-titulo-solicitud").val('');
+        $("#lfu-descripcion-solicitud").val('');
+    });
+
+    // Al presionar "X" de cerrar, los campos de texto deben quedar en blanco.
+    $(".cerrar_modal_realizar_solicitud").click(function(){
+        $("#lfu-titulo-solicitud").val('');
+        $("#lfu-descripcion-solicitud").val('');
+    });
+
+
+
+
+
+
+
 
 
 
