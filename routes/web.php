@@ -110,7 +110,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/cuenta/nuevo-mensaje/enviar/{id_receptor?}/origen/{origen}', 'MensajeController@enviarMensaje')->name('enviar_mensaje');
         Route::get('/cuenta/mis-solicitudes', 'SolicitudController@verLista')->name('usuario.solicitudes');
         Route::get('/cuenta/mis-solicitudes/{id_solicitud}', 'SolicitudController@verSolicitud')->name('usuario.ver_solicitud');
-        Route::get('/cuenta/nueva-solicitud', 'SolicitudController@nuevaSolicitud')->name('usuario.nueva_solicitud');
         Route::post('/cuenta/nueva-solicitud/enviar', 'SolicitudController@enviarSolicitud')->name('usuario.enviar_solicitud');
 
     });

@@ -27,16 +27,19 @@ class SolicitudController extends Controller
         return view('userview.solicitudes.ver_lista', ['usuario' => $usuario, 'solicitudes' => $solicitudes]);
     }
 
-    public function verSolicitud($id)
+    public function verSolicitud($id_solicitud)
     {
         // Mostrar la información correspondiente al registro de la solicitud seleccionada.
-        return view('userview.solicitudes.ver_solicitud', ['usuario' => Auth::User()]);
-    }
+        $usuario = Auth::User();
+        $solicitud = Solicitud::find($id_solicitud);
 
-    public function nuevaSolicitud()
-    {
-    	// Mostrar el formulario necesario para realizar una nueva solicitud
-        return view('userview.nueva_solicitud', ['usuario' => Auth::User()]);
+        if ( $solicitud ) {
+            if ( $solicitud->usuario_solicitante_id === $usuario->id ) {
+                return view('userview.solicitudes.ver_solicitud', 
+                    ['usuario' => $usuario, 'solicitud' => $solicitud]);
+            }
+        }
+        return view('userview.home', ['usuario' => $usuario]);
     }
 
     public function enviarSolicitud(Request $request)

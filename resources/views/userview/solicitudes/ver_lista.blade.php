@@ -8,46 +8,74 @@
     
     @include('includes.bloque_de_mensajes')
     @include('includes.modal_realizar_solicitud')
-	<h3>Mis Solicitudes</h3>
-   <div class="col-xs-12" style="text-align:left;padding:0px;">
-		<a class="btn btn-primary" id="lfu-realizar-solicitud" style="margin-bottom:5px;">Realizar nueva solicitud</a>
-	</div>
 
-	<table class="table table-bordered" id="lfu-tabla-mensajes" style="">
-	<thead style="">
-		<tr>
-			<th>Tipo</th>
-			<th>Título</th>
-			<th>Fecha y hora</th>
-			<th>Estado</th>
-		</tr>
-	</thead>
-	<tbody id="lfu-tabla-body">
-		@foreach ($solicitudes as $solicitud)
-			<tr>
-				<td style="width:;">
-					{{ $solicitud->tipo()->first()->descripcion }}
-				</td>
-				<td style="width:;">
-					<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.ver_solicitud', ['id_solicitud' => $solicitud->id]) }}">
-						{{ $solicitud->titulo }}
-					</a>
-				</td>
-				<td style="width:;">{{ date('d/m/Y', strtotime($solicitud->fecha_solicitud)) }} a las {{  date('h:i A', strtotime($solicitud->fecha_solicitud)) }}
-				</td>
-				<td>
-				</td>
-			</tr>
-		@endforeach
-	</tbody>
-</table>
+    @if ( is_obj_empty($solicitudes) )
 
-<div class="lfu-seccion-completa col-xs-12">
-	<div class="panel panel-primary panel-footer-configuracion">
-		<div class="panel-primary panel-footer sin-texto panel-footer-configuracion" id="lfu-panel-footer"></div>
-	</div>
-</div>
+	    <div style="text-align:right;padding:0px;">
+			<a class="btn btn-primary" id="lfu-realizar-solicitud" style="margin-bottom:5px;">Realizar nueva solicitud</a>
+		</div>
 
-{{ $solicitudes->links() }}
+		<div>
+			<div class="panel panel-primary" id="lfu-panel-solicitudes" style="">
+				<div class="panel-heading" id="lfu-panel-heading-solicitudes">Mis Solicitudes</div>	    	
+			</div>
+		</div>
+		
+
+		<table class="table table-bordered" id="lfu-tabla" style="">
+			<thead style="">
+				<tr>
+					<th style="font-weight:normal;">Tipo</th>
+					<th style="font-weight:normal;">Título</th>
+					<th style="font-weight:normal;">Fecha y hora</th>
+					<th style="font-weight:normal;">Estado</th>
+				</tr>
+			</thead>
+			<tbody id="lfu-tabla-body">
+				@foreach ($solicitudes as $solicitud)
+					<tr>
+						<td style="width:;">
+							{{ $solicitud->tipo()->first()->descripcion }}
+						</td>
+						<td style="width:;">
+							<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.ver_solicitud', ['id_solicitud' => $solicitud->id]) }}">
+								{{ $solicitud->titulo }}
+							</a>
+						</td>
+						<td style="width:;">{{ date('d/m/Y', strtotime($solicitud->fecha_solicitud)) }} a las {{  date('h:i A', strtotime($solicitud->fecha_solicitud)) }}
+						</td>
+						<td>
+							@if ( $solicitud->estado === null )
+								En espera
+							@elseif ( $solicitud->estado === true )
+								Rechazada
+							@else ( $solicitud->estado === false )
+								Aceptada
+							@endif
+						</td>
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
+
+	@else
+		<div>
+			<div class="panel panel-primary" id="lfu-panel-solicitudes" style="">
+				<div class="panel-heading" id="lfu-panel-heading-solicitudes">Mis Solicitudes</div>	    	
+			</div>
+		</div>
+		<div class="jumbotron info" id="lfu-jumbotron" style="margin:auto;">
+        	Aún no ha realizado solicitudes.
+        	<a id="lfu-realizar-solicitud" style="display:block;margin-top:20px;cursor:pointer;">Presione aquí para realizar una solicitud</a>
+        </div>
+	@endif
+
+	<div class="lfu-seccion-completa col-xs-12">
+			<div class="panel panel-primary panel-footer-configuracion">
+				<div class="panel-primary panel-footer sin-texto panel-footer-configuracion" id="lfu-panel-footer"></div>
+			</div>
+		</div>
+
+	{{ $solicitudes->links() }}
 
 @endsection

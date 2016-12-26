@@ -22,8 +22,8 @@
 
 
 	<div class="lfu-seccion-completa col-xs-12">
-    	<div class="panel panel-primary" id="lfu-panel-mensaje">
-			<div class="panel-heading" id="lfu-panel-mensaje-heading"><strong>Mensaje de <a class="lfu-enlace-sin-decoracion" style="color:white;" href="{{ route('usuario.perfil', ['nickname' => $mensaje->usuarioEmisor()->first()->nickname]) }}">{{ $mensaje->usuarioEmisor()->first()->nickname }}</a></strong></div>
+    	<div class="panel panel-primary" id="lfu-panel-mensaje" style="border-bottom-left-radius:0px;border-bottom-right-radius:0px;">
+			<div class="panel-heading" id="lfu-panel-mensaje-heading"><strong>Mensaje de <a class="lfu-enlace-sin-decoracion" style="color:white;border-bottom-left-radius:0px;border-bottom-right-radius:0px;" href="{{ route('usuario.perfil', ['nickname' => $mensaje->usuarioEmisor()->first()->nickname]) }}">{{ $mensaje->usuarioEmisor()->first()->nickname }}</a></strong></div>
 			<div class="panel-body">
 				<strong>Para: </strong><span class="info-mensaje">Mí</span>
 				<br>
@@ -37,6 +37,12 @@
 				{{ $mensaje->descripcion }}
 				<hr class="lfu-separador">
 			</div>
+		</div>
+	</div>
+
+	<div class="lfu-seccion-completa col-xs-12">
+		<div class="panel panel-primary panel-footer-configuracion">
+			<div class="panel-primary panel-footer sin-texto panel-footer-configuracion" id="lfu-panel-footer"></div>
 		</div>
 	</div>
 
