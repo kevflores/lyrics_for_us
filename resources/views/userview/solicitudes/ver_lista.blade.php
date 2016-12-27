@@ -46,11 +46,11 @@
 						</td>
 						<td>
 							@if ( $solicitud->estado === null )
-								En espera
+								<i class="fa fa-clock-o" aria-hidden="true" title="Solicitud en espera" style="cursor:default;"></i>
 							@elseif ( $solicitud->estado === true )
-								Rechazada
+								<i class="fa fa-check-circle" aria-hidden="true" title="Solicitud aceptada" style="cursor:default;color:#2A8A3A;"></i>
 							@else ( $solicitud->estado === false )
-								Aceptada
+								<i class="fa fa-times-circle" aria-hidden="true" title="Solicitud rechazada" style="cursor:default;color:#BE1E1E;"></i>
 							@endif
 						</td>
 					</tr>

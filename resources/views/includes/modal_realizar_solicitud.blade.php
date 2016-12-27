@@ -13,7 +13,7 @@
             		{!! csrf_field() !!}
             		<div class="form-group col-xs-12 {{ $errors->has('tipo_solicitud') ? 'has-error' : '' }}">
 						{!! Form::label('tipo_solicitud','Tipo de solicitud', array('class'=>'label-izquierda', )) !!}
-						{!! Form::select('tipo_solicitud', array('1' => 'Registro de Artista', '2' => 'Registro de Disco', '3' => 'Registro de Canción'), old('tipo_solicitud'), ['class'=>'form-control']); !!}
+						{!! Form::select('tipo_solicitud', $tiposSolicitudes, old('tipo_solicitud'), ['class'=>'form-control']); !!}
 					</div>
             		<div class="form-group col-xs-12 {{ $errors->has('titulo') ? 'has-error' : '' }}">
 						{!! Form::label('titulo','Título', array('class'=>'label-izquierda', )) !!}

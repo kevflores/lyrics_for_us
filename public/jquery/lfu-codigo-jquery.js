@@ -1,7 +1,5 @@
 $(document).ready(function(){
 
-
-
     // Al presionar "Mostrar Comentarios" se muestra la sección de comentarios.
     $("a[class='ver-comentarios']").click(function(){
         $("#lfu-panel-comentarios").toggleClass("no-border-bottom");
@@ -273,22 +271,6 @@ $(document).ready(function(){
         $("#responderMensajeModal").modal('hide'); // Se oculta el modal
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Al presionar "Realizar Nueva Solicitud" se muestra el Modal.
     $("#lfu-realizar-solicitud").click(function(){
         $("#realizarSolicitudModal").modal();
@@ -311,19 +293,6 @@ $(document).ready(function(){
         $("#lfu-titulo-solicitud").val('');
         $("#lfu-descripcion-solicitud").val('');
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // Para no permitir que se los datos de los formularios del submódulo "Configuración" se
     // envíen al presionar "ENTER" (sólo se permite presionar el BOTÓN respectivo).
@@ -378,7 +347,7 @@ $(document).ready(function(){
         $(".spanImagen").text('Imagen: "' + fileName + '"');
     });
 
-/*    
+    /*    
     $('.eliminar-artista-favorito').on('click', function(event) {
         event.preventDefault();
         var tipoo = "artista";
@@ -393,6 +362,6 @@ $(document).ready(function(){
             console.log(msg['message']);
         });
     });
-*/  
+    */  
 
 });

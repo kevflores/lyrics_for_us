@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Usuario;
 use App\Solicitud;
+use App\TipoSolicitud;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -24,7 +25,11 @@ class SolicitudController extends Controller
                                     ->orderBy("fecha_solicitud","desc")
                                     ->paginate(10);
 
-        return view('userview.solicitudes.ver_lista', ['usuario' => $usuario, 'solicitudes' => $solicitudes]);
+        $tiposSolicitudes = TipoSolicitud::pluck('descripcion', 'id');
+
+        return view('userview.solicitudes.ver_lista', ['usuario' => $usuario, 
+                                                       'solicitudes' => $solicitudes,
+                                                       'tiposSolicitudes' => $tiposSolicitudes]);
     }
 
     public function verSolicitud($id_solicitud)
@@ -34,11 +39,13 @@ class SolicitudController extends Controller
         $solicitud = Solicitud::find($id_solicitud);
 
         if ( $solicitud ) {
+            // Si la solicitud pertenece al usuario autenticado, entonces se muestra
             if ( $solicitud->usuario_solicitante_id === $usuario->id ) {
                 return view('userview.solicitudes.ver_solicitud', 
                     ['usuario' => $usuario, 'solicitud' => $solicitud]);
             }
         }
+        // Sino, se redirecciona a Home.
         return view('userview.home', ['usuario' => $usuario]);
     }
 
