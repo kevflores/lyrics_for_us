@@ -129,7 +129,6 @@ class UsuarioController extends Controller
     {
         $usuarioPerfil = DB::table('usuarios')->where('nickname', $nickname)->first();
         
-        // Si el usuario existe...
         if ($usuarioPerfil){
 
             // Se consulta el listado de canciones, cuyas letras fueron provistas por el usuario del perfil.
@@ -153,12 +152,10 @@ class UsuarioController extends Controller
                                                          'letrasProvistas' => $letrasProvistas,
                                                          'comentariosUsuario' => $comentariosUsuario]);
         } 
-        // Sino...
         else {
-            echo 'Mostrar vista con mensaje de "Usuario No Existe"';
-            // return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User()]);
+            return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User(),
+                                                         'usuarioPerfil' => $usuarioPerfil]);
         }
-        
     }
 
     // Método para registrar el comentario realizado sobre un ususario.

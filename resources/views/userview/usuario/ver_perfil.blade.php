@@ -6,15 +6,17 @@
 
 @section('contenido')
 
-	@include('includes.bloque_de_mensajes')
+	@if ($usuarioPerfil)
 
-	@if ($usuario) {{-- Si un usuario autenticado está accediendo al perfil --}}
-		@include('includes.modal_crear_comentario')
-		@if ( $usuarioPerfil->id !== Auth::User()->id )
-			@include('includes.modal_enviar_mensaje_desde_perfil')
-			@include('includes.modal_reportar_usuario')
+		@include('includes.bloque_de_mensajes')
+
+		@if ($usuario) {{-- Si un usuario autenticado está accediendo al perfil --}}
+			@include('includes.modal_crear_comentario')
+			@if ( $usuarioPerfil->id !== Auth::User()->id )
+				@include('includes.modal_enviar_mensaje_desde_perfil')
+				@include('includes.modal_reportar_usuario')
+			@endif
 		@endif
-	@endif
 
 		<div class="lfu-seccion-completa col-xs-12">
 	    	
@@ -216,6 +218,28 @@
 				</div>
 			</div>
 		</div>
+
+	@else
+
+		<div class="lfu-seccion-completa col-xs-12">
+	    	<div class="panel panel-primary" id="lfu-panel-default" style="border-bottom-left-radius:0px;border-bottom-right-radius:0px;">
+				<div class="panel-heading" id="lfu-panel-heading-default">¿Usuario equivocado?</div>
+				<div class="panel-body" id="lfu-panel-body-default">
+					<div class="imagen-perfil" style="margin-bottom:15px;">
+						<span><img src="{{ asset('images\lfu-default-avatar.png') }}" class="img-responsive img-rounded lfu-avatar"></span>
+					</div> 
+	                <p style="margin-bottom:15px;">Este usuario no existe.</p>
+					</div>
+			</div>
+		</div>
+
+		<div class="lfu-seccion-completa col-xs-12">
+			<div class="panel panel-primary panel-footer-configuracion">
+				<div class="panel-primary panel-footer sin-texto panel-footer-configuracion" id="lfu-panel-footer"></div>
+			</div>
+		</div>
+
+	@endif
 
 	{{-- Prueba para el front-end --}}
     <h6 class="col-xs-12">Resolución: 
