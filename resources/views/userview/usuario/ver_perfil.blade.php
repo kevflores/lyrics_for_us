@@ -222,14 +222,14 @@
 	@else
 
 		<div class="lfu-seccion-completa col-xs-12">
-	    	<div class="panel panel-primary" id="lfu-panel-default" style="border-bottom-left-radius:0px;border-bottom-right-radius:0px;">
+	    	<div class="panel panel-primary" id="lfu-panel-default">
 				<div class="panel-heading" id="lfu-panel-heading-default">¿Usuario equivocado?</div>
 				<div class="panel-body" id="lfu-panel-body-default">
 					<div class="imagen-perfil" style="margin-bottom:15px;">
 						<span><img src="{{ asset('images\lfu-default-avatar.png') }}" class="img-responsive img-rounded lfu-avatar"></span>
 					</div> 
 	                <p style="margin-bottom:15px;">Este usuario no existe.</p>
-					</div>
+				</div>
 			</div>
 		</div>
 

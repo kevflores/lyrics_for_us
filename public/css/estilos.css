@@ -141,6 +141,15 @@ body {
     border-right:0px;
 }
 
+.lfu-panel-footer-default {
+    border-top: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    background-color: rgba(92, 180, 238, 1);
+    border-color: rgba(68, 154, 208, 1); 
+    color: white;
+}
+
 #lfu-jumbotron {
     border: solid 1px rgba(68, 154, 208, 1);
     border-top-left-radius: 0px;
@@ -456,8 +465,7 @@ th {
 
 #lfu-panel-heading, #lfu-panel-footer {
     background-color: rgba(92, 180, 238, 1);
-    background-color: rgba(92, 180, 238, 1);
-    border-color: rgba(68, 154, 208, 1); /*rgba(92, 180, 238, 1);*/
+    border-color: rgba(68, 154, 208, 1); 
     color: white;
 }
 
@@ -494,8 +502,33 @@ th {
 /* ESTILOS GENÉRICOS PARA LOS MÓDULOS "ARTISTAS", "DISCOS" Y "CANCIONES"*/
 /* FIN DE ESTILOS GENÉRICOS PARA LOS MÓDULOS "ARTISTAS", "DISCOS" Y "CANCIONES"*/
 
+.lfu-opcion {
+    margin: 1px;
+    margin-bottom: 5px;
+}
 
 /* ESTILOS PARA EL MÓDULO "ARTISTAS" */
+
+#lfu-artistas-opciones {
+
+}
+
+#lfu-artistas-listado {
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+
+    -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 40px; /* Firefox */
+    column-gap: 40px;
+
+    -webkit-column-rule: 4px outset rgba(68, 154, 208, 1); /* Chrome, Safari, Opera */
+    -moz-column-rule: 4px outset rgba(68, 154, 208, 1); /* Firefox */
+    column-rule: 4px outset rgba(68, 154, 208, 1);
+}
+
+
+
 /* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS" */
 
 
