@@ -14,16 +14,40 @@
 					@include('includes.opciones_artistas')
 				</div>
 				<hr class="lfu-separador">
-				<div class="" id="lfu-artistas-listado" style="margin: auto 0;text-align:center;">
-					@if ( is_obj_empty($artistas) )
-						@foreach ($artistas as $artista)
-							{{ $artista->nombre }}
-							<br>
-						@endforeach
+				@if ( is_obj_empty($artistas) )
+					
+					<?php $cantidad = 0; ?>
+					@foreach ($artistas as $artista)
+						<?php $cantidad++; ?>
+					@endforeach
+
+					@if ( $cantidad === 1 )
+						<div class="" style="margin: auto 0;text-align:center;">
+							@foreach ($artistas as $artista)
+								{{ $artista->nombre }}
+								<br>
+							@endforeach
+						</div> 
+					@elseif ( $cantidad === 2 || $cantidad === 4 )
+						<div class="" id="lfu-artistas-listado-dos" style="margin: auto 0;text-align:center;">
+							@foreach ($artistas as $artista)
+								{{ $artista->nombre }}
+								<br>
+							@endforeach
+						</div> 
 					@else
-						No hay artistas.
+						<div class="" id="lfu-artistas-listado" style="margin: auto 0;text-align:center;">
+							@foreach ($artistas as $artista)
+								{{ $artista->nombre }}
+								<br>
+							@endforeach
+						</div> 
 					@endif
-				</div> 
+				@else
+					<div class="" style="margin: auto 0;text-align:center;">
+						No hay artistas.
+					</div> 
+				@endif
 			</div>
 		</div>
 	</div>

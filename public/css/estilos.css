@@ -513,21 +513,45 @@ th {
 
 }
 
-#lfu-artistas-listado {
-    -webkit-column-count: 3; /* Chrome, Safari, Opera */
-    -moz-column-count: 3; /* Firefox */
-    column-count: 3;
+@media (max-width: 767px) {
 
-    -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
-    -moz-column-gap: 40px; /* Firefox */
-    column-gap: 40px;
+    #lfu-artistas-listado , #lfu-artistas-listado-dos {
+        line-height: 20px;
+    }
 
-    -webkit-column-rule: 4px outset rgba(68, 154, 208, 1); /* Chrome, Safari, Opera */
-    -moz-column-rule: 4px outset rgba(68, 154, 208, 1); /* Firefox */
-    column-rule: 4px outset rgba(68, 154, 208, 1);
 }
 
+@media (min-width: 768px) {
 
+    #lfu-artistas-listado {
+        -webkit-column-count: 3; /* Chrome, Safari, Opera */
+        -moz-column-count: 3; /* Firefox */
+        column-count: 3;
+
+        -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+        -moz-column-gap: 40px; /* Firefox */
+        column-gap: 40px;
+
+        -webkit-column-rule: 4px outset rgba(68, 154, 208, 1); /* Chrome, Safari, Opera */
+        -moz-column-rule: 4px outset rgba(68, 154, 208, 1); /* Firefox */
+        column-rule: 4px outset rgba(68, 154, 208, 1);
+    }
+
+    #lfu-artistas-listado-dos {
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+
+        -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+        -moz-column-gap: 40px; /* Firefox */
+        column-gap: 40px;
+
+        -webkit-column-rule: 4px outset rgba(68, 154, 208, 1); /* Chrome, Safari, Opera */
+        -moz-column-rule: 4px outset rgba(68, 154, 208, 1); /* Firefox */
+        column-rule: 4px outset rgba(68, 154, 208, 1);
+    }
+
+}
 
 /* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS" */
 

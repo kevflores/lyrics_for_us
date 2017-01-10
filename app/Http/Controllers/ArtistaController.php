@@ -62,6 +62,7 @@ class ArtistaController extends Controller
                                     ->orderBy('nombre')->get();
             }
         } else {
+            // Mostrar vista de error: What are you looking for?
             return "ERROR";
         }
         return view('userview.artistas.ver_lista', ['usuario' => Auth::User(),
