@@ -114,6 +114,15 @@ body {
     color: rgba(49, 123, 176, 1);
 }
 
+.lfu-enlace-sin-decoracion-well:link, .lfu-enlace-sin-decoracion-well:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+.lfu-enlace-sin-decoracion-well:hover, .lfu-enlace-sin-decoracion-well:active {
+    color: white;
+}
+
 .lfu-texto-italic {
     font-style: italic;
 }
@@ -511,6 +520,14 @@ th {
 
 #lfu-artistas-opciones {
 
+}
+
+.well-artista-nombre {
+    transition: ease 0.19s all;
+}
+
+.well-artista-nombre:hover {
+    background-color: #588EF2;
 }
 
 @media (max-width: 767px) {

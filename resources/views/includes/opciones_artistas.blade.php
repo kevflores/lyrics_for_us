@@ -1,5 +1,5 @@
 <a href="{{ route('artistas.lista', ['seleccion' => 'top']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'top' ? 'active' : '' }}" role="button">Top Artistas</a>
-<a href="{{ route('artistas.lista', ['seleccion' => 'numero']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'numero' ? 'active' : '' }}" role="button">#</a>
+<a href="{{ route('artistas.lista', ['seleccion' => 'numero']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'numero' ? 'active' : '' }}" role="button">0-9</a>
 <a href="{{ route('artistas.lista', ['seleccion' => 'a']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'a' ? 'active' : '' }}" role="button">A</a>
 <a href="{{ route('artistas.lista', ['seleccion' => 'b']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'b' ? 'active' : '' }}" role="button">B</a>
 <a href="{{ route('artistas.lista', ['seleccion' => 'c']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'c' ? 'active' : '' }}" role="button">C</a>
@@ -14,7 +14,6 @@
 <a href="{{ route('artistas.lista', ['seleccion' => 'l']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'l' ? 'active' : '' }}" role="button">L</a>
 <a href="{{ route('artistas.lista', ['seleccion' => 'm']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'm' ? 'active' : '' }}" role="button">M</a>
 <a href="{{ route('artistas.lista', ['seleccion' => 'n']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'n' ? 'active' : '' }}" role="button">N</a>
-<a href="{{ route('artistas.lista', ['seleccion' => 'nn']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'nn' ? 'active' : '' }}" role="button">Ñ</a>
 <a href="{{ route('artistas.lista', ['seleccion' => 'o']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'o' ? 'active' : '' }}" role="button">O</a>
 <a href="{{ route('artistas.lista', ['seleccion' => 'p']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'p' ? 'active' : '' }}" role="button">P</a>
 <a href="{{ route('artistas.lista', ['seleccion' => 'q']) }}" class="btn btn-info lfu-opcion {{ $seleccion === 'q' ? 'active' : '' }}" role="button">Q</a>

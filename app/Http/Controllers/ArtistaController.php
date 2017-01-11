@@ -25,7 +25,7 @@ class ArtistaController extends Controller
         // Mostrar la vista con todas las opciones disponibles para seleccionar a un artista.
 
         // Consultar los mas populares...
-            $artistas = null;
+        $artistas = null;
 
         return view('userview.artistas.index', ['usuario' => Auth::User(), 
                                                 'seleccion' => 'top',
@@ -45,25 +45,26 @@ class ArtistaController extends Controller
 
         } elseif ( $seleccion === 'numero' ) {
             $artistas = Artista::where(DB::raw('substring(nombre,1,1)'), '~', '^[0-9]')
-                                    ->orderBy('nombre')->get();
-        } elseif ( ctype_alpha($seleccion) ){
-            if ( strlen($seleccion) === 1 ) {
-                $mayuscula = Str::upper($seleccion);
-                $minuscula = Str::lower($seleccion);
-                $artistas = Artista::where(DB::raw('substring(nombre,1,1)'), $mayuscula)
-                                    ->orWhere(DB::raw('substring(nombre,1,1)'), $minuscula)
-                                    ->orderBy('nombre')->get();
+                                    ->orderBy('nombre')->paginate(10);
+        } elseif (preg_match("/^[a-zA-Z]$/", $seleccion)){
+            $mayuscula = Str::upper($seleccion);
+            $minuscula = Str::lower($seleccion);
 
-                                    //Str::lower($test);
+            if ( $seleccion !== 'n' || $seleccion !== 'N' ) {
+                $artistas = Artista::where(DB::raw('substring(nombre,1,1)'), $mayuscula)
+                                ->orWhere(DB::raw('substring(nombre,1,1)'), $minuscula)
+                                ->orderBy('nombre')->paginate(10);
             } else {
-                // Entonces es 'nn' o 'NN'...
-                $artistas = Artista::where(DB::raw('substring(nombre,1,1)'), 'Ñ')
-                                    ->orWhere(DB::raw('substring(nombre,1,1)'), 'ñ')
-                                    ->orderBy('nombre')->get();
+                // Se consulta la lista de artistas cuyos nombres comiencen por N/Ñ
+                $artistas = Artista::where(DB::raw('substring(nombre,1,1)'), $mayuscula)
+                                ->orWhere(DB::raw('substring(nombre,1,1)'), $minuscula)
+                                ->orWhere(DB::raw('substring(nombre,1,1)'), 'Ñ')
+                                ->orWhere(DB::raw('substring(nombre,1,1)'), 'ñ')
+                                ->orderBy('nombre')->paginate(10);
             }
         } else {
-            // Mostrar vista de error: What are you looking for?
-            return "ERROR";
+            // El usuario (probablemente) insertó un valor NO VÁLIDO en la URL.
+            return redirect()->action('ArtistaController@index');
         }
         return view('userview.artistas.ver_lista', ['usuario' => Auth::User(),
                                                     'seleccion' => $seleccion,
