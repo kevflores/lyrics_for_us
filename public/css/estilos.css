@@ -74,6 +74,18 @@ body {
     height: 40px; /*Se le da una altura al panel-footer, ya que no contiene texto.*/
 }
 
+.lfu-seccion-completa {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
+.lfu-seccion-dividida {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
 .lfu-separador-comentarios {
     margin-top:0px;
     margin-bottom:13px;
@@ -516,7 +528,7 @@ th {
     margin-bottom: 5px;
 }
 
-/* ESTILOS PARA EL MÓDULO "ARTISTAS" */
+/* ESTILOS PARA EL MÓDULO "ARTISTAS (BÚSQUEDA Y LISTADO)" */
 
 #lfu-artistas-opciones {
 
@@ -570,8 +582,173 @@ th {
 
 }
 
-/* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS" */
 
+/* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS (BÚSQUEDA Y LISTADO)" */
+
+
+/* ESTILOS PARA EL MÓDULO "ARTISTAS (SECCIÓN INDIVIDUAL POR ARTISTA)"*/
+
+#lfu-artista-panel-datos {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    min-height: 550px;
+    max-height: 550px;
+    margin-bottom: 0px;
+}
+
+#lfu-artista-panel-body-datos {
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 507px;
+    max-height: 507px;
+    padding-bottom: 15px;
+}
+
+#lfu-artista-panel-popularidad {
+    overflow: hidden;
+    min-height: 150px;
+    max-height: 150px;
+    margin-bottom: 0px;
+}
+
+#lfu-artista-panel-body-popularidad {
+    overflow: auto;
+    min-height: 107px;
+    max-height: 107px;
+    padding-bottom: 15px;
+}
+
+#lfu-artista-panel-discografia {
+    /*overflow-x: hidden;*/
+    overflow-x: hidden;
+    min-height: 700px;
+    max-height: 700px;
+}
+
+#lfu-artista-panel-body-discografia{
+    /*overflow-x: hidden;*/
+    overflow-x: hidden;
+    min-height: 657px;
+    max-height: 657px;
+    padding-bottom: 15px;
+    margin-right: 14px;
+}
+
+.artista-cantidad-favoritos {
+    margin-bottom: 10px;
+}
+
+.lfu-separador {
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+.lfu-separador-cancion-misma-fecha {
+    border-top: 0px; 
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+
+.lfu-separador-comentarios {
+    margin-top:0px;
+    margin-bottom:13px;
+}
+
+#lfu-artista-panel-datos, #lfu-artista-panel-popularidad, #lfu-artista-panel-discografia {
+    border-color: rgba(68, 154, 208, 1);
+    //border-radius: 0px;
+    border-bottom-right-radius: 0px; 
+    border-bottom-left-radius: 0px;
+    margin-bottom:0px;
+}
+
+#lfu-panel-comentarios {
+    border-color: rgba(68, 154, 208, 1);
+    //border-radius: 0px;
+    margin-bottom:0px;
+}
+
+#lfu-artista-panel-popularidad, #lfu-panel-comentarios {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#lfu-artista-panel-heading-datos, #lfu-artista-panel-heading-discografia,
+#lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios {
+    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    font-size: 14px;
+}
+
+#lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios
+{
+    border-radius: 0px;
+}
+
+.artista-dato, .artista-opcion {
+    margin-bottom: 7px;
+}
+
+.artista-opcion:last-child {
+    margin-bottom: 0px;
+}
+
+.resumen-artista {
+    font-style: italic;
+}
+
+.otroNombreArtista:last-child::after {
+    /* Se le agrega un punto final al último nombre alternativo del artista */
+    content: '.';
+}
+
+@media (min-width: 768px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-artista-panel-discografia {
+        border-left: none;
+    }
+    #lfu-artista-panel-popularidad, #lfu-panel-comentarios {
+        border-top: none;
+    }
+
+    #lfu-artista-panel-datos, #lfu-artista-panel-heading-datos {
+        border-top-right-radius: 0px;
+    }
+
+    #lfu-artista-panel-discografia, #lfu-artista-panel-heading-discografia {
+        border-top-left-radius: 0px;
+    }
+
+    /* Para no permitir que el nombre (del artista) largos sobrepasen el panel*/
+    #lfu-artista-panel-heading-datos, #lfu-artista-panel-heading-discografia,
+    #lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        /* max-height: 40px; */
+    }
+}
+
+@media (max-width: 767px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-artista-panel-discografia, #lfu-artista-panel-popularidad, #lfu-panel-comentarios {
+        border-top: none;
+    }
+
+    #lfu-artista-panel-discografia, #lfu-artista-panel-heading-discografia {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    #lfu-artista-panel-datos, #lfu-artista-panel-popularidad, #lfu-artista-panel-discografia {
+        max-height: 5000px;
+    }
+
+    #lfu-artista-panel-body-datos, #lfu-artista-panel-body-popularidad, #lfu-artista-panel-body-discografia {
+        max-height: 4957px;
+    }
+}
+
+/* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS (SECCIÓN INDIVIDUAL POR ARTISTA)" */
 
 /* ESTILOS PARA EL MÓDULO "DISCOS" */
 /* FIN DE ESTILOS PARA EL MÓDULO "DISCOS" */
@@ -587,18 +764,6 @@ th {
     list-style-type: none;
     margin: 0;
     padding: 0;
-}
-
-.lfu-seccion-completa {
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-}
-
-.lfu-seccion-dividida {
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
 }
 
 #lfu-perfil-panel-datos {
@@ -632,16 +797,18 @@ th {
 }
 
 #lfu-perfil-panel-letras {
-    overflow: hidden;
+    /*overflow: hidden;*/
+    overflow-x: hidden;
     min-height: 700px;
     max-height: 700px;
 }
 
 #lfu-perfil-panel-body-letras{
-    overflow: auto;
+    /*overflow-x: hidden;*/
     min-height: 657px;
     max-height: 657px;
     padding-bottom: 15px;
+    margin-right: 14px;
 }
 
 .lfu-separador {

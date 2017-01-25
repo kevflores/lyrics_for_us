@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Artista;
+use App\Disco;
 use App\ComentarioArtista;
 use App\ArtistaFavorito;
 
@@ -79,11 +80,11 @@ class ArtistaController extends Controller
         
         if ( $artista ) {
 
-            $nombresArtista = null;
-
+            $nombresArtista = $artista->nombresAlternativos;
+/*
             $discosArtista = $artista->discos;
             // $comments = App\Post::find(1)->comments()->where('title', 'foo')->first();
-
+*/
             $comentariosArtista = DB::table('comentarios_artistas AS a')
             ->join('usuarios AS b', 'a.usuario_id', '=', 'b.id')
             ->where('a.artista_id', $artista->id)
@@ -91,10 +92,22 @@ class ArtistaController extends Controller
             ->orderBy('fecha', 'desc')
             ->get();
 
+
+            // Discos propios
+            $discosArtista = $artista->discos;
+
+            // Canciones no incluidas en discos
+            $cancionesArtistaSinDisco = $artista;
+
+            // Colaboraciones como artista invitado con otros artistas
+            $cancionesArtistaInvitado = $artista->canciones()->where('invitado', true);
+
             return view('userview.artistas.ver_informacion', ['usuario' => Auth::User(),
                                                           'artista' => $artista,
                                                           'nombresArtista' => $nombresArtista,
                                                           'discosArtista' => $discosArtista,
+                                                          'cancionesArtistaSinDisco' => $cancionesArtistaSinDisco,
+                                                          'cancionesArtistaInvitado' => $cancionesArtistaInvitado,
                                                           'comentariosArtista' => $comentariosArtista]);
         } else {
             // Mostrar mensaje si el id_artista es FAAALSSSOOO o llevar al INDEX del módulo Artistas

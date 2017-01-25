@@ -1,7 +1,7 @@
 @extends('layouts.master_usuario')
 
 @section('titulo')
-    Lyrics For Us
+    Discos | Lyrics For Us
 @endsection
 
 @section('contenido')

@@ -1,7 +1,7 @@
 @extends('layouts.master_usuario')
 
 @section('titulo')
-    Lyrics For Us
+    {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}} ({{ $usuarioPerfil->nickname }}) | Lyrics For Us
 @endsection
 
 @section('contenido')
@@ -47,7 +47,13 @@
 						@endif
 
 						<hr class="lfu-separador">
-						<div class="perfil-dato-usuario"><i class="fa fa-user-circle-o lfu-fa-icon" aria-hidden="true"></i> {{ $usuarioPerfil->nickname }}</div>
+						
+						<div class="perfil-dato-usuario">
+							<strong>
+								<i class="fa fa-user-circle-o lfu-fa-icon" aria-hidden="true"></i>
+								{{ $usuarioPerfil->nickname }} 
+							</strong>
+						</div>
 						@if ( $usuarioPerfil->resumen )
 							<div class="perfil-dato-usuario resumen-usuario"> "{{ $usuarioPerfil->resumen }}"</div>
 						@endif
