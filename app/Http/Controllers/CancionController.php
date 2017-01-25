@@ -28,6 +28,13 @@ class CancionController extends Controller
         // Mostrar la información de una canción.
         return view('userview.canciones.ver_informacion', ['usuario' => Auth::User()]);
     }
+
+    public function getImagenCancion($imagenNombre)
+    {
+        // Se obtiene la portada de la canción para mostrarla en pantalla.
+        $avatar = Storage::disk('img-canciones')->get($imagenNombre);
+        return new Response($avatar, 200);
+    }
     
     public function comentar(Request $request, $id_cancion)
     {

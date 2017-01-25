@@ -28,6 +28,13 @@ class DiscoController extends Controller
         // Mostrar la información de un disco.
         return view('userview.discos.ver_informacion', ['usuario' => Auth::User()]);
     }
+
+    public function getImagenDisco($imagenNombre)
+    {
+        // Se obtiene la portada del disco para mostrarla en pantalla.
+        $avatar = Storage::disk('img-discos')->get($imagenNombre);
+        return new Response($avatar, 200);
+    }
     
     public function comentar(Request $request, $id_disco)
     {

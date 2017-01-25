@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Artista;
+use App\ComentarioArtista;
 use App\ArtistaFavorito;
 
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 
-
+use DateTime;
 
 class ArtistaController extends Controller
 {
@@ -24,7 +25,7 @@ class ArtistaController extends Controller
     {
         // Mostrar la vista con todas las opciones disponibles para seleccionar a un artista.
 
-        // Consultar los mas populares...
+        // Consultar los más populares...
         $artistas = null;
 
         return view('userview.artistas.index', ['usuario' => Auth::User(), 
@@ -74,12 +75,107 @@ class ArtistaController extends Controller
     public function verInformacion($id_artista)
     {
         // Mostrar la información de un artista específico.
-        return view('userview.artistas.ver_informacion', ['usuario' => Auth::User()]);
+        $artista = Artista::find($id_artista);
+        
+        if ( $artista ) {
+
+            $nombresArtista = null;
+
+            $discosArtista = $artista->discos;
+            // $comments = App\Post::find(1)->comments()->where('title', 'foo')->first();
+
+            $comentariosArtista = DB::table('comentarios_artistas AS a')
+            ->join('usuarios AS b', 'a.usuario_id', '=', 'b.id')
+            ->where('a.artista_id', $artista->id)
+            ->select('a.id', 'a.descripcion', 'a.fecha', 'a.usuario_id', 'b.nickname', 'b.nombre', 'b.apellido', 'b.imagen AS imagen_usuario')
+            ->orderBy('fecha', 'desc')
+            ->get();
+
+            return view('userview.artistas.ver_informacion', ['usuario' => Auth::User(),
+                                                          'artista' => $artista,
+                                                          'nombresArtista' => $nombresArtista,
+                                                          'discosArtista' => $discosArtista,
+                                                          'comentariosArtista' => $comentariosArtista]);
+        } else {
+            // Mostrar mensaje si el id_artista es FAAALSSSOOO o llevar al INDEX del módulo Artistas
+            return redirect()->action('ArtistaController@index');
+        }
+
+        
+    }
+
+    // Método para actualizar la imagen del artista.
+    public function actualizarImagen(Request $request, $id_artista)
+    {
+        $this->validate($request, ['imagen' => 'required|mimes:jpg,jpeg,bmp,png|max:5000']);
+
+        $artista = Artista::find($id_artista);
+        $imagen = $request->file('imagen');
+
+        // Para obtener la extensión (formato) de la imagen subida.
+        $imagenInfo = getimagesize($imagen);
+        $extension = image_type_to_extension($imagenInfo[2]);
+
+        // Se establece el nombre de la imagen (ID de usuario seguido de la extensión de la imagen).
+        $imagenNombre = $artista->id.$extension;
+        $imagenUbicacion = 'img-artistas/'.$imagenNombre;
+
+        // Si el artista ya posee una imagen almacenada, entonces dicha imagen es eliminada.
+        if ($artista->imagen) {
+            Storage::Delete('img-artistas/'.$artista->imagen);
+            Storage::Delete('img-artistas/thumbnail_'.$artista->imagen);
+            $artista->imagen = null;
+            $artista->save();
+        }
+       
+        // Se almacena la nueva imagen del artista.
+        $imagenAlmacenada = Storage::put($imagenUbicacion, file_get_contents($imagen->getRealPath()));
+
+        // Si la imagen fue almacenada...
+        if($imagenAlmacenada){
+            // Se crea el thumbnail de la imagen.
+            $thumbnail = Image::make($imagen->getRealPath()); // use this if you want facade style code
+            $thumbnail->resize(intval(100), null, function($constraint) {
+                 $constraint->aspectRatio();
+            });
+            $thumbnail->save(storage_path('app/img-artistas'). '/thumbnail_'.$imagenNombre);
+
+            // Se guarda el nombre de la imagen en la BD.
+            $artista->imagen = $imagenNombre;
+            $artista->save();
+        }
+
+        $mensaje = "La imagen del artista ha sido actualizada.";
+
+        return redirect()->back()->withInput()->with(['mensaje' => $mensaje]);
+    }
+
+    public function getImagenArtista($imagenNombre)
+    {
+        // Se obtiene la imagen del artista para mostrarla en pantalla.
+        $avatar = Storage::disk('img-artistas')->get($imagenNombre);
+        return new Response($avatar, 200);
     }
     
     public function comentar(Request $request, $id_artista)
     {
         // Registrar el comentario realizado sobre un artista.
+        $this->validate($request, ['descripcion-comentario' => 'required|string']);
+
+        $usuario = Auth::User();
+
+        $comentarioArtista = new ComentarioArtista();
+
+        $comentarioArtista->descripcion = $request['descripcion-comentario'];
+        $comentarioArtista->fecha = new DateTime();
+        $comentarioArtista->artista_id = $id_artista;
+        $comentarioArtista->usuario_id = $usuario->id; 
+
+        $comentarioArtista->save();
+
+        $mensaje = "El comentario ha sido enviado exitosamente.";
+
+        return redirect()->back()->with(['mensaje' => $mensaje]);
     }
     
     public function favorito($id_artista)

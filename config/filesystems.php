@@ -53,6 +53,21 @@ return [
             'root' => storage_path('app/avatars'),
         ],
 
+        'img-artistas' => [
+            'driver' => 'local',
+            'root' => storage_path('app/img-artistas'),
+        ],
+
+        'img-discos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/img-discos'),
+        ],
+
+        'img-canciones' => [
+            'driver' => 'local',
+            'root' => storage_path('app/img-canciones'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

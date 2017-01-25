@@ -32,7 +32,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/artistas/{id_artista}', 'ArtistaController@verInformacion')->name('artistas.informacion');
     Route::post('/artistas/{id_artista}/comentar', 'ArtistaController@comentar')->name('artistas.comentar')->middleware('auth');
     Route::post('/artistas/{id_artista}/favorito', 'ArtistaController@favorito')->name('artistas.favorito')->middleware('auth');
-
+    Route::post('/artistas/actualizar-imagen/{id_artista}', 'ArtistaController@actualizarImagen')->name('artistas.actualizar_imagen');//->middleware('auth');
 
     # DISCOS
 
@@ -124,6 +124,10 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/avatar/{imagenNombre}', 'UsuarioController@getAvatarUsuario')->name('usuario.avatar');
     Route::post('/avatar/eliminar', 'UsuarioController@eliminarAvatarUsuario')->name('usuario.eliminar_avatar')->middleware('auth');
+    Route::get('/imagen-artista/{imagenNombre}', 'ArtistaController@getImagenArtista')->name('artistas.imagen');
+    Route::get('/imagen-disco/{imagenNombre}', 'DiscoController@getImagenDisco')->name('discos.imagen');
+    Route::get('/imagen-cancion/{imagenNombre}', 'CancionController@getImagenCancion')->name('canciones.imagen');
+
 
 
     # RUTAS PARA MODO ADMINISTRADOR
