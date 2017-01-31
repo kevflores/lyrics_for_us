@@ -1,4 +1,4 @@
-<span class="lfu-texto-italic">"{{ $letraProvista->titulo }}"</span>
+<strong><span class="lfu-texto-italic">"{{ $letraProvista->titulo }}"</span></strong>
 <?php 
 	$id_cancion = $letraProvista->cancion_id; 
 	$artistasPrincipales = App\Cancion::find($id_cancion)->artistas()->where('invitado', false)->orderBy('artistas.nombre')->get();

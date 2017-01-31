@@ -106,30 +106,43 @@
     	</div>
 
     	<div class="lfu-seccion-dividida col-xs-12 col-sm-8"  style="">
-    		{{-- Sección de Letras --}}
-	    	<div class="panel panel-primary artista-seccion-discografia" id="lfu-artista-panel-discografia" style="">
+    		{{-- Sección de la Discografía del Artista --}}
+	    	<div class="panel panel-primary artista-seccion-discografia" id="lfu-artista-panel-discografia">
 				<div class="panel-heading" id="lfu-artista-panel-heading-discografia">Discografía de {{ $artista->nombre }}</div>
 				<div class="panel-body" id="lfu-artista-panel-body-discografia">
 
 					{{-- Si el artista tiene discos... --}}
 					{{-- COLOCAR CADA UNO EN UN WELL O ALGO ASÍ--}}
-
-			    	@if ( count($artista->discos) )
-			    	Discos
-			    	<br>
-			    	<br>
-			    		@foreach ( $artista->discos as $disco )
-			    			"{{ $disco->titulo }}"
-			    			{{-- Y se muestran las canciones que pertenecen al disco --}}
-			    			<br>Canciones<br>
-			    			@foreach ( (App\Disco::find($disco->id)->canciones) as $cancion )
-			    				"{{ $cancion->titulo }}"
-			    				<br>
-			    			@endforeach
-			    			<br>
-			    		@endforeach
-			    	<br>
-			    	<br>
+					@if ( count($artista->discos) )
+						<div class="">
+							<span class="label label-info">Discos</span>
+					    	<hr class="lfu-separador" style="border-top: 0px;">
+					    	@foreach ( $artista->discos()->orderBy('fecha', 'desc')->get() as $disco )
+							<div>
+								<div>
+									<strong>"<a class="lfu-enlace-sin-decoracion lfu-texto-italic" data-toggle="collapse" href="#collapse{{ $disco->id }}">{{ $disco->titulo }}</a>"</strong> ({{ date('Y', strtotime($disco->fecha))}})
+								</div>
+								{{-- Y se muestran las canciones que pertenecen al disco --}}
+								<div id="collapse{{ $disco->id }}" class="collapse">
+									<a href="{{ route('discos.informacion', ['id_disco' => $disco->id]) }}" title="">Ver información</a>
+									<br>
+									@if ( count((App\Disco::find($disco->id)->canciones)) )
+										Lista de canciones:
+										<hr class="lfu-separador-cancion-misma-fecha">
+										@foreach ( (App\Disco::find($disco->id)->canciones()->orderBy('numero')->get()) as $cancion )
+											<a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}" title=""><span class="lfu-texto-italic">{{ $cancion->titulo }}</span></a>
+											<hr class="lfu-separador-cancion-misma-fecha">
+										@endforeach
+										<hr class="lfu-separador" style="border-top: 0px;">
+									@else
+									 {{-- Se coloca un separador pequeño, ya que no se muestra la lista de canciones del disco--}}
+									 	<hr class="lfu-separador-simple" style="border-top: 0px;">
+									@endif
+									
+								</div>
+							</div>
+							@endforeach
+						</div>
 			    	@endif
 
 			    	{{-- Si el artista tiene canciones que no están incluidas en ningún disco... --}}

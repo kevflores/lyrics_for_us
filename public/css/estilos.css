@@ -150,6 +150,7 @@ body {
 #lfu-panel-heading-default {
     background-color: rgba(92, 180, 238, 1);
     font-size: 14px;
+    border-color: rgba(68, 154, 208, 1);
     font-weight: bold;
     border-bottom: none;
     border-bottom-left-radius: 0px;
@@ -413,6 +414,7 @@ th {
 #lfu-inicio-panel-heading-topusuarios {
     background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
     font-size: 14px;
+    border-color: rgba(68, 154, 208, 1);
 }
 
 #lfu-inicio-panel-heading-topusuarios {
@@ -432,10 +434,12 @@ th {
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
+        border-color: rgba(68, 154, 208, 1);
     }
 
     #lfu-inicio-panel-ultimasletras, #lfu-inicio-panel-heading-ultimasletras {
         border-top-right-radius: 0px;
+        border-color: rgba(68, 154, 208, 1);
     } 
 }
 
@@ -676,7 +680,8 @@ th {
 #lfu-artista-panel-heading-datos, #lfu-artista-panel-heading-discografia,
 #lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios {
     background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
-    font-size: 14px;
+    font-size: 14px;border-color: rgba(68, 154, 208, 1);
+    border-color: rgba(68, 154, 208, 1);
 }
 
 #lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios
@@ -699,6 +704,14 @@ th {
 .otroNombreArtista:last-child::after {
     /* Se le agrega un punto final al último nombre alternativo del artista */
     content: '.';
+}
+
+.disco-collapse:link, .disco-collapse:visited {
+    color: inherit;
+}
+
+.disco-collapse:hover, .disco-collapse:active {
+    color: inherit;
 }
 
 @media (min-width: 768px) {
@@ -816,6 +829,11 @@ th {
     margin-bottom: 13px;
 }
 
+.lfu-separador-simple {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
 .lfu-separador-cancion-misma-fecha {
     border-top: 0px; 
     margin-bottom: 3px;
@@ -850,6 +868,7 @@ th {
 #lfu-perfil-panel-heading-opciones, #lfu-panel-heading-comentarios {
     background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
     font-size: 14px;
+    border-color: rgba(68, 154, 208, 1);
 }
 
 #lfu-perfil-panel-heading-opciones, #lfu-panel-heading-comentarios
