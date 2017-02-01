@@ -82,6 +82,15 @@ class ArtistaController extends Controller
 
             $nombresArtista = $artista->nombresAlternativos;
 
+            // Se obtiene el número de usuarios que han agregado al Artista a sus Favoritos
+            $numeroFavoritos = $artista->usuarios()->count();
+
+            $usuario = Auth::User();
+            // Se verifica si el usuario autenticado tiene al Artista en sus Favoritos
+            $usuarioFavorito = $artista->usuarios()
+                                        ->where('usuario_id', $usuario->id)
+                                        ->where('artista_id', $artista->id)->first();
+
             // Discos propios
             $discosArtista = $artista->discos()->orderBy('fecha', 'desc')->get();
 
@@ -112,10 +121,12 @@ class ArtistaController extends Controller
             return view('userview.artistas.ver_informacion', ['usuario' => Auth::User(),
                                                           'artista' => $artista,
                                                           'nombresArtista' => $nombresArtista,
+                                                          'numeroFavoritos' => $numeroFavoritos,
                                                           'discosArtista' => $discosArtista,
                                                           'cancionesArtistaSinDisco' => $cancionesArtistaSinDisco,
                                                           'cancionesArtistaInvitado' => $cancionesArtistaInvitado,
                                                           'cancionesArtistaPrincipalEnOtroDisco' => $cancionesArtistaPrincipalEnOtroDisco,
+                                                          'usuarioFavorito' => $usuarioFavorito,
                                                           'comentariosArtista' => $comentariosArtista]);
         } else {
             // Mostrar mensaje si el id_artista es FAAALSSSOOO o llevar al INDEX del módulo Artistas
@@ -199,9 +210,33 @@ class ArtistaController extends Controller
         return redirect()->back()->with(['mensaje' => $mensaje]);
     }
     
-    public function favorito($id_artista)
+    public function favorito(Request $request)
     {
         // Agregar o quitar como favorito (del usuario autenticado) a un artista específico.
+        $usuario = Auth::user();
+        $this->validate($request, ['id_artista' => 'required|integer']);
+        $id_artista = $request['id_artista'];
+        $artista = Artista::find($id_artista);
+
+        if ( $artista ) {
+            
+            try {
+                $artistaFavorito = new ArtistaFavorito();
+
+                $artistaFavorito->artista_id = $id_artista;
+                $artistaFavorito->usuario_id = $usuario->id;
+                $artistaFavorito->fecha = new DateTime();
+                $artistaFavorito->save();
+
+            } catch ( \Illuminate\Database\QueryException $e) {
+                return redirect()->back()->with('mensajeError', 'Ya está en tu lista.');
+            }
+
+            return redirect()->back()->with('mensaje', 'Se ha agredado a '.$artista->nombre.' a su lista de artistas favoritos.');
+        } else {
+            return redirect()->back()->with('mensajeError', 'Error. El artista no pudo ser agregado a su lista de favoritos.');
+        }
+
     }
     
 }

@@ -93,12 +93,22 @@
 				<div class="panel-heading" id="lfu-artista-panel-heading-popularidad">Popularidad</div>
 				<div class="panel-body" id="lfu-artista-panel-body-popularidad">
 					<div class="artista-cantidad-favoritos">
-						A 10 usuarios les gusta {{ $artista->nombre }}
+						@if ( count($usuarioFavorito) )
+							A ti y a {{ $numeroFavoritos + 100 - 1 }} usuarios más les gusta {{ $artista->nombre }}
+						@else
+							A {{ $numeroFavoritos + 100 }} usuarios les gusta {{ $artista->nombre }}
+						@endif
+						
 					</div>
 					@if ($usuario)
 						<div class="artista-opcion">
-							<i class="fa fa-star lfu-fa-icon" aria-hidden="true"></i> 
-							<a href="#">Agregar a mis artistas favoritos</b></a>
+							
+							<form action="{{ route('artistas.favorito') }}" method="post">
+								{!! csrf_field() !!}
+								<input type="hidden" name="id_artista" value="{{ $artista->id }}">
+								<i class="fa fa-star lfu-fa-icon" aria-hidden="true"></i> 
+								<button type="submit" class="btn btn-link" value="submit">Agregar a mis artistas favoritos</b></button>
+							</form>
 						</div>
 					@endif
 				</div>

@@ -31,7 +31,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/artistas/por/{seleccion}', 'ArtistaController@verLista')->name('artistas.lista');
     Route::get('/artistas/{id_artista}', 'ArtistaController@verInformacion')->name('artistas.informacion');
     Route::post('/artistas/{id_artista}/comentar', 'ArtistaController@comentar')->name('artistas.comentar')->middleware('auth');
-    Route::post('/artistas/{id_artista}/favorito', 'ArtistaController@favorito')->name('artistas.favorito')->middleware('auth');
+    Route::post('/artistas/favorito', 'ArtistaController@favorito')->name('artistas.favorito')->middleware('auth');
     Route::post('/artistas/actualizar-imagen/{id_artista}', 'ArtistaController@actualizarImagen')->name('artistas.actualizar_imagen')->middleware('auth');
 
     # DISCOS
