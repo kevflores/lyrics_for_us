@@ -623,19 +623,19 @@ th {
 }
 
 #lfu-artista-panel-discografia {
-    /*overflow-x: hidden;*/
+    /*overflow: hidden;*/
     overflow-x: hidden;
     min-height: 700px;
     max-height: 700px;
 }
 
 #lfu-artista-panel-body-discografia{
-    /*overflow-x: hidden;*/
+    /*overflow: hidden;*/
     overflow-x: hidden;
     min-height: 657px;
     max-height: 657px;
     padding-bottom: 15px;
-    margin-right: 14px;
+    /*margin-right: 14px;*/
 }
 
 .artista-cantidad-favoritos {
@@ -821,7 +821,7 @@ th {
     min-height: 657px;
     max-height: 657px;
     padding-bottom: 15px;
-    margin-right: 14px;
+    /*margin-right: 14px;*/
 }
 
 .lfu-separador {

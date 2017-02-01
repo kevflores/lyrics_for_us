@@ -81,10 +81,27 @@ class ArtistaController extends Controller
         if ( $artista ) {
 
             $nombresArtista = $artista->nombresAlternativos;
-/*
-            $discosArtista = $artista->discos;
-            // $comments = App\Post::find(1)->comments()->where('title', 'foo')->first();
-*/
+
+            // Discos propios
+            $discosArtista = $artista->discos()->orderBy('fecha', 'desc')->get();
+
+            // Canciones no incluidas en discos
+            $cancionesArtistaSinDisco = $artista->canciones->where('pivot.invitado', FALSE)->where('disco_id', NULL);
+
+            // Colaboraciones como artista invitado con otros artistas
+            $cancionesArtistaInvitado = $artista->canciones->where('pivot.invitado', TRUE);
+
+            // Colaboraciones como artista principal, pero en un disco que no pertenezca al artista
+            $cancionesArtistaPrincipalEnOtroDisco = DB::table('canciones AS a')
+            ->join('canciones_artistas AS b', 'a.id', '=', 'b.cancion_id')
+            ->join('discos AS c', 'a.disco_id', '=', 'c.id')
+            ->where('b.invitado', FALSE)
+            ->where('b.artista_id', $artista->id)
+            ->where('c.artista_id', '<>', $artista->id)
+            ->select('a.id', 'a.titulo')
+            ->orderBy('fecha', 'desc')
+            ->get();
+
             $comentariosArtista = DB::table('comentarios_artistas AS a')
             ->join('usuarios AS b', 'a.usuario_id', '=', 'b.id')
             ->where('a.artista_id', $artista->id)
@@ -92,22 +109,13 @@ class ArtistaController extends Controller
             ->orderBy('fecha', 'desc')
             ->get();
 
-
-            // Discos propios
-            $discosArtista = $artista->discos;
-
-            // Canciones no incluidas en discos
-            $cancionesArtistaSinDisco = $artista;
-
-            // Colaboraciones como artista invitado con otros artistas
-            $cancionesArtistaInvitado = $artista->canciones()->where('invitado', true);
-
             return view('userview.artistas.ver_informacion', ['usuario' => Auth::User(),
                                                           'artista' => $artista,
                                                           'nombresArtista' => $nombresArtista,
                                                           'discosArtista' => $discosArtista,
                                                           'cancionesArtistaSinDisco' => $cancionesArtistaSinDisco,
                                                           'cancionesArtistaInvitado' => $cancionesArtistaInvitado,
+                                                          'cancionesArtistaPrincipalEnOtroDisco' => $cancionesArtistaPrincipalEnOtroDisco,
                                                           'comentariosArtista' => $comentariosArtista]);
         } else {
             // Mostrar mensaje si el id_artista es FAAALSSSOOO o llevar al INDEX del módulo Artistas

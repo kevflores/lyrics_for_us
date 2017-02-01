@@ -113,11 +113,11 @@
 
 					{{-- Si el artista tiene discos... --}}
 					{{-- COLOCAR CADA UNO EN UN WELL O ALGO ASÍ--}}
-					@if ( count($artista->discos) )
+					@if ( count($discosArtista) )
 						<div class="">
 							<span class="label label-info">Discos</span>
 					    	<hr class="lfu-separador" style="border-top: 0px;">
-					    	@foreach ( $artista->discos()->orderBy('fecha', 'desc')->get() as $disco )
+					    	@foreach ( $discosArtista as $disco )
 							<div>
 								<div>
 									<strong>"<a class="lfu-enlace-sin-decoracion lfu-texto-italic" data-toggle="collapse" href="#collapse{{ $disco->id }}">{{ $disco->titulo }}</a>"</strong> ({{ date('Y', strtotime($disco->fecha))}})
@@ -127,11 +127,13 @@
 									<a href="{{ route('discos.informacion', ['id_disco' => $disco->id]) }}" title="">Ver información</a>
 									<br>
 									@if ( count((App\Disco::find($disco->id)->canciones)) )
-										Lista de canciones:
 										<hr class="lfu-separador-cancion-misma-fecha">
+										Lista de canciones:
+										<br>
 										@foreach ( (App\Disco::find($disco->id)->canciones()->orderBy('numero')->get()) as $cancion )
 											<a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}" title=""><span class="lfu-texto-italic">{{ $cancion->titulo }}</span></a>
-											<hr class="lfu-separador-cancion-misma-fecha">
+											@include('includes.imprimir_artistas_invitados')
+											<br>
 										@endforeach
 										<hr class="lfu-separador" style="border-top: 0px;">
 									@else
@@ -143,32 +145,51 @@
 							</div>
 							@endforeach
 						</div>
+						<hr class="lfu-separador">
 			    	@endif
 
 			    	{{-- Si el artista tiene canciones que no están incluidas en ningún disco... --}}
-			    	@if ( count($artista->canciones->where('pivot.invitado', FALSE)->where('disco_id', NULL)) )
-			    	Canciones sin disco
-			    	<br>
-			    	<br>
-			    		@foreach ( $artista->canciones->where('pivot.invitado', FALSE)->where('disco_id', NULL) as $cancion )
-			    			"{{ $cancion->titulo }}"
-			    		@endforeach
-			    	<br>
-			    	<br>
+			    	@if ( count($cancionesArtistaSinDisco) )
+			    		<div class="">
+							<span class="label label-info">Canciones sin Disco</span>
+					    	<hr class="lfu-separador" style="border-top: 0px;">
+							@foreach ( $cancionesArtistaSinDisco as $cancion )
+								"<strong><a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}" title=""><span class="lfu-texto-italic">{{ $cancion->titulo }}</span></a></strong>"
+								@include('includes.imprimir_artistas_invitados')
+								<br>
+							@endforeach
+						</div>
+						<hr class="lfu-separador">
 			    	@endif
 			    	
-			    	{{-- Si el artista ha colaborado como invitado en canciones de otros artistas... --}}
-			    	@if ( count($artista->canciones->where('pivot.invitado', TRUE)) )
-			    	Colaboraciones
-			    	<br>
-			    	<br>
-			    		@foreach ( $artista->canciones->where('pivot.invitado', TRUE) as $cancion )
-			    			"{{ $cancion->titulo }}"
-			    		@endforeach
-			    	<br>
-			    	<br>
-			    	@endif
-			        
+			    	{{-- Si el artista ha colaborado como invitado en canciones de otros artistas, y
+			    	si el artista ha colaborado como artista principal en una canción, pero ésta
+			    	ha sido incluida en un disco que no forma parte de su discografía... --}}
+			    	@if ( count($cancionesArtistaInvitado) || count($cancionesArtistaPrincipalEnOtroDisco))
+			    		@if ( count($cancionesArtistaInvitado) )
+				    		<div class="">
+								<span class="label label-info">Colaboraciones con Otros Artistas</span>
+						    	<hr class="lfu-separador" style="border-top: 0px;">
+								@foreach ( $cancionesArtistaInvitado as $cancion )
+									"<strong><a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}" title=""><span class="lfu-texto-italic">{{ $cancion->titulo }}</span></a></strong>"
+									@include('includes.imprimir_artistas_principales')
+									<br>
+								@endforeach
+							</div>
+						@endif
+						@if ( count($cancionesArtistaPrincipalEnOtroDisco) )
+				    		<div class="">
+								<span class="label label-info">Colaboraciones con Otros Artistas</span>
+						    	<hr class="lfu-separador" style="border-top: 0px;">
+								@foreach ( $cancionesArtistaPrincipalEnOtroDisco as $cancion )
+									"<strong><a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}" title=""><span class="lfu-texto-italic">{{ $cancion->titulo }}</span></a></strong>"
+									@include('includes.imprimir_artistas_principales')
+									<br>
+								@endforeach
+							</div>
+						@endif
+						<hr class="lfu-separador">
+					@endif
 				</div>
 			</div>
     	</div>
