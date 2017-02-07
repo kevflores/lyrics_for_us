@@ -96,7 +96,6 @@ $(document).ready(function(){
     // Al momento de presionar "Confirmar Actualización" de la contraeña.
     $("#enviarNuevaPassword").click(function(){
         $("#lfu-configuracion-panel-body-password".form).submit(); 
-        
         $("#actualizarPasswordModal").modal('hide');                // Se oculta el modal
     });
 
@@ -345,6 +344,16 @@ $(document).ready(function(){
     $(".subirImagen").change(function(e) {
         var fileName = e.target.files[0].name;
         $(".spanImagen").text('Imagen: "' + fileName + '"');
+    });
+
+    // Al presionar el enlace "Agregar a mi lista de artistas favoritos".
+    $("#lfu-agregar-artista-favoritos").click(function(){
+        $("#lfu-agregar-artista-favoritos-form").submit(); 
+    });
+
+    // Al presionar el enlace "Eliminar de mi lista de artistas favoritos".
+    $("#lfu-eliminar-artista-favoritos").click(function(){
+        $("#lfu-eliminar-artista-favoritos-form").submit(); 
     });
 
     /*    

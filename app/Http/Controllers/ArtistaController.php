@@ -77,7 +77,8 @@ class ArtistaController extends Controller
     {
         // Mostrar la información de un artista específico.
         $artista = Artista::find($id_artista);
-        
+        $usuario = Auth::User();
+
         if ( $artista ) {
 
             $nombresArtista = $artista->nombresAlternativos;
@@ -85,11 +86,15 @@ class ArtistaController extends Controller
             // Se obtiene el número de usuarios que han agregado al Artista a sus Favoritos
             $numeroFavoritos = $artista->usuarios()->count();
 
-            $usuario = Auth::User();
-            // Se verifica si el usuario autenticado tiene al Artista en sus Favoritos
-            $usuarioFavorito = $artista->usuarios()
-                                        ->where('usuario_id', $usuario->id)
-                                        ->where('artista_id', $artista->id)->first();
+            if ( $usuario ) {
+                // En caso de que el usuario esté autenticado, se verifica
+                // si dicho usuario tiene al Artista en sus Favoritos.
+                $usuarioFavorito = $artista->usuarios()
+                                            ->where('usuario_id', $usuario->id)
+                                            ->where('artista_id', $artista->id)->first();
+            } else {
+                $usuarioFavorito = json_decode (null); // Se crea un objeto vacío.
+            }
 
             // Discos propios
             $discosArtista = $artista->discos()->orderBy('fecha', 'desc')->get();
@@ -118,7 +123,14 @@ class ArtistaController extends Controller
             ->orderBy('fecha', 'desc')
             ->get();
 
-            return view('userview.artistas.ver_informacion', ['usuario' => Auth::User(),
+            // Se verifica si el artista posee discografía.
+            if ( count($discosArtista) || count($cancionesArtistaSinDisco) || count($cancionesArtistaInvitado) || count($cancionesArtistaPrincipalEnOtroDisco) ) {
+                $sinDiscografia = false;
+            } else {
+                $sinDiscografia = true;
+            }
+
+            return view('userview.artistas.ver_informacion', ['usuario' => $usuario,
                                                           'artista' => $artista,
                                                           'nombresArtista' => $nombresArtista,
                                                           'numeroFavoritos' => $numeroFavoritos,
@@ -127,9 +139,9 @@ class ArtistaController extends Controller
                                                           'cancionesArtistaInvitado' => $cancionesArtistaInvitado,
                                                           'cancionesArtistaPrincipalEnOtroDisco' => $cancionesArtistaPrincipalEnOtroDisco,
                                                           'usuarioFavorito' => $usuarioFavorito,
+                                                          'sinDiscografia' => $sinDiscografia,
                                                           'comentariosArtista' => $comentariosArtista]);
         } else {
-            // Mostrar mensaje si el id_artista es FAAALSSSOOO o llevar al INDEX del módulo Artistas
             return redirect()->action('ArtistaController@index');
         }
 
@@ -214,27 +226,36 @@ class ArtistaController extends Controller
     {
         // Agregar o quitar como favorito (del usuario autenticado) a un artista específico.
         $usuario = Auth::user();
+
         $this->validate($request, ['id_artista' => 'required|integer']);
-        $id_artista = $request['id_artista'];
-        $artista = Artista::find($id_artista);
+        $this->validate($request, ['opcion' => 'required']);
 
-        if ( $artista ) {
-            
-            try {
-                $artistaFavorito = new ArtistaFavorito();
+        $artista = Artista::find($request['id_artista']);
+        $opcion = $request['opcion'];
 
-                $artistaFavorito->artista_id = $id_artista;
-                $artistaFavorito->usuario_id = $usuario->id;
-                $artistaFavorito->fecha = new DateTime();
-                $artistaFavorito->save();
-
-            } catch ( \Illuminate\Database\QueryException $e) {
-                return redirect()->back()->with('mensajeError', 'Ya está en tu lista.');
+        if ( $artista && ( $opcion === 'agregar' || $opcion === 'eliminar' ) ) {
+            if ( $opcion === 'agregar' ) {
+                // El artista se debe agregar a la lista de favoritos del usuario.
+                try {
+                    $artistaFavorito = new ArtistaFavorito();
+                    $artistaFavorito->artista_id = $artista->id;
+                    $artistaFavorito->usuario_id = $usuario->id;
+                    $artistaFavorito->fecha = new DateTime();
+                    $artistaFavorito->save();
+                } catch ( \Illuminate\Database\QueryException $e) {
+                    return redirect()->back()->with('mensajeError', $artista->nombre.' ya está en tu lista de artistas favoritos.');
+                }
+                return redirect()->back()->with('mensaje', $artista->nombre.' ha sido agregado a tu lista de artistas favoritos.');
+            } else {
+                // El artista se debe eliminar de la lista de favoritos del usuario.
+                $artistaFavorito = ArtistaFavorito::where('artista_id', $artista->id)
+                                                    ->where('usuario_id', $usuario->id)
+                                                    ->first();
+                $artistaFavorito->delete();
+                return redirect()->back()->with('mensaje', $artista->nombre.' ha sido eliminado de tu lista de artistas favoritos.');
             }
-
-            return redirect()->back()->with('mensaje', 'Se ha agredado a '.$artista->nombre.' a su lista de artistas favoritos.');
         } else {
-            return redirect()->back()->with('mensajeError', 'Error. El artista no pudo ser agregado a su lista de favoritos.');
+            return redirect()->back()->with('mensajeError', 'Error.');
         }
 
     }

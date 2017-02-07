@@ -68,6 +68,7 @@ body {
     border-top: 0px;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
+    border-color: rgba(68, 154, 208, 1);
 }
 
 .panel-primary.panel-footer.sin-texto {

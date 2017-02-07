@@ -70,9 +70,10 @@
 			<div class="panel-primary panel-footer sin-texto lfu-panel-footer-default"></div>
 		</div>
 	</div>
-    
-	<div class="col-xs-12"> 
-		{{ $artistas->links() }}
-	</div>
+    @if ( is_obj_empty($artistas) )
+		<div class="col-xs-12"> 
+			{{ $artistas->links() }}
+		</div>
+	@endif
 
 @endsection

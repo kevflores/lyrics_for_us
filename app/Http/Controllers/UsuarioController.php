@@ -285,7 +285,7 @@ class UsuarioController extends Controller
         
         if ( $usuario->email === $request['email'] ) {
 
-            $mensaje = "El correo electrónico introducido es su correo electrónico actual.";
+            $mensaje = "El correo electrónico introducido es tu correo electrónico actual.";
             return redirect()->back()->withInput()->with(['mensajeError' => $mensaje, 'correoActual' => '1']);
 
         } else {
