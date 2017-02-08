@@ -400,7 +400,6 @@ th {
 
 #lfu-inicio-panel-ultimasletras, #lfu-inicio-panel-topusuarios, #lfu-inicio-panel-topcanciones {
     border-color: rgba(68, 154, 208, 1);
-    //border-radius: 0px;
     border-bottom-right-radius: 0px; 
     border-bottom-left-radius: 0px;
     margin-bottom:0px;
@@ -413,7 +412,7 @@ th {
 
 #lfu-inicio-panel-heading-topcanciones, #lfu-inicio-panel-heading-ultimasletras,
 #lfu-inicio-panel-heading-topusuarios {
-    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    background-color: rgba(92, 180, 238, 1);
     font-size: 14px;
     border-color: rgba(68, 154, 208, 1);
 }
@@ -685,8 +684,7 @@ th {
     border-color: rgba(68, 154, 208, 1);
 }
 
-#lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios
-{
+#lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios {
     border-radius: 0px;
 }
 
@@ -872,8 +870,7 @@ th {
     border-color: rgba(68, 154, 208, 1);
 }
 
-#lfu-perfil-panel-heading-opciones, #lfu-panel-heading-comentarios
-{
+#lfu-perfil-panel-heading-opciones, #lfu-panel-heading-comentarios {
     border-radius: 0px;
 }
 
@@ -911,6 +908,7 @@ a[href="#lfu-panel-collapse-comentarios"] {
 #lfu-panel-heading-comentarios {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+    border-color: rgba(68, 154, 208, 1);
 }
 
 .seleccionarImagen {
@@ -1014,6 +1012,7 @@ a[href="#lfu-panel-collapse-comentarios"] {
     font-size: 14px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
+    border-color: rgba(68, 154, 208, 1);
 }
 
 #lfu-panel-artistas-favoritos {
@@ -1185,8 +1184,9 @@ a[href="#lfu-panel-collapse-comentarios"] {
 }
 
 #lfu-panel-mensaje-heading {
-    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    background-color: rgba(92, 180, 238, 1); 
     font-size: 14px;
+    border-color: rgba(68, 154, 208, 1);
 }
 
 /* FIN DE ESTILOS PARA EL SUBMÓDULO "MENSAJES" */
@@ -1209,6 +1209,7 @@ a[href="#lfu-panel-collapse-comentarios"] {
     border-bottom: none;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    border-color: rgba(68, 154, 208, 1);
 }
 
 #lfu-solicitud {
@@ -1230,6 +1231,7 @@ a[href="#lfu-panel-collapse-comentarios"] {
     border-top: 0px;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
+    border-color: rgba(68, 154, 208, 1);
 }
 
 #lfu-configuracion-panel-datos {
@@ -1302,7 +1304,8 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
 #lfu-configuracion-panel-heading-imagen, #lfu-configuracion-panel-heading-datos,
 #lfu-configuracion-panel-heading-password, #lfu-configuracion-panel-heading-correo {
-    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    background-color: rgba(92, 180, 238, 1); 
+    border-color: rgba(68, 154, 208, 1);
     font-size: 14px;
 }
 

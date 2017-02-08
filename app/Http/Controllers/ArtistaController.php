@@ -38,11 +38,10 @@ class ArtistaController extends Controller
     {
         // Mostrar la lista de artistas asociados a la selección del usuario.
 
-        // Validar que selección sea "top" o "#" o "a" - "z" o "A" - "Z" o "nn" o "NN"
-        // Mostrar msj de error en caso que de que sea distinto...
+        // Validar que selección sea "top" o "numero" o "a" - "z" o "A" - "Z"
         if ( $seleccion === 'top') {
 
-            // Consultar los mas populares...
+            // Consultar los más populares...
             $artistas = null;
 
         } elseif ( $seleccion === 'numero' ) {
@@ -80,15 +79,13 @@ class ArtistaController extends Controller
         $usuario = Auth::User();
 
         if ( $artista ) {
-
             $nombresArtista = $artista->nombresAlternativos;
 
             // Se obtiene el número de usuarios que han agregado al Artista a sus Favoritos
             $numeroFavoritos = $artista->usuarios()->count();
 
             if ( $usuario ) {
-                // En caso de que el usuario esté autenticado, se verifica
-                // si dicho usuario tiene al Artista en sus Favoritos.
+                // En caso de que el usuario esté autenticado, se verifica si dicho usuario tiene al Artista en sus Favoritos.
                 $usuarioFavorito = $artista->usuarios()
                                             ->where('usuario_id', $usuario->id)
                                             ->where('artista_id', $artista->id)->first();
@@ -144,8 +141,6 @@ class ArtistaController extends Controller
         } else {
             return redirect()->action('ArtistaController@index');
         }
-
-        
     }
 
     // Método para actualizar la imagen del artista.

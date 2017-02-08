@@ -32,10 +32,6 @@
 							@endforeach
 						</div> 
 					@elseif ( $cantidad === 2 || $cantidad === 4 )
-
-									
-
-
 						<div id="lfu-artistas-listado-dos" style="margin: auto 0;text-align:center;">
 							@foreach ($artistas as $artista)
 								<a class="lfu-enlace-sin-decoracion-well" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}">

@@ -156,7 +156,7 @@
 
 					@if ( $sinDiscografia ) 
 						<hr class="lfu-separador">
-						Aún existen registros del trabajo musical del artista.
+						Aún no existen registros del trabajo musical del artista.
 						<span style="font-style:italic;color:red;">(Mostrar imagen)</span>
 						{{-- Mostrar alguna imagen alusiva --}}
 						<hr class="lfu-separador">
