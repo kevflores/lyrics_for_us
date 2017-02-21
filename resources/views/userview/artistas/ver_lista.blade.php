@@ -2,7 +2,7 @@
 
 @section('titulo')
     Artistas
-    @if ( $seleccion !== 'top' )
+    @if ( ($seleccion !== 'top') && ($seleccion !== 'numero') )
     	(Letra {{ strtoupper($seleccion) }})
     @endif
      | Lyrics For Us

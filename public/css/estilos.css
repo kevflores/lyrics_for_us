@@ -758,6 +758,7 @@ th {
 
 /* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS (SECCIÓN INDIVIDUAL POR ARTISTA)" */
 
+
 /* ESTILOS PARA EL MÓDULO "DISCOS (BÚSQUEDA Y LISTADO)" */
 
 .well-disco-nombre {
@@ -959,8 +960,199 @@ th {
 /* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS (SECCIÓN INDIVIDUAL POR ARTISTA)" */
 
 
-/* ESTILOS PARA EL MÓDULO "CANCIONES" */
-/* FIN DE ESTILOS PARA EL MÓDULO "CANCIONES" */
+/* ESTILOS PARA EL MÓDULO "CANCIONES (BÚSQUEDA Y LISTADO)" */
+
+.well-cancion-nombre {
+    transition: ease 0.19s all;
+}
+
+.well-cancion-nombre:hover {
+    background-color: #588EF2;
+}
+
+@media (max-width: 767px) {
+
+    #lfu-canciones-listado, #lfu-canciones-listado-dos {
+        line-height: 20px;
+    }
+
+}
+
+@media (min-width: 768px) {
+
+    #lfu-canciones-listado {
+        -webkit-column-count: 3; /* Chrome, Safari, Opera */
+        -moz-column-count: 3; /* Firefox */
+        column-count: 3;
+
+        -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+        -moz-column-gap: 40px; /* Firefox */
+        column-gap: 40px;
+
+        -webkit-column-rule: 4px outset rgba(68, 154, 208, 1); /* Chrome, Safari, Opera */
+        -moz-column-rule: 4px outset rgba(68, 154, 208, 1); /* Firefox */
+        column-rule: 4px outset rgba(68, 154, 208, 1);
+    }
+
+    #lfu-canciones-listado-dos {
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+
+        -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+        -moz-column-gap: 40px; /* Firefox */
+        column-gap: 40px;
+
+        -webkit-column-rule: 4px outset rgba(68, 154, 208, 1); /* Chrome, Safari, Opera */
+        -moz-column-rule: 4px outset rgba(68, 154, 208, 1); /* Firefox */
+        column-rule: 4px outset rgba(68, 154, 208, 1);
+    }
+
+}
+
+/* FIN DE ESTILOS PARA EL MÓDULO "CANCIONES (BÚSQUEDA Y LISTADO)" */
+
+
+/* ESTILOS PARA EL MÓDULO "CANCIONES (SECCIÓN INDIVIDUAL POR CANCIÓN)"*/
+
+#lfu-cancion-panel-datos {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    min-height: 550px;
+    max-height: 550px;
+    margin-bottom: 0px;
+}
+
+#lfu-cancion-panel-body-datos {
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 507px;
+    max-height: 507px;
+    padding-bottom: 15px;
+}
+
+#lfu-cancion-panel-popularidad {
+    overflow: hidden;
+    min-height: 150px;
+    max-height: 150px;
+    margin-bottom: 0px;
+}
+
+#lfu-cancion-panel-body-popularidad {
+    overflow: auto;
+    min-height: 107px;
+    max-height: 107px;
+    padding-bottom: 15px;
+}
+
+#lfu-cancion-panel-canciones {
+    /*overflow: hidden;*/
+    overflow-x: hidden;
+    min-height: 700px;
+    max-height: 700px;
+}
+
+#lfu-cancion-panel-body-canciones{
+    /*overflow: hidden;*/
+    overflow-x: hidden;
+    min-height: 657px;
+    max-height: 657px;
+    padding-bottom: 15px;
+    /*margin-right: 14px;*/
+}
+
+.cancion-cantidad-favoritos {
+    margin-bottom: 10px;
+}
+
+#lfu-cancion-panel-datos, #lfu-cancion-panel-popularidad, #lfu-cancion-panel-canciones {
+    border-color: rgba(68, 154, 208, 1);
+    border-bottom-right-radius: 0px; 
+    border-bottom-left-radius: 0px;
+    margin-bottom:0px;
+}
+
+#lfu-panel-cancion-comentarios {
+    border-color: rgba(68, 154, 208, 1);
+    margin-bottom:0px;
+}
+
+#lfu-cancion-panel-popularidad, #lfu-panel-cancion-comentarios {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#lfu-cancion-panel-heading-datos, #lfu-cancion-panel-heading-canciones,
+#lfu-cancion-panel-heading-popularidad, #lfu-cancion-panel-heading-comentarios {
+    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    font-size: 14px;border-color: rgba(68, 154, 208, 1);
+    border-color: rgba(68, 154, 208, 1);
+}
+
+#lfu-cancion-panel-heading-popularidad, #lfu-cancion-panel-heading-comentarios {
+    border-radius: 0px;
+}
+
+.cancion-dato, .cancion-opcion {
+    margin-bottom: 7px;
+}
+
+.cancion-opcion:last-child {
+    margin-bottom: 0px;
+}
+
+.resumen-cancion {
+    font-style: italic;
+}
+
+@media (min-width: 768px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-cancion-panel-canciones {
+        border-left: none;
+    }
+    #lfu-cancion-panel-popularidad, #lfu-panel-cancion-comentarios {
+        border-top: none;
+    }
+
+    #lfu-cancion-panel-datos, #lfu-cancion-panel-heading-datos {
+        border-top-right-radius: 0px;
+    }
+
+    #lfu-cancion-panel-canciones, #lfu-cancion-panel-heading-canciones {
+        border-top-left-radius: 0px;
+    }
+
+    /* Para no permitir que el nombre (del artista) largos sobrepasen el panel*/
+    #lfu-cancion-panel-heading-datos, #lfu-cancion-panel-heading-canciones,
+    #lfu-cancion-panel-heading-popularidad, #lfu-cancion-panel-heading-comentarios {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        /* max-height: 40px; */
+    }
+}
+
+@media (max-width: 767px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-cancion-panel-canciones, #lfu-cancion-panel-popularidad, #lfu-panel-cancion-comentarios {
+        border-top: none;
+    }
+
+    #lfu-cancion-panel-canciones, #lfu-cancion-panel-heading-canciones {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    #lfu-cancion-panel-datos, #lfu-cancion-panel-popularidad, #lfu-cancion-panel-canciones {
+        max-height: 5000px;
+    }
+
+    #lfu-cancion-panel-body-datos, #lfu-cancion-panel-body-popularidad, #lfu-cancion-panel-body-canciones {
+        max-height: 4957px;
+    }
+}
+
+/* FIN DE ESTILOS PARA EL MÓDULO "CANCIONES (SECCIÓN INDIVIDUAL POR CANCIÓN)" */
 
 
 /* ESTILOS PARA EL SUBMÓDULO "PERFIL DE USUARIO" */
