@@ -26,7 +26,7 @@ class DiscoController extends Controller
     {
         // Mostrar la vista con todas las opciones disponibles para seleccionar a un disco.
 
-        // Consultar los discos más populares...
+        // Consultar los discos más populares... y REUTILIZAR código en $seleccion === 'top'
         $discos = null;
 
         return view('userview.discos.index', ['usuario' => Auth::User(), 
@@ -41,7 +41,7 @@ class DiscoController extends Controller
         // Validar que selección sea "top" o "numero" o "a" - "z" o "A" - "Z"
         if ( $seleccion === 'top') {
 
-            // Consultar los más populares...
+            // Consultar los más populares... REUTILIZAR código de index();
             $discos = null;
 
         } elseif ( $seleccion === 'numero' ) {
@@ -115,6 +115,52 @@ class DiscoController extends Controller
         }
     }
 
+    // Método para actualizar la portada del disco.
+    public function actualizarImagen(Request $request, $id_disco)
+    {
+        $this->validate($request, ['imagen' => 'required|mimes:jpg,jpeg,bmp,png|max:5000']);
+
+        $disco = Disco::find($id_disco);
+        $imagen = $request->file('imagen');
+
+        // Para obtener la extensión (formato) de la imagen subida.
+        $imagenInfo = getimagesize($imagen);
+        $extension = image_type_to_extension($imagenInfo[2]);
+
+        // Se establece el nombre de la imagen (ID de usuario seguido de la extensión de la imagen).
+        $imagenNombre = $disco->id.$extension;
+        $imagenUbicacion = 'img-discos/'.$imagenNombre;
+
+        // Si el disco ya posee una imagen almacenada, entonces dicha imagen es eliminada.
+        if ($disco->portada) {
+            Storage::Delete('img-discos/'.$disco->portada);
+            Storage::Delete('img-discos/thumbnail_'.$disco->portada);
+            $disco->portada = null;
+            $disco->save();
+        }
+       
+        // Se almacena la nueva imagen del disco.
+        $imagenAlmacenada = Storage::put($imagenUbicacion, file_get_contents($imagen->getRealPath()));
+
+        // Si la imagen fue almacenada...
+        if($imagenAlmacenada){
+            // Se crea el thumbnail de la imagen.
+            $thumbnail = Image::make($imagen->getRealPath());
+            $thumbnail->resize(intval(100), null, function($constraint) {
+                 $constraint->aspectRatio();
+            });
+            $thumbnail->save(storage_path('app/img-discos'). '/thumbnail_'.$imagenNombre);
+
+            // Se guarda el nombre de la imagen en la BD.
+            $disco->portada = $imagenNombre;
+            $disco->save();
+        }
+
+        $mensaje = "La portada del disco ha sido actualizada.";
+
+        return redirect()->back()->withInput()->with(['mensaje' => $mensaje]);
+    }
+
     public function getImagenDisco($imagenNombre)
     {
         // Se obtiene la portada del disco para mostrarla en pantalla.
@@ -125,10 +171,64 @@ class DiscoController extends Controller
     public function comentar(Request $request, $id_disco)
     {
         // Registrar el comentario realizado sobre un disco.
+        $this->validate($request, ['descripcion-comentario' => 'required|string']);
+
+        try {
+            $usuario = Auth::User();
+
+            $comentarioDisco = new ComentarioDisco();
+
+            $comentarioDisco->descripcion = $request['descripcion-comentario'];
+            $comentarioDisco->fecha = new DateTime();
+            $comentarioDisco->disco_id = $id_disco;
+            $comentarioDisco->usuario_id = $usuario->id; 
+            $comentarioDisco->save();
+
+            $mensaje = "El comentario ha sido enviado exitosamente.";
+        } catch ( \Illuminate\Database\QueryException $e) {
+            return redirect()->back()->with('mensajeError', 'El comentario no pudo ser enviado.');
+        }
+        return redirect()->back()->with(['mensaje' => $mensaje]);
     }
     
-    public function favorito($id_disco)
+    public function favorito(Request $request)
     {
         // Agregar o quitar como favorito (del usuario autenticado) a un disco.
+        $usuario = Auth::user();
+
+        $this->validate($request, ['id_disco' => 'required|integer']);
+        $this->validate($request, ['opcion' => 'required']);
+
+        $disco = Disco::find($request['id_disco']);
+        $opcion = $request['opcion'];
+
+        if ( $disco && ( $opcion === 'agregar' || $opcion === 'eliminar' ) ) {
+            if ( $opcion === 'agregar' ) {
+                // El disco se debe agregar a la lista de favoritos del usuario.
+                try {
+                    $discoFavorito = new DiscoFavorito();
+                    $discoFavorito->disco_id = $disco->id;
+                    $discoFavorito->usuario_id = $usuario->id;
+                    $discoFavorito->fecha = new DateTime();
+                    $discoFavorito->save();
+                } catch ( \Illuminate\Database\QueryException $e) {
+                    return redirect()->back()->with('mensajeError', '"'.$disco->titulo.'" ya está en tu lista de discos favoritos.');
+                }
+                return redirect()->back()->with('mensaje', '"'.$disco->titulo.'" ha sido agregado a tu lista de discos favoritos.');
+            } else {
+                // El disco se debe eliminar de la lista de favoritos del usuario.
+                try {
+                    $discoFavorito = DiscoFavorito::where('disco_id', $disco->id)
+                                                    ->where('usuario_id', $usuario->id)
+                                                    ->first();
+                    $discoFavorito->delete();
+                } catch ( \Illuminate\Database\QueryException $e) {
+                    return redirect()->back()->with('mensajeError', 'Error en la eliminación de la lista de favoritos.');
+                }   
+                return redirect()->back()->with('mensaje', '"'.$disco->titulo.'" ha sido eliminado de tu lista de discos favoritos.');
+            }
+        } else {
+            return redirect()->back()->with('mensajeError', 'Error.');
+        }
     }
 }

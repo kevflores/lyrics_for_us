@@ -211,6 +211,22 @@ th {
     color: white;
 }
 
+.lfu-separador {
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+.lfu-separador-cancion-misma-fecha {
+    border-top: 0px; 
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+
+.lfu-separador-comentarios {
+    margin-top:0px;
+    margin-bottom:13px;
+}
+
 /* FIN DE ESTILOS GENERALES */
 
 
@@ -534,10 +550,6 @@ th {
 
 /* ESTILOS PARA EL MÓDULO "ARTISTAS (BÚSQUEDA Y LISTADO)" */
 
-#lfu-artistas-opciones {
-
-}
-
 .well-artista-nombre {
     transition: ease 0.19s all;
 }
@@ -642,22 +654,6 @@ th {
     margin-bottom: 10px;
 }
 
-.lfu-separador {
-    margin-top: 13px;
-    margin-bottom: 13px;
-}
-
-.lfu-separador-cancion-misma-fecha {
-    border-top: 0px; 
-    margin-bottom: 3px;
-    margin-top: 3px;
-}
-
-.lfu-separador-comentarios {
-    margin-top:0px;
-    margin-bottom:13px;
-}
-
 #lfu-artista-panel-datos, #lfu-artista-panel-popularidad, #lfu-artista-panel-discografia {
     border-color: rgba(68, 154, 208, 1);
     //border-radius: 0px;
@@ -666,25 +662,25 @@ th {
     margin-bottom:0px;
 }
 
-#lfu-panel-comentarios {
+#lfu-panel-artista-comentarios {
     border-color: rgba(68, 154, 208, 1);
     //border-radius: 0px;
     margin-bottom:0px;
 }
 
-#lfu-artista-panel-popularidad, #lfu-panel-comentarios {
+#lfu-artista-panel-popularidad, #lfu-panel-artista-comentarios {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
 
 #lfu-artista-panel-heading-datos, #lfu-artista-panel-heading-discografia,
-#lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios {
+#lfu-artista-panel-heading-popularidad, #lfu-artista-panel-heading-comentarios {
     background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
     font-size: 14px;border-color: rgba(68, 154, 208, 1);
     border-color: rgba(68, 154, 208, 1);
 }
 
-#lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios {
+#lfu-artista-panel-heading-popularidad, #lfu-artista-panel-heading-comentarios {
     border-radius: 0px;
 }
 
@@ -718,7 +714,7 @@ th {
     #lfu-artista-panel-discografia {
         border-left: none;
     }
-    #lfu-artista-panel-popularidad, #lfu-panel-comentarios {
+    #lfu-artista-panel-popularidad, #lfu-panel-artista-comentarios {
         border-top: none;
     }
 
@@ -732,7 +728,7 @@ th {
 
     /* Para no permitir que el nombre (del artista) largos sobrepasen el panel*/
     #lfu-artista-panel-heading-datos, #lfu-artista-panel-heading-discografia,
-    #lfu-artista-panel-heading-popularidad, #lfu-panel-heading-comentarios {
+    #lfu-artista-panel-heading-popularidad, #lfu-artista-panel-heading-comentarios {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -742,7 +738,7 @@ th {
 
 @media (max-width: 767px) {
     /* Para no mostrar 'doble borde' entre paneles adyacentes*/
-    #lfu-artista-panel-discografia, #lfu-artista-panel-popularidad, #lfu-panel-comentarios {
+    #lfu-artista-panel-discografia, #lfu-artista-panel-popularidad, #lfu-panel-artista-comentarios {
         border-top: none;
     }
 
@@ -762,8 +758,205 @@ th {
 
 /* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS (SECCIÓN INDIVIDUAL POR ARTISTA)" */
 
-/* ESTILOS PARA EL MÓDULO "DISCOS" */
-/* FIN DE ESTILOS PARA EL MÓDULO "DISCOS" */
+/* ESTILOS PARA EL MÓDULO "DISCOS (BÚSQUEDA Y LISTADO)" */
+
+.well-disco-nombre {
+    transition: ease 0.19s all;
+}
+
+.well-disco-nombre:hover {
+    background-color: #588EF2;
+}
+
+@media (max-width: 767px) {
+
+    #lfu-discos-listado, #lfu-discos-listado-dos {
+        line-height: 20px;
+    }
+
+}
+
+@media (min-width: 768px) {
+
+    #lfu-discos-listado {
+        -webkit-column-count: 3; /* Chrome, Safari, Opera */
+        -moz-column-count: 3; /* Firefox */
+        column-count: 3;
+
+        -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+        -moz-column-gap: 40px; /* Firefox */
+        column-gap: 40px;
+
+        -webkit-column-rule: 4px outset rgba(68, 154, 208, 1); /* Chrome, Safari, Opera */
+        -moz-column-rule: 4px outset rgba(68, 154, 208, 1); /* Firefox */
+        column-rule: 4px outset rgba(68, 154, 208, 1);
+    }
+
+    #lfu-discos-listado-dos {
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+
+        -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+        -moz-column-gap: 40px; /* Firefox */
+        column-gap: 40px;
+
+        -webkit-column-rule: 4px outset rgba(68, 154, 208, 1); /* Chrome, Safari, Opera */
+        -moz-column-rule: 4px outset rgba(68, 154, 208, 1); /* Firefox */
+        column-rule: 4px outset rgba(68, 154, 208, 1);
+    }
+
+}
+
+/* FIN DE ESTILOS PARA EL MÓDULO "DISCOS (BÚSQUEDA Y LISTADO)" */
+
+
+/* ESTILOS PARA EL MÓDULO "DISCOS (SECCIÓN INDIVIDUAL POR DISCO)"*/
+
+#lfu-disco-panel-datos {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    min-height: 550px;
+    max-height: 550px;
+    margin-bottom: 0px;
+}
+
+#lfu-disco-panel-body-datos {
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 507px;
+    max-height: 507px;
+    padding-bottom: 15px;
+}
+
+#lfu-disco-panel-popularidad {
+    overflow: hidden;
+    min-height: 150px;
+    max-height: 150px;
+    margin-bottom: 0px;
+}
+
+#lfu-disco-panel-body-popularidad {
+    overflow: auto;
+    min-height: 107px;
+    max-height: 107px;
+    padding-bottom: 15px;
+}
+
+#lfu-disco-panel-canciones {
+    /*overflow: hidden;*/
+    overflow-x: hidden;
+    min-height: 700px;
+    max-height: 700px;
+}
+
+#lfu-disco-panel-body-canciones{
+    /*overflow: hidden;*/
+    overflow-x: hidden;
+    min-height: 657px;
+    max-height: 657px;
+    padding-bottom: 15px;
+    /*margin-right: 14px;*/
+}
+
+.disco-cantidad-favoritos {
+    margin-bottom: 10px;
+}
+
+#lfu-disco-panel-datos, #lfu-disco-panel-popularidad, #lfu-disco-panel-canciones {
+    border-color: rgba(68, 154, 208, 1);
+    border-bottom-right-radius: 0px; 
+    border-bottom-left-radius: 0px;
+    margin-bottom:0px;
+}
+
+#lfu-panel-disco-comentarios {
+    border-color: rgba(68, 154, 208, 1);
+    margin-bottom:0px;
+}
+
+#lfu-disco-panel-popularidad, #lfu-panel-disco-comentarios {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#lfu-disco-panel-heading-datos, #lfu-disco-panel-heading-canciones,
+#lfu-disco-panel-heading-popularidad, #lfu-disco-panel-heading-comentarios {
+    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    font-size: 14px;border-color: rgba(68, 154, 208, 1);
+    border-color: rgba(68, 154, 208, 1);
+}
+
+#lfu-disco-panel-heading-popularidad, #lfu-disco-panel-heading-comentarios {
+    border-radius: 0px;
+}
+
+.disco-dato, .disco-opcion {
+    margin-bottom: 7px;
+}
+
+.disco-opcion:last-child {
+    margin-bottom: 0px;
+}
+
+.resumen-disco {
+    font-style: italic;
+}
+
+.lfu-separador-cancion-mismo-disco {
+    border-top: 0px; 
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+
+@media (min-width: 768px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-disco-panel-canciones {
+        border-left: none;
+    }
+    #lfu-disco-panel-popularidad, #lfu-panel-disco-comentarios {
+        border-top: none;
+    }
+
+    #lfu-disco-panel-datos, #lfu-disco-panel-heading-datos {
+        border-top-right-radius: 0px;
+    }
+
+    #lfu-disco-panel-canciones, #lfu-disco-panel-heading-canciones {
+        border-top-left-radius: 0px;
+    }
+
+    /* Para no permitir que el nombre (del artista) largos sobrepasen el panel*/
+    #lfu-disco-panel-heading-datos, #lfu-disco-panel-heading-canciones,
+    #lfu-disco-panel-heading-popularidad, #lfu-disco-panel-heading-comentarios {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        /* max-height: 40px; */
+    }
+}
+
+@media (max-width: 767px) {
+    /* Para no mostrar 'doble borde' entre paneles adyacentes*/
+    #lfu-disco-panel-canciones, #lfu-disco-panel-popularidad, #lfu-panel-disco-comentarios {
+        border-top: none;
+    }
+
+    #lfu-disco-panel-canciones, #lfu-disco-panel-heading-canciones {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    #lfu-disco-panel-datos, #lfu-disco-panel-popularidad, #lfu-disco-panel-canciones {
+        max-height: 5000px;
+    }
+
+    #lfu-disco-panel-body-datos, #lfu-disco-panel-body-popularidad, #lfu-disco-panel-body-canciones {
+        max-height: 4957px;
+    }
+}
+
+/* FIN DE ESTILOS PARA EL MÓDULO "ARTISTAS (SECCIÓN INDIVIDUAL POR ARTISTA)" */
 
 
 /* ESTILOS PARA EL MÓDULO "CANCIONES" */
@@ -831,12 +1024,6 @@ th {
 .lfu-separador-simple {
     margin-top: 7px;
     margin-bottom: 7px;
-}
-
-.lfu-separador-cancion-misma-fecha {
-    border-top: 0px; 
-    margin-bottom: 3px;
-    margin-top: 3px;
 }
 
 .lfu-separador-comentarios {
@@ -1084,12 +1271,6 @@ a[href="#lfu-panel-collapse-comentarios"] {
 .lfu-separador {
     margin-top: 13px;
     margin-bottom: 13px;
-}
-
-.lfu-separador-cancion-misma-fecha {
-    border-top: 0px; 
-    margin-bottom: 3px;
-    margin-top: 3px;
 }
 
 .panel-footer-favoritos {

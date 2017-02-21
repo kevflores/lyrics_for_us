@@ -1,4 +1,4 @@
-<!-- Modal para crear comentario en la sección individual por Artista -->
+<!-- Modal para crear comentario en la sección individual por Canción -->
 <div class="modal fade" id="comentarModal" role="dialog">
 	<div class="modal-dialog">
 	<!-- Contenido del Modal-->

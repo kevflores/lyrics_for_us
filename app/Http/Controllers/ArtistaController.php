@@ -173,7 +173,7 @@ class ArtistaController extends Controller
         // Si la imagen fue almacenada...
         if($imagenAlmacenada){
             // Se crea el thumbnail de la imagen.
-            $thumbnail = Image::make($imagen->getRealPath()); // use this if you want facade style code
+            $thumbnail = Image::make($imagen->getRealPath());
             $thumbnail->resize(intval(100), null, function($constraint) {
                  $constraint->aspectRatio();
             });
@@ -252,7 +252,6 @@ class ArtistaController extends Controller
         } else {
             return redirect()->back()->with('mensajeError', 'Error.');
         }
-
     }
     
 }

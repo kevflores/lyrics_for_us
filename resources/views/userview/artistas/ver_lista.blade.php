@@ -1,7 +1,11 @@
 @extends('layouts.master_usuario')
 
 @section('titulo')
-    Artistas | Lyrics For Us
+    Artistas
+    @if ( $seleccion !== 'top' )
+    	(Letra {{ strtoupper($seleccion) }})
+    @endif
+     | Lyrics For Us
 @endsection
 
 @section('contenido')

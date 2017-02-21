@@ -40,8 +40,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/discos/por/{seleccion}', 'DiscoController@verLista')->name('discos.lista');
     Route::get('/discos/{id_disco}', 'DiscoController@verInformacion')->name('discos.informacion');
     Route::post('/discos/{id_disco}/comentar', 'DiscoController@comentar')->name('discos.comentar')->middleware('auth');
-    Route::post('/discos/{id_disco}/favorito', 'DiscoController@favorito')->name('discos.favorito')->middleware('auth');
-
+    Route::post('/discos/favorito', 'DiscoController@favorito')->name('discos.favorito')->middleware('auth');
+    Route::post('/discos/actualizar-imagen/{id_disco}', 'DiscoController@actualizarImagen')->name('discos.actualizar_imagen')->middleware('auth');
 
     # CANCIONES
 

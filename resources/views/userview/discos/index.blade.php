@@ -8,9 +8,9 @@
     
 	<div class="lfu-seccion-completa col-xs-12">
     	<div class="panel panel-primary" id="lfu-panel-default">
-			<div class="panel-heading" id="lfu-panel-heading-default">Artistas</div>
+			<div class="panel-heading" id="lfu-panel-heading-default">Discos</div>
 			<div class="panel-body" id="lfu-panel-body-default">
-				<div class="" id="lfu-artistas-opciones">
+				<div>
 					@include('includes.opciones_discos')
 				</div>
 				<hr class="lfu-separador">
@@ -25,7 +25,7 @@
 						<div style="margin: auto 0;text-align:center;">
 							@foreach ($discos as $disco)
 								<a class="lfu-enlace-sin-decoracion-well" href="{{ route('discos.informacion', ['id_disco' => $disco->id]) }}">
-									<div class="well well-sm well-artista-nombre">
+									<div class="well well-sm well-disco-nombre">
 										<strong>"{{ $disco->titulo }}"</strong> de 
 										{{ (App\Disco::find($disco->id)->artista)->nombre }}
 									</div>
@@ -33,10 +33,10 @@
 							@endforeach
 						</div> 
 					@elseif ( $cantidad === 2 || $cantidad === 4 )
-						<div id="lfu-artistas-listado-dos" style="margin: auto 0;text-align:center;">
+						<div id="lfu-discos-listado-dos" style="margin: auto 0;text-align:center;">
 							@foreach ($discos as $disco)
 								<a class="lfu-enlace-sin-decoracion-well" href="{{ route('discos.informacion', ['id_disco' => $disco->id]) }}">
-									<div class="well well-sm well-artista-nombre">
+									<div class="well well-sm well-disco-nombre">
 										<strong>"{{ $disco->titulo }}"</strong> de 
 										{{ (App\Disco::find($disco->id)->artista)->nombre }}
 									</div>
@@ -44,10 +44,10 @@
 							@endforeach
 						</div> 
 					@else
-						<div id="lfu-artistas-listado" style="margin: auto 0;text-align:center;">
+						<div id="lfu-discos-listado" style="margin: auto 0;text-align:center;">
 							@foreach ($discos as $disco)
 								<a class="lfu-enlace-sin-decoracion-well" href="{{ route('discos.informacion', ['id_disco' => $disco->id]) }}">
-									<div class="well well-sm well-artista-nombre">
+									<div class="well well-sm well-disco-nombre">
 										<strong>"{{ $disco->titulo }}"</strong> de 
 										{{ (App\Disco::find($disco->id)->artista)->nombre }}
 									</div>

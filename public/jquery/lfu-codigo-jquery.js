@@ -2,18 +2,30 @@ $(document).ready(function(){
 
     // Al presionar "Mostrar Comentarios" se muestra la sección de comentarios.
     $("a[class='ver-comentarios']").click(function(){
-        $("#lfu-panel-comentarios").toggleClass("no-border-bottom");
+        $("#lfu-panel-comentarios").toggleClass("no-border-bottom"); // Para el Perfil de Usuario.
+        $("#lfu-panel-artista-comentarios").toggleClass("no-border-bottom"); // Para la sección individual de Artista.
+        $("#lfu-panel-disco-comentarios").toggleClass("no-border-bottom"); // Para la sección individual de Disco.
+        $("#lfu-panel-cancion-comentarios").toggleClass("no-border-bottom"); // Para la sección individual de Canción.
         $(".ver-comentarios").hide();
         $(".ocultar-comentarios").show();
-        $("#lfu-panel-heading-comentarios").css("border-radius","0px");
+        $("#lfu-panel-heading-comentarios").css("border-radius","0px"); // Para el Perfil de Usuario.
+        $("#lfu-artista-panel-heading-comentarios").css("border-radius","0px"); // Para la sección individual de Artista.
+        $("#lfu-disco-panel-heading-comentarios").css("border-radius","0px"); // Para la sección individual de Disco.
+        $("#lfu-cancion-panel-heading-comentarios").css("border-radius","0px"); // Para la sección individual de Canción.
     });
 
     // Al presionar "Ocultar Comentarios" se oculta la sección de comentarios.
     $("a[class='ocultar-comentarios']").click(function(){
-        $("#lfu-panel-comentarios").toggleClass("no-border-bottom");
+        $("#lfu-panel-comentarios").toggleClass("no-border-bottom"); // Para el Perfil de Usuario.
+        $("#lfu-panel-artista-comentarios").toggleClass("no-border-bottom"); // Para la sección individual de Artista.
+        $("#lfu-panel-disco-comentarios").toggleClass("no-border-bottom"); // Para la sección individual de Disco.
+        $("#lfu-panel-cancion-comentarios").toggleClass("no-border-bottom"); // Para la sección individual de Canción.
         $(".ver-comentarios").show();
         $(".ocultar-comentarios").hide();
         $("#lfu-panel-heading-comentarios").css({"border-bottom-left-radius":"3px","border-bottom-right-radius":"3px"});
+        $("#lfu-artista-panel-heading-comentarios").css({"border-bottom-left-radius":"3px","border-bottom-right-radius":"3px"}); // Para la sección individual de Artista.
+        $("#lfu-disco-panel-heading-comentarios").css({"border-bottom-left-radius":"3px","border-bottom-right-radius":"3px"}); // Para la sección individual de Disco.
+        $("#lfu-cancion-panel-heading-comentarios").css({"border-bottom-left-radius":"3px","border-bottom-right-radius":"3px"}); // Para la sección individual de Canción.
     });
 
     // Al presionar "Comentar" se muestra el Modal para realizar el comentario.
@@ -354,6 +366,26 @@ $(document).ready(function(){
     // Al presionar el enlace "Eliminar de mi lista de artistas favoritos".
     $("#lfu-eliminar-artista-favoritos").click(function(){
         $("#lfu-eliminar-artista-favoritos-form").submit(); 
+    });
+
+    // Al presionar el enlace "Agregar a mi lista de discos favoritos".
+    $("#lfu-agregar-disco-favoritos").click(function(){
+        $("#lfu-agregar-disco-favoritos-form").submit(); 
+    });
+
+    // Al presionar el enlace "Eliminar de mi lista de discos favoritos".
+    $("#lfu-eliminar-disco-favoritos").click(function(){
+        $("#lfu-eliminar-disco-favoritos-form").submit(); 
+    });
+
+    // Al presionar el enlace "Agregar a mi lista de canciones favoritas".
+    $("#lfu-agregar-cancion-favoritos").click(function(){
+        $("#lfu-agregar-canciones-favoritos-form").submit(); 
+    });
+
+    // Al presionar el enlace "Eliminar de mi lista de canciones favoritas".
+    $("#lfu-eliminar-cancion-favoritos").click(function(){
+        $("#lfu-eliminar-canciones-favoritos-form").submit(); 
     });
 
     /*    

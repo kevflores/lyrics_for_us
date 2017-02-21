@@ -1,4 +1,4 @@
-<!-- Modal para crear comentario en la sección individual por Artista -->
+<!-- Modal para crear comentario en la sección individual por Disco -->
 <div class="modal fade" id="comentarModal" role="dialog">
 	<div class="modal-dialog">
 	<!-- Contenido del Modal-->
@@ -6,11 +6,11 @@
 			<div class="modal-header" >
 				<button type="button" class="close cerrar_modal" data-dismiss="modal">&times;</button>
 				<h4><span class="glyphicon glyphicon-pencil"></span>
-					Comentar sobre {{ $artista->nombre }}
+					Comentar sobre <strong>"{{ $disco->titulo }}"</strong>
 				</h4>
 			</div>
 			<div class="modal-body" >
-				<form action="{{ route('artistas.comentar', ['id_artista' => $artista->id]) }}" method="post">
+				<form action="{{ route('discos.comentar', ['id_disco' => $disco->id]) }}" method="post">
 					{!! csrf_field() !!}
 					<div class="form-group col-xs-12 {{ $errors->has('descripcion-comentario') ? 'has-error' : '' }}">
 						<textarea class="form-control" rows="8" cols="50" id="lfu-textarea-comentario" name="descripcion-comentario" placeholder="Ingresar comentario..." style="resize: none;" autofocus>{{ old('descripcion-comentario') }}</textarea>

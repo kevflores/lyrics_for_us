@@ -250,8 +250,8 @@
 
 	<div class="lfu-seccion-completa col-xs-12" >
 		{{-- Sección de Comentarios --}}
-		<div class="panel panel-primary artista-seccion-comentarios no-border-bottom" id="lfu-panel-comentarios">
-			<div class="panel-heading" id="lfu-panel-heading-comentarios">
+		<div class="panel panel-primary artista-seccion-comentarios no-border-bottom" id="lfu-panel-artista-comentarios">
+			<div class="panel-heading" id="lfu-artista-panel-heading-comentarios">
 				<i class="fa fa-comments-o" aria-hidden="true"></i> 
 				<a data-toggle="collapse" class="ver-comentarios" href="#lfu-panel-collapse-comentarios">Mostrar comentarios</a>
 				<a data-toggle="collapse" class="ocultar-comentarios" href="#lfu-panel-collapse-comentarios">Ocultar comentarios</a>
