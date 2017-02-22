@@ -541,12 +541,14 @@ th {
 
 
 /* ESTILOS GENÉRICOS PARA LOS MÓDULOS "ARTISTAS", "DISCOS" Y "CANCIONES"*/
-/* FIN DE ESTILOS GENÉRICOS PARA LOS MÓDULOS "ARTISTAS", "DISCOS" Y "CANCIONES"*/
 
 .lfu-opcion {
     margin: 1px;
     margin-bottom: 5px;
 }
+
+/* FIN DE ESTILOS GENÉRICOS PARA LOS MÓDULOS "ARTISTAS", "DISCOS" Y "CANCIONES"*/
+
 
 /* ESTILOS PARA EL MÓDULO "ARTISTAS (BÚSQUEDA Y LISTADO)" */
 
@@ -635,7 +637,7 @@ th {
 }
 
 #lfu-artista-panel-discografia {
-    /*overflow: hidden;*/
+    overflow-y: hidden;
     overflow-x: hidden;
     min-height: 700px;
     max-height: 700px;
@@ -845,7 +847,7 @@ th {
 }
 
 #lfu-disco-panel-canciones {
-    /*overflow: hidden;*/
+    overflow-y: hidden;
     overflow-x: hidden;
     min-height: 700px;
     max-height: 700px;
@@ -1047,6 +1049,7 @@ th {
 
 #lfu-cancion-panel-canciones {
     /*overflow: hidden;*/
+    overflow-y: hidden;
     overflow-x: hidden;
     min-height: 700px;
     max-height: 700px;
@@ -1195,6 +1198,7 @@ th {
 
 #lfu-perfil-panel-letras {
     /*overflow: hidden;*/
+    overflow-y: hidden;
     overflow-x: hidden;
     min-height: 700px;
     max-height: 700px;
@@ -1225,7 +1229,6 @@ th {
 
 #lfu-perfil-panel-datos, #lfu-perfil-panel-opciones, #lfu-perfil-panel-letras {
     border-color: rgba(68, 154, 208, 1);
-    //border-radius: 0px;
     border-bottom-right-radius: 0px; 
     border-bottom-left-radius: 0px;
     margin-bottom:0px;
@@ -1233,7 +1236,6 @@ th {
 
 #lfu-panel-comentarios {
     border-color: rgba(68, 154, 208, 1);
-    //border-radius: 0px;
     margin-bottom:0px;
 }
 

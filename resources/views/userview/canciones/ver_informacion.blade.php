@@ -35,13 +35,9 @@
 
 					<div class="cancion-dato">
 						<strong>
-							<i class="fa fa-play lfu-fa-icon" aria-hidden="true"></i>
+							<i class="fa fa-music lfu-fa-icon" aria-hidden="true"></i>
 							"{{ $cancion->titulo }}"
 						</strong>
-
-						<?php
-							$artistasPrincipales = $cancion->artistas()->where('invitado', false)->orderBy('artistas.nombre')->get();
-						?>
 
 						@if ( $artistasPrincipales->count() > 1 )
 							de 
@@ -63,8 +59,9 @@
 					</div>
 
 					@if ( $cancion->disco_id )
-						<div class="cancion-dato"> 
-							Disco: "<a class="lfu-enlace-sin-decoracion" href="{{ route('discos.informacion', ['id_disco' => $cancion->disco_id]) }}" title="">{{$cancion->disco()->first()->titulo}}</a>" ({{ date('Y', strtotime($cancion->disco()->first()->fecha)) }})
+						<div class="cancion-dato">
+							<i class="fa fa-play lfu-fa-icon" aria-hidden="true"></i>
+							<a class="lfu-enlace-sin-decoracion" href="{{ route('discos.informacion', ['id_disco' => $cancion->disco_id]) }}" title="">"{{$cancion->disco()->first()->titulo}}" ({{ date('Y', strtotime($cancion->disco()->first()->fecha)) }})</a>
 						</div>
 					@endif
 
@@ -97,7 +94,7 @@
 						@if ( count($usuarioFavorito) )
 							<div class="cancion-cantidad-favoritos">
 								@if ( $numeroFavoritos === 1 )
-									"{{ $cancion->titulo }}" es uno de tus canciones favoritas
+									"{{ $cancion->titulo }}" es una de tus canciones favoritas
 								@elseif ( $numeroFavoritos === 2 )
 									Tú y otro usuario tienen a "{{ $cancion->titulo }}" en su lista de canciones favoritas
 								@else 
@@ -118,11 +115,11 @@
 						@else
 							<div class="cancion-cantidad-favoritos">
 								@if ( $numeroFavoritos === 0)
-									"{{ $cancion->titulo }}" aún no ha sido agregado a una lista de canciones favoritas
+									"{{ $cancion->titulo }}" aún no ha sido agregada a una lista de canciones favoritas
 								@elseif ( $numeroFavoritos === 1)
-									"{{ $cancion->titulo }}" es uno de los canciones favoritas de un usuario
+									"{{ $cancion->titulo }}" es una de las canciones favoritas de un usuario
 								@else
-									"{{ $cancion->titulo }}" es uno de los canciones favoritas de <strong>{{ $numeroFavoritos }}</strong> usuarios
+									"{{ $cancion->titulo }}" es una de las canciones favoritas de <strong>{{ $numeroFavoritos }}</strong> usuarios
 								@endif
 							</div>
 							<div class="cancion-opcion">
@@ -140,11 +137,11 @@
 					@else
 						<div class="cancion-cantidad-favoritos">
 								@if ( $numeroFavoritos === 0)
-									"{{ $cancion->titulo }}" aún no ha sido agregado a una lista de canciones favoritas
+									"{{ $cancion->titulo }}" aún no ha sido agregada a una lista de canciones favoritas
 								@elseif ( $numeroFavoritos === 1)
-									"{{ $cancion->titulo }}" es uno de los canciones favoritas de un usuario
+									"{{ $cancion->titulo }}" es una de las canciones favoritas de un usuario
 								@else
-									"{{ $cancion->titulo }}" es uno de los canciones favoritas de <strong>{{ $numeroFavoritos }}</strong> usuarios
+									"{{ $cancion->titulo }}" es una de las canciones favoritas de <strong>{{ $numeroFavoritos }}</strong> usuarios
 								@endif
 							</div>
 					@endif
@@ -155,13 +152,13 @@
     	<div class="lfu-seccion-dividida col-xs-12 col-sm-8"  style="">
     		{{-- Sección de la letra de la cancion --}}
 	    	<div class="panel panel-primary cancion-seccion-canciones" id="lfu-cancion-panel-canciones">
-				<div class="panel-heading" id="lfu-cancion-panel-heading-canciones">Lista de canciones de "{{ $cancion->titulo }}"</div>
+				<div class="panel-heading" id="lfu-cancion-panel-heading-canciones">Letra de "{{ $cancion->titulo }}"</div>
 				<div class="panel-body" id="lfu-cancion-panel-body-canciones">
 
 					@if ( $cancion->letra ) 
 						<hr class="lfu-separador">
-						{{ $cancion->letra }}
-						{{-- Mostrar alguna imagen alusiva --}}
+						{{-- Se usa la función "nl2br" para que muestre los saltos de línea --}}
+						<?php echo nl2br($cancion->letra); ?>
 						<hr class="lfu-separador">
 					@else
 						{{-- Si el cancion tiene canciones... --}}

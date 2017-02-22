@@ -1,4 +1,4 @@
-<strong><span class="lfu-texto-italic">"{{ $letraProvista->titulo }}"</span></strong>
+<strong><span class="lfu-texto-italic">"<a href="{{ route('canciones.informacion', ['id_cancion' => $letraProvista->id] )}}" class="lfu-enlace-sin-decoracion">{{ $letraProvista->titulo }}</a>"</span></strong>
 <?php 
 	$id_cancion = $letraProvista->cancion_id; 
 	$artistasPrincipales = App\Cancion::find($id_cancion)->artistas()->where('invitado', false)->orderBy('artistas.nombre')->get();

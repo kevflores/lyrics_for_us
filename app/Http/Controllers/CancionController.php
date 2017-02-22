@@ -89,6 +89,12 @@ class CancionController extends Controller
                 $usuarioFavorito = json_decode (null); // Se crea un objeto vacío.
             }
 
+            // Se obtiene el listado de los artistas principales que participan en la canción.
+            $artistasPrincipales = $cancion->artistas()->where('invitado', false)->orderBy('artistas.nombre')->get();
+
+            // Se obtiene el listado de los artistas que participan como invitados en la canción.
+            $artistasInvitados = $cancion->artistas()->where('invitado', true)->orderBy('artistas.nombre')->get();
+
             $comentariosCancion = DB::table('comentarios_canciones AS a')
             ->join('usuarios AS b', 'a.usuario_id', '=', 'b.id')
             ->where('a.cancion_id', $cancion->id)
@@ -100,6 +106,8 @@ class CancionController extends Controller
                                                           'cancion' => $cancion,
                                                           'numeroFavoritos' => $numeroFavoritos,
                                                           'usuarioFavorito' => $usuarioFavorito,
+                                                          'artistasPrincipales' => $artistasPrincipales,
+                                                          'artistasInvitados' => $artistasInvitados,
                                                           'comentariosCancion' => $comentariosCancion]);
         } else {
             return redirect()->action('DiscoController@index');
