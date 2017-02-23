@@ -20,6 +20,7 @@ class CreateDiscosTable extends Migration
             $table->dateTime('fecha')->nullable();
             $table->text('portada')->nullable();
             $table->integer('artista_id')->unsigned();
+            $table->integer('visitas')->default(0);
             $table->timestamps();
 
             // Llaves foráneas

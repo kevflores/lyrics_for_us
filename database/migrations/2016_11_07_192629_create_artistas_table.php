@@ -18,6 +18,7 @@ class CreateArtistasTable extends Migration
             $table->string('nombre', 100)->unique();
             $table->string('resumen', 255)->nullable();
             $table->text('imagen')->nullable();
+            $table->integer('visitas')->default(0);
             $table->timestamps();
         });
     }

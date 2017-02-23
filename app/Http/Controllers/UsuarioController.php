@@ -153,8 +153,9 @@ class UsuarioController extends Controller
                                                          'comentariosUsuario' => $comentariosUsuario]);
         } 
         else {
+            // El usuario no fue encontrado en la BD, por ende, no existe.
             return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User(),
-                                                         'usuarioPerfil' => $usuarioPerfil]);
+                                                         'usuarioPerfil' => null]);
         }
     }
 
@@ -343,7 +344,8 @@ class UsuarioController extends Controller
         if ($request['_token']) {
             // Si la petición proviene del formulario de Configuración.
             $usuario = Auth::User();
-            Storage::Delete('avatars/'.$usuario->imagen);
+            Storage::Delete('avatars/'.$usuario->imagen); // Se elimina la imagen del storage
+            Storage::Delete('avatars/thumbnail_'.$usuario->imagen); // Se elimina su thumbnail correspondiente
             $usuario->imagen = null;
             $usuario->save();
             $mensaje = "La imagen de perfil ha sido eliminada.";

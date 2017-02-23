@@ -1,12 +1,17 @@
 @extends('layouts.master_usuario')
 
 @section('titulo')
-    {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}} ({{ $usuarioPerfil->nickname }}) | Lyrics For Us
+	@if ( $usuarioPerfil )
+    	{{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido}} ({{ $usuarioPerfil->nickname }})
+    @else
+    	Usuario Equivocado
+    @endif
+     | Lyrics For Us
 @endsection
 
 @section('contenido')
 
-	@if ($usuarioPerfil)
+	@if ( $usuarioPerfil )
 
 		@include('includes.bloque_de_mensajes')
 

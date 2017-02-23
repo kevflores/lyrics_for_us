@@ -27,7 +27,8 @@ class CreateCancionesTable extends Migration
             $table->integer('usuario_id')->unsigned()->nullable();
             $table->dateTime('fecha_letra_modificada')->nullable();
             $table->integer('usuario_modificador_id')->unsigned()->nullable();
-            $table->integer('visitas');
+            $table->integer('visitas')->default(0);
+            $table->integer('visitas_letra')->default(0);
             $table->timestamps();
 
             // Llaves foráneas

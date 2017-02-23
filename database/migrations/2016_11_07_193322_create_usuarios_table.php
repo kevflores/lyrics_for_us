@@ -23,6 +23,8 @@ class CreateUsuariosTable extends Migration
             $table->string('resumen', 255)->nullable();
             $table->string('url')->nullable();
             $table->string('ubicacion')->nullable();
+            $table->integer('visitas')->default(0);
+            $table->char('genero', 1)->default('I');
             $table->string('imagen')->nullable();
             $table->boolean('estado')->default(false);
             $table->boolean('permiso')->default(true);

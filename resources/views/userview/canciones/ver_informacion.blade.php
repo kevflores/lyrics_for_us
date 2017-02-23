@@ -56,6 +56,24 @@
 							@endforeach
 						@endif
 
+						@if ( $artistasInvitados->count() > 1 )
+							<?php
+								$primerArtista = true;
+								foreach ( $artistasInvitados as $artista ) {
+									if ( $primerArtista === true)
+										$invitados = $artista->nombre;
+									else
+										$invitados= $invitados." & ".$artista->nombre;
+									$primerArtista = false;
+								}
+							?>
+							(feat. {{$invitados}})
+						@else
+							@foreach ( $artistasInvitados as $artista )
+								(feat. {{ $artista->nombre }})
+							@endforeach
+						@endif
+
 					</div>
 
 					@if ( $cancion->disco_id )

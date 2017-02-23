@@ -32,6 +32,7 @@ $factory->define(App\Usuario::class, function (Faker\Generator $faker) {
         'url' => $faker->url,
         'ubicacion' => $faker->country,
         //'imagen' => $faker->imageUrl($width = 640, $height = 480),
+        'genero' => rand(0, 1) ? 'M' : 'F',
         'estado' => false,
         'permiso' => true,
         'remember_token' => str_random(10),
