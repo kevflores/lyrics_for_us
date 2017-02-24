@@ -1108,6 +1108,17 @@ th {
     font-style: italic;
 }
 
+.otro-featuring:last-child::after {
+    /* Se le agrega un cierre de paréntesis al nombre del último artista invitado en una canción*/
+    content: ')';
+}
+
+.lfu-usuario-proveedor {
+    font-weight: bold;;
+    margin-top: 13px;
+    margin-bottom: 6px;
+}
+
 @media (min-width: 768px) {
     /* Para no mostrar 'doble borde' entre paneles adyacentes*/
     #lfu-cancion-panel-canciones {

@@ -54,6 +54,7 @@
 					@endif
 
 					{{-- <!-- Código para actualizar la portada del disco [SE DEBE USAR al momento de implementar la función del Administrador] -->
+					@if ( $usuario )
 					<form action="{{ route('discos.actualizar_imagen', ['id_disco' => $disco->id]) }}" method="post", id='lfu-form-config-imagen' enctype="multipart/form-data">
 						{!! csrf_field() !!}
 						<div class="form-group col-xs-12 {{ $errors->has('imagen') ? 'has-error' : '' }}">
@@ -64,6 +65,7 @@
         				</div>
 						<button type="submit" class="btn btn-primary">Subir nueva imagen</button>
 					</form>
+					@endif
 					--}}
 					
 					<hr class="lfu-separador">

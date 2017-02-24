@@ -57,17 +57,15 @@
 						@endif
 
 						@if ( $artistasInvitados->count() > 1 )
-							<?php
-								$primerArtista = true;
-								foreach ( $artistasInvitados as $artista ) {
-									if ( $primerArtista === true)
-										$invitados = $artista->nombre;
-									else
-										$invitados= $invitados." & ".$artista->nombre;
-									$primerArtista = false;
-								}
-							?>
-							(feat. {{$invitados}})
+							<?php $primerArtista = true; ?>
+							@foreach ( $artistasInvitados as $artista )
+								@if ( $primerArtista === true)
+									(feat. <a class="lfu-enlace-sin-decoracion" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}" title="">{{ $artista->nombre }}</a>
+								@else
+									& <span class="otro-featuring"><a class="lfu-enlace-sin-decoracion" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}" title="">{{ $artista->nombre }}</a></span>
+								@endif
+								<?php $primerArtista = false; ?>
+							@endforeach
 						@else
 							@foreach ( $artistasInvitados as $artista )
 								(feat. {{ $artista->nombre }})
@@ -87,7 +85,27 @@
 						<div class="cancion-dato resumen-cancion"> "{{ $cancion->resumen }}"</div>
 					@endif
 
-					{{-- <!-- Código para actualizar la portada del cancion [SE DEBE USAR al momento de implementar la función del Administrador] -->
+					@if ( $cancion->numero )
+						<div class="cancion-dato">
+							<i class="fa fa-list-ol lfu-fa-icon" aria-hidden="true"></i>
+							Track N° {{ $cancion->numero }}
+						</div>
+					@endif
+
+					@if ( $cancion->autor )
+						<div class="cancion-dato">
+							<i class="fa fa-pencil lfu-fa-icon" aria-hidden="true"></i>
+							Escrita por {{ $cancion->autor }}
+						</div>
+					@endif
+
+					<div class="cancion-dato">
+						<i class="fa fa-eye lfu-fa-icon" aria-hidden="true"></i>
+						{{ $cancion->visitas }} visitas
+					</div>
+
+					 <!-- Código para actualizar la portada del cancion [SE DEBE USAR al momento de implementar la función del Administrador] -->
+					@if ( $usuario )
 					<form action="{{ route('canciones.actualizar_imagen', ['id_cancion' => $cancion->id]) }}" method="post", id='lfu-form-config-imagen' enctype="multipart/form-data">
 						{!! csrf_field() !!}
 						<div class="form-group col-xs-12 {{ $errors->has('imagen') ? 'has-error' : '' }}">
@@ -98,7 +116,8 @@
         				</div>
 						<button type="submit" class="btn btn-primary">Subir nueva imagen</button>
 					</form>
-					--}}
+					@endif
+					
 					
 					<hr class="lfu-separador">
 				</div>
@@ -177,13 +196,20 @@
 						<hr class="lfu-separador">
 						{{-- Se usa la función "nl2br" para que muestre los saltos de línea --}}
 						<?php echo nl2br($cancion->letra); ?>
+						
+						<div class="lfu-usuario-proveedor">
+							Letra provista por 
+							<a href="{{ route('usuario.perfil', ['nickname' => $usuarioProveedor->nickname]) }}" title="Ver perfil">{{ $usuarioProveedor->nickname }}</a> ({{ date('d/m/Y', strtotime($cancion->fecha_letra)) }})
+						</div>
+						
 						<hr class="lfu-separador">
 					@else
 						{{-- Si el cancion tiene canciones... --}}
 						<hr class="lfu-separador">
 						La letra de esta canción aún no ha sido registrada.
 						<br />
-						 ¿Deseas compartirla con nosotros?
+						<a id="lfu-proveer-letra" style="cursor:pointer">¿Deseas compartirla con nosotros?</a>
+						<br />
 						<span style="font-style:italic;color:red;">(Mostrar imagen)</span>
 						{{-- Mostrar alguna imagen alusiva --}}
 						<hr class="lfu-separador">

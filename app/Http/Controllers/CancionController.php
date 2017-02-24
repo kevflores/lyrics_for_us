@@ -95,6 +95,9 @@ class CancionController extends Controller
             // Se obtiene el listado de los artistas que participan como invitados en la canción.
             $artistasInvitados = $cancion->artistas()->where('invitado', true)->orderBy('artistas.nombre')->get();
 
+            $usuarioProveedor = $cancion->usuario()->first();
+            $usuarioModificador = $cancion->usuarioModificador();
+
             $comentariosCancion = DB::table('comentarios_canciones AS a')
             ->join('usuarios AS b', 'a.usuario_id', '=', 'b.id')
             ->where('a.cancion_id', $cancion->id)
@@ -108,10 +111,58 @@ class CancionController extends Controller
                                                           'usuarioFavorito' => $usuarioFavorito,
                                                           'artistasPrincipales' => $artistasPrincipales,
                                                           'artistasInvitados' => $artistasInvitados,
+                                                          'usuarioProveedor' => $usuarioProveedor,
+                                                          'usuarioModificador' => $usuarioModificador,
                                                           'comentariosCancion' => $comentariosCancion]);
         } else {
             return redirect()->action('DiscoController@index');
         }
+    }
+
+    // Método para actualizar la portada de la canción (en caso de que tenga).
+    public function actualizarImagen(Request $request, $id_cancion)
+    {
+        $this->validate($request, ['imagen' => 'required|mimes:jpg,jpeg,bmp,png|max:5000']);
+
+        $cancion = Cancion::find($id_cancion);
+        $imagen = $request->file('imagen');
+
+        // Para obtener la extensión (formato) de la imagen subida.
+        $imagenInfo = getimagesize($imagen);
+        $extension = image_type_to_extension($imagenInfo[2]);
+
+        // Se establece el nombre de la imagen (ID de usuario seguido de la extensión de la imagen).
+        $imagenNombre = $cancion->id.$extension;
+        $imagenUbicacion = 'img-canciones/'.$imagenNombre;
+
+        // Si el disco ya posee una imagen almacenada, entonces dicha imagen es eliminada.
+        if ($cancion->portada) {
+            Storage::Delete('img-canciones/'.$cancion->portada);
+            Storage::Delete('img-canciones/thumbnail_'.$cancion->portada);
+            $cancion->portada = null;
+            $cancion->save();
+        }
+       
+        // Se almacena la nueva imagen de la canción.
+        $imagenAlmacenada = Storage::put($imagenUbicacion, file_get_contents($imagen->getRealPath()));
+
+        // Si la imagen fue almacenada...
+        if($imagenAlmacenada){
+            // Se crea el thumbnail de la imagen.
+            $thumbnail = Image::make($imagen->getRealPath());
+            $thumbnail->resize(intval(100), null, function($constraint) {
+                 $constraint->aspectRatio();
+            });
+            $thumbnail->save(storage_path('app/img-canciones'). '/thumbnail_'.$imagenNombre);
+
+            // Se guarda el nombre de la imagen en la BD.
+            $cancion->portada = $imagenNombre;
+            $cancion->save();
+        }
+
+        $mensaje = "La portada de la canción ha sido actualizada.";
+
+        return redirect()->back()->withInput()->with(['mensaje' => $mensaje]);
     }
 
     public function getImagenCancion($imagenNombre)
