@@ -1114,9 +1114,12 @@ th {
 }
 
 .lfu-usuario-proveedor {
-    font-weight: bold;;
+    font-weight: bold;
+}
+
+.lfu-usuario-modificador {
     margin-top: 13px;
-    margin-bottom: 6px;
+    font-weight: bold;
 }
 
 @media (min-width: 768px) {

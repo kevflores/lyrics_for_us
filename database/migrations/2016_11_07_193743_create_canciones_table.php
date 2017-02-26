@@ -22,13 +22,7 @@ class CreateCancionesTable extends Migration
             $table->string('autor')->nullable();
             $table->text('audio')->nullable();
             $table->text('portada')->nullable();
-            $table->text('letra')->nullable();
-            $table->dateTime('fecha_letra')->nullable();
-            $table->integer('usuario_id')->unsigned()->nullable();
-            $table->dateTime('fecha_letra_modificada')->nullable();
-            $table->integer('usuario_modificador_id')->unsigned()->nullable();
             $table->integer('visitas')->default(0);
-            $table->integer('visitas_letra')->default(0);
             $table->timestamps();
 
             // Llaves foráneas

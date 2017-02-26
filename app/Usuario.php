@@ -65,15 +65,13 @@ class Usuario extends Authenticatable
     }
 
     // Un usuario puede proporcionar la letra de muchas canciones.
-    public function canciones()
+    public function letras()
     {
-    	return $this->hasMany('App\Cancion', 'usuario_id', 'id');
-    }
-
-    // Un usuario puede modificar la letra de muchas canciones.
-    public function cancionesModificadas()
-    {
-    	return $this->hasMany('App\Cancion', 'usuario_modificador_id', 'id');
+    	return $this->belongsToMany('App\CancionLetra',
+                                    'canciones_letras', 
+                                    'usuario_id', 
+                                    'cancion_id')
+                                    ->withPivot('id', 'letra', 'fecha_letra', 'fecha_letra_modificada', 'proveedor', 'visitas');
     }
 
     // Muchos usuarios pueden compartir sus artistas favoritos.

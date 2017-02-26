@@ -6,6 +6,7 @@ use App\ComentarioUsuario;
 use App\Artista;
 use App\Disco;
 use App\Cancion;
+use App\CancionLetra;
 use App\ArtistaFavorito;
 use App\DiscoFavorito;
 use App\CancionFavorita;
@@ -132,11 +133,21 @@ class UsuarioController extends Controller
         if ($usuarioPerfil){
 
             // Se consulta el listado de canciones, cuyas letras fueron provistas por el usuario del perfil.
+            /*
             $letrasProvistas = DB::table('canciones')
             ->where('canciones.usuario_id', $usuarioPerfil->id)
             ->select('canciones.*', 'canciones.id AS cancion_id')
             ->orderBy('fecha_letra', 'desc')
             ->orderBy('canciones.titulo', 'asc')
+            ->get();
+            */
+
+            $letrasProvistas = DB::table('canciones_letras AS a')
+            ->where('a.usuario_id', $usuarioPerfil->id)
+            ->join('canciones AS b', 'a.cancion_id', '=', 'b.id')
+            ->select('a.*', 'b.titulo')
+            ->orderBy('a.fecha_letra', 'desc')
+            ->orderBy('b.titulo', 'asc')
             ->get();
 
             // Se consultan todos los comentarios escritos en el perfil del usuario.

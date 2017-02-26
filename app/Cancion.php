@@ -33,14 +33,9 @@ class Cancion extends Model
         return $this->belongsTo('App\Disco');
     }
 
-    // Una canción puede poseer una letra provista por un usuario.
-    public function usuario() {
-        return $this->belongsTo('App\Usuario', 'usuario_id', 'id');
-    }
-
-    // Una canción puede poseer una letra modificada por un usuario.
-    public function usuarioModificador() {
-        return $this->belongsTo('App\Usuario', 'usuario_modificador_id', 'id');
+    // Una canción puede poseer una letra provista y una letra modificada
+    public function letra() {
+        return $this->hasMany('App\CancionLetra');
     }
 
     // Una canción puede ser favorita de muchos usuarios.

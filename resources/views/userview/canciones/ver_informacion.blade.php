@@ -192,15 +192,42 @@
 				<div class="panel-heading" id="lfu-cancion-panel-heading-canciones">Letra de "{{ $cancion->titulo }}"</div>
 				<div class="panel-body" id="lfu-cancion-panel-body-canciones">
 
-					@if ( $cancion->letra ) 
+					@if ( $letra ) 
 						<hr class="lfu-separador">
 						{{-- Se usa la función "nl2br" para que muestre los saltos de línea --}}
-						<?php echo nl2br($cancion->letra); ?>
+						<?php echo nl2br($letra->letra); ?>
+
+						<hr class="lfu-separador">
 						
 						<div class="lfu-usuario-proveedor">
 							Letra provista por 
-							<a href="{{ route('usuario.perfil', ['nickname' => $usuarioProveedor->nickname]) }}" title="Ver perfil">{{ $usuarioProveedor->nickname }}</a> ({{ date('d/m/Y', strtotime($cancion->fecha_letra)) }})
+							@if ( $usuario )
+								@if ( $usuario->nickname === $usuarioProveedor->nickname )
+									ti
+								@else
+									<a href="{{ route('usuario.perfil', ['nickname' => $usuarioProveedor->nickname]) }}" title="Ver perfil">{{ $usuarioProveedor->nickname }}</a>
+								@endif
+							@else
+								<a href="{{ route('usuario.perfil', ['nickname' => $usuarioProveedor->nickname]) }}" title="Ver perfil">{{ $usuarioProveedor->nickname }}</a> 
+							@endif
+							({{ date('d/m/Y', strtotime($letra->fecha_letra)) }})
 						</div>
+
+						@if ( $usuarioModificador )
+						<div class="lfu-usuario-modificador">
+							Letra modificada por 
+							@if ( $usuario )
+								@if ( $usuario->nickname === $usuarioModificador->nickname )
+									ti
+								@else
+									<a href="{{ route('usuario.perfil', ['nickname' => $usuarioModificador->nickname]) }}" title="Ver perfil">{{ $usuarioModificador->nickname }}</a> 
+								@endif
+							@else
+								<a href="{{ route('usuario.perfil', ['nickname' => $usuarioModificador->nickname]) }}" title="Ver perfil">{{ $usuarioModificador->nickname }}</a>
+							@endif
+							({{ date('d/m/Y', strtotime($letraModificada->fecha_letra)) }})
+						</div>
+						@endif
 						
 						<hr class="lfu-separador">
 					@else
@@ -214,6 +241,8 @@
 						{{-- Mostrar alguna imagen alusiva --}}
 						<hr class="lfu-separador">
 					@endif
+
+	
 
 				</div>
 			</div>

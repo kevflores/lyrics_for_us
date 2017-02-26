@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Cancion;
 use App\Artista;
 use App\Disco;
+use App\Usuario;
 use App\ComentarioCancion;
 use App\CancionFavorita;
 
@@ -95,8 +96,23 @@ class CancionController extends Controller
             // Se obtiene el listado de los artistas que participan como invitados en la canción.
             $artistasInvitados = $cancion->artistas()->where('invitado', true)->orderBy('artistas.nombre')->get();
 
-            $usuarioProveedor = $cancion->usuario()->first();
-            $usuarioModificador = $cancion->usuarioModificador();
+
+            // Se busca la letra de la canción
+            $letra = $cancion->letra()->where('usuario_proveedor', 'true')->first();
+            // Si hay letra, entonces hay un usuario proveedor
+            if ( $letra ) {
+                $usuarioProveedor = Usuario::find($letra->usuario_id);
+            } else {
+                $usuarioProveedor = null;
+            }
+            // Se busca la letra modificada de la canción
+            $letraModificada = $cancion->letra()->where('usuario_proveedor', 'false')->first();
+            // Si hay letra, entonces hay un usuario modificador
+            if ( $letraModificada ) {
+                $usuarioModificador = Usuario::find($letraModificada->usuario_id);
+            } else {
+                $usuarioModificador = null;
+            }
 
             $comentariosCancion = DB::table('comentarios_canciones AS a')
             ->join('usuarios AS b', 'a.usuario_id', '=', 'b.id')
@@ -111,11 +127,13 @@ class CancionController extends Controller
                                                           'usuarioFavorito' => $usuarioFavorito,
                                                           'artistasPrincipales' => $artistasPrincipales,
                                                           'artistasInvitados' => $artistasInvitados,
+                                                          'letra' => $letra,
+                                                          'letraModificada' => $letraModificada,
                                                           'usuarioProveedor' => $usuarioProveedor,
                                                           'usuarioModificador' => $usuarioModificador,
                                                           'comentariosCancion' => $comentariosCancion]);
         } else {
-            return redirect()->action('DiscoController@index');
+            return redirect()->action('CancionController@index');
         }
     }
 
