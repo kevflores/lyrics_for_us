@@ -380,12 +380,12 @@ $(document).ready(function(){
 
     // Al presionar el enlace "Agregar a mi lista de canciones favoritas".
     $("#lfu-agregar-cancion-favoritos").click(function(){
-        $("#lfu-agregar-canciones-favoritos-form").submit(); 
+        $("#lfu-agregar-cancion-favoritos-form").submit(); 
     });
 
     // Al presionar el enlace "Eliminar de mi lista de canciones favoritas".
     $("#lfu-eliminar-cancion-favoritos").click(function(){
-        $("#lfu-eliminar-canciones-favoritos-form").submit(); 
+        $("#lfu-eliminar-cancion-favoritos-form").submit(); 
     });
 
     // Al presionar "Reportar letra" se muestra el Modal para escribir el reporte.
@@ -407,6 +407,27 @@ $(document).ready(function(){
     // Al presionar "X" de cerrar, el campo del textarea debe quedar en blanco.
     $(".cerrar_modal_reporte_letra").click(function(){
         $("#lfu-textarea-reporte-letra").val('');
+    });
+
+    // Al presionar "¿Deseas compartirla (la letra )con nosotros?" se muestra el Modal para escribir la letra.
+    $("#lfu-proveer-letra").click(function(){
+        $("#proveerLetraModal").modal();
+    });
+
+    // Al momento de presionar "Registrar letra".
+    $(".modal-body").on('click', '#guardar-letra', function (e) {
+        $(this.form).submit();              // Se envía el comentario
+        $("#proveerLetraModal").modal('hide');        // Se oculta el modal
+    });
+
+    // Al presionar "Cancelar", el campo del textarea debe quedar en blanco.
+    $("#cancelar-guardado-letra").click(function(){
+        $("#lfu-textarea-letra-cancion").val('');
+    });
+
+    // Al presionar "X" de cerrar, el campo del textarea debe quedar en blanco.
+    $(".cerrar_modal_proveer_letra").click(function(){
+        $("#lfu-textarea-letra-cancion").val('');
     });
 
     /*    

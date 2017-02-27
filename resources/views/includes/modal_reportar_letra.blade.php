@@ -4,7 +4,7 @@
 	<!-- Contenido del Modal-->
 		<div class="modal-content">
 			<div class="modal-header" >
-				<button type="button" class="close estilo-cerrar-modal cerrar_modal_reporte_usuario" data-dismiss="modal">&times;</button>
+				<button type="button" class="close estilo-cerrar-modal cerrar_modal_reporte_letra" data-dismiss="modal">&times;</button>
 				<h4><span class="glyphicon glyphicon-pencil"></span> Reportar letra de <strong>"{{ $cancion->titulo }}"</strong> </h4>
 			</div>
 			<div class="modal-body" >

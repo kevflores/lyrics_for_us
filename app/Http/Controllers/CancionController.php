@@ -7,6 +7,7 @@ use App\Disco;
 use App\Usuario;
 use App\ComentarioCancion;
 use App\CancionFavorita;
+use App\CancionLetra;
 use App\LetraReportada;
 
 use Illuminate\Http\Request;
@@ -207,16 +208,95 @@ class CancionController extends Controller
     public function comentar(Request $request, $id_cancion)
     {
         // Registrar el comentario realizado sobre una canción.
+        $this->validate($request, ['descripcion-comentario' => 'required|string']);
+
+        try {
+            $usuario = Auth::User();
+
+            $comentarioCancion = new ComentarioCancion();
+
+            $comentarioCancion->descripcion = $request['descripcion-comentario'];
+            $comentarioCancion->fecha = new DateTime();
+            $comentarioCancion->cancion_id = $id_cancion;
+            $comentarioCancion->usuario_id = $usuario->id; 
+            $comentarioCancion->save();
+
+            $mensaje = "El comentario ha sido enviado exitosamente.";
+        } catch ( \Illuminate\Database\QueryException $e) {
+            return redirect()->back()->with('mensajeError', 'El comentario no pudo ser enviado.');
+        }
+        return redirect()->back()->with(['mensaje' => $mensaje]);
     }
     
-    public function favorita($id_cancion)
+    public function favorita(Request $request)
     {
         // Agregar o quitar como favorita (del usuario autenticado) a una canción.
+        $usuario = Auth::user();
+
+        $this->validate($request, ['id_cancion' => 'required|integer']);
+        $this->validate($request, ['opcion' => 'required']);
+
+        $cancion = Cancion::find($request['id_cancion']);
+        $opcion = $request['opcion'];
+
+        if ( $cancion && ( $opcion === 'agregar' || $opcion === 'eliminar' ) ) {
+            if ( $opcion === 'agregar' ) {
+                // La canción se debe agregar a la lista de favoritos del usuario.
+                try {
+                    $cancionFavorita = new CancionFavorita();
+                    $cancionFavorita->cancion_id = $cancion->id;
+                    $cancionFavorita->usuario_id = $usuario->id;
+                    $cancionFavorita->fecha = new DateTime();
+                    $cancionFavorita->save();
+                } catch ( \Illuminate\Database\QueryException $e) {
+                    return redirect()->back()->with('mensajeError', '"'.$cancion->titulo.'" ya está en tu lista de canciones favoritas.');
+                }
+                return redirect()->back()->with('mensaje', '"'.$cancion->titulo.'" ha sido agregada a tu lista de canciones favoritas.');
+            } else {
+                // La canción se debe eliminar de la lista de favoritos del usuario.
+                try {
+                    $cancionFavorita = CancionFavorita::where('cancion_id', $cancion->id)
+                                                    ->where('usuario_id', $usuario->id)
+                                                    ->first();
+                    $cancionFavorita->delete();
+                } catch ( \Illuminate\Database\QueryException $e) {
+                    return redirect()->back()->with('mensajeError', 'Error en la eliminación de la lista de canciones favoritas.');
+                }   
+                return redirect()->back()->with('mensaje', '"'.$cancion->titulo.'" ha sido eliminada de tu lista de canciones favoritas.');
+            }
+        } else {
+            return redirect()->back()->with('mensajeError', 'Error.');
+        }
     }
 
     public function guardarLetra(Request $request, $id_cancion)
     {
         // Almacenar la letra (provista por un usuario) de una canción.
+        $this->validate($request, ['letra-cancion' => 'required|string']);
+
+        try {
+            $letraComprobacion = CancionLetra::where('cancion_id', $id_cancion)->get(); 
+
+            // Si el registro es encontrado, quiere decir que la canción ya posee una letra,
+            // así que no se puede registrar otra (a no ser que un usuario apto decida modificarla).
+            if ( $letraComprobacion->count() > 0 ) {
+                return redirect()->back()->with(['mensajeError' => 'Error. La canción ya posee tiene letra.']);
+            } else {
+                // El usuario puede registrar la letra de la canción.
+                $usuario = Auth::User();
+                $letra = new CancionLetra();
+                $letra->cancion_id = $id_cancion;
+                $letra->usuario_id = $usuario->id; 
+                $letra->letra = $request['letra-cancion'];
+                $letra->fecha_letra = new DateTime();
+                $letra->usuario_proveedor = TRUE;
+                $letra->visitas = 0;
+                $letra->save();
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with(['mensajeError' => 'Error.']);
+        }
+        return redirect()->back()->with(['mensaje' => 'La letra de la canción ha sido registrada exitosamente.']);
     }
 
     public function reportarLetra(Request $request, $id_cancion)

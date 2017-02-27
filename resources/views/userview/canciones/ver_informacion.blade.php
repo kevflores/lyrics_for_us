@@ -12,6 +12,9 @@
 		@if ( $letra && ( $reporteAtendido === true || $reporteAtendido === NULL ) )
 			@include('includes.modal_reportar_letra')
 		@endif
+		@if ( !$letra )
+			@include('includes.modal_proveer_letra')
+		@endif
 	@endif
 
 	<div class="lfu-seccion-completa col-xs-12">
