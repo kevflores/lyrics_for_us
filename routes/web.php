@@ -51,7 +51,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/canciones/{id_cancion}/comentar', 'CancionController@comentar')->name('canciones.comentar')->middleware('auth');
     Route::post('/canciones/favorita', 'CancionController@favorita')->name('canciones.favorita')->middleware('auth');
     Route::post('/canciones/{id_cancion}/guardarletra', 'CancionController@guardarLetra')->name('canciones.guardarletra')->middleware('auth');
-    Route::post('/canciones/{id_cancion}/reportarletra', 'CancionController@reportarLetra')->name('canciones.reportarletra')->middleware('auth');
+    Route::post('/canciones/{id_cancion}/reportar', 'CancionController@reportarLetra')->name('canciones.reportar')->middleware('auth');
     Route::post('/canciones/actualizar-imagen/{id_cancion}', 'CancionController@actualizarImagen')->name('canciones.actualizar_imagen')->middleware('auth');
 
 

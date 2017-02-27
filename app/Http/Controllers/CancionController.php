@@ -7,6 +7,7 @@ use App\Disco;
 use App\Usuario;
 use App\ComentarioCancion;
 use App\CancionFavorita;
+use App\LetraReportada;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -86,8 +87,20 @@ class CancionController extends Controller
                 $usuarioFavorito = $cancion->usuarios()
                                             ->where('usuario_id', $usuario->id)
                                             ->where('cancion_id', $cancion->id)->first();
+                // También se verifica si el usuario autenticado ha reportado la letra de la canción previamente,
+                // y que dicho reporte aún no haya sido atendido por algún administrador.
+                $letraReportada = LetraReportada::where('cancion_id', $cancion->id)
+                                                ->where('usuario_reportante_id', $usuario->id)
+                                                ->whereNull('usuario_admin_id')->get(); 
+                if ( $letraReportada->count() > 0 ) {
+                    $reporteAtendido = false;
+                } else {
+                    // El reporte fue atendido, por lo tanto, el usuario puede reportar la letra otra vez.
+                    $reporteAtendido = true;
+                }
             } else {
                 $usuarioFavorito = json_decode (null); // Se crea un objeto vacío.
+                $reporteAtendido = NULL; 
             }
 
             // Se obtiene el listado de los artistas principales que participan en la canción.
@@ -129,6 +142,7 @@ class CancionController extends Controller
                                                           'artistasInvitados' => $artistasInvitados,
                                                           'letra' => $letra,
                                                           'letraModificada' => $letraModificada,
+                                                          'reporteAtendido' => $reporteAtendido,
                                                           'usuarioProveedor' => $usuarioProveedor,
                                                           'usuarioModificador' => $usuarioModificador,
                                                           'comentariosCancion' => $comentariosCancion]);
@@ -208,5 +222,32 @@ class CancionController extends Controller
     public function reportarLetra(Request $request, $id_cancion)
     {
         // Registrar el reporte realizado sobre la letra de una canción.
+        $this->validate($request, ['descripcion-reporte' => 'required|string']);
+
+        try {
+            $reportante = Auth::User();
+
+            $reporteComprobacion = LetraReportada::where('cancion_id', $id_cancion)
+                                        ->where('usuario_reportante_id', $reportante->id)
+                                        ->whereNull('usuario_admin_id')->get(); 
+
+            // Si el registro es encontrado y el campo 'usuario_admin_id' es NULO, entonces el usuario
+            // ya había reportado la letra y ésta aún no ha sida atendida.
+            if ( $reporteComprobacion->count() > 0 ) {
+                return redirect()->back()->with(['mensajeError' => 'Error. El reporte ya fue realizado con anterioridad.']);
+            } else {
+                // El usuario puede reportar la letra sin problemas, ya que no ha reportado la letra (o lo hizo, pero
+                // su reporte ya fue atendido).
+                $reporteLetra = new LetraReportada();
+                $reporteLetra->descripcion = $request['descripcion-reporte'];
+                $reporteLetra->cancion_id = $id_cancion;
+                $reporteLetra->fecha_reporte = new DateTime();
+                $reporteLetra->usuario_reportante_id = $reportante->id; 
+                $reporteLetra->save();
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with(['mensajeError' => 'Error en el envío del reporte.']);
+        }
+        return redirect()->back()->with(['mensaje' => 'El reporte ha sido enviado exitosamente.']);
     }
 }

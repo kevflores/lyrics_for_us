@@ -6,9 +6,12 @@
 
 @section('contenido')
     
-	@if ($usuario) {{-- Si un usuario autenticado está accediendo a la información de una Canción --}}
+	@if ( $usuario ) {{-- Si un usuario autenticado está accediendo a la información de una Canción --}}
 		@include('includes.bloque_de_mensajes')
 		@include('includes.modal_comentar_cancion')
+		@if ( $letra && ( $reporteAtendido === true || $reporteAtendido === NULL ) )
+			@include('includes.modal_reportar_letra')
+		@endif
 	@endif
 
 	<div class="lfu-seccion-completa col-xs-12">
@@ -192,11 +195,15 @@
 				<div class="panel-heading" id="lfu-cancion-panel-heading-canciones">Letra de "{{ $cancion->titulo }}"</div>
 				<div class="panel-body" id="lfu-cancion-panel-body-canciones">
 
-					@if ( $letra ) 
+					@if ( $letra || $letraModificada ) 
 						<hr class="lfu-separador">
 						{{-- Se usa la función "nl2br" para que muestre los saltos de línea --}}
-						<?php echo nl2br($letra->letra); ?>
-
+						@if ( $letraModificada )
+							{{-- Si la letra fue modificada, entonces se muestra ésta y no la original --}}
+							<?php echo nl2br($letraModificada->letra); ?> 
+						@else
+							<?php echo nl2br($letra->letra); ?>
+						@endif
 						<hr class="lfu-separador">
 						
 						<div class="lfu-usuario-proveedor">
@@ -211,6 +218,12 @@
 								<a href="{{ route('usuario.perfil', ['nickname' => $usuarioProveedor->nickname]) }}" title="Ver perfil">{{ $usuarioProveedor->nickname }}</a> 
 							@endif
 							({{ date('d/m/Y', strtotime($letra->fecha_letra)) }})
+							{{-- Mostrar el número de visitas de la letra --}}
+							@if ( $letra->fecha_letra_modificada )
+								- {{ $letra->visitas }} visualizaciones
+							@else
+								- {{ $letra->visitas }} visualizaciones
+							@endif
 						</div>
 
 						@if ( $usuarioModificador )
@@ -226,10 +239,25 @@
 								<a href="{{ route('usuario.perfil', ['nickname' => $usuarioModificador->nickname]) }}" title="Ver perfil">{{ $usuarioModificador->nickname }}</a>
 							@endif
 							({{ date('d/m/Y', strtotime($letraModificada->fecha_letra)) }})
+							{{-- Mostrar el número de visitas de la letra modificada --}}
+							@if ( $letraModificada->fecha_letra_modificada )
+								- {{ $letraModificada->visitas }} visualizaciones
+							@else
+								- {{ $letraModificada->visitas }} visualizaciones
+							@endif
 						</div>
 						@endif
-						
+
 						<hr class="lfu-separador">
+
+						@if ( $usuario && ( $reporteAtendido === true || $reporteAtendido === NULL ) )
+							<i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> 
+							<a id="lfu-reportar-letra" style="cursor:pointer">Reportar letra</a>
+							<hr class="lfu-separador">
+						@elseif ( $usuario && ( $reporteAtendido === false ) )
+							<span style="font-style:italic;">Tú has reportado la letra de esta canción</span>
+							<hr class="lfu-separador">
+						@endif
 					@else
 						{{-- Si el cancion tiene canciones... --}}
 						<hr class="lfu-separador">

@@ -14,7 +14,7 @@
 						<textarea class="form-control" rows="8" cols="50" id="lfu-textarea-reporte-usuario" name="descripcion-reporte" placeholder="Ingresar reporte..." style="resize: none;" autofocus>{{ old('descripcion-reporte') }}</textarea>
 					</div>
 					<button type="button" class="btn btn-danger" id="cancelar-envio-reporte-usuario" data-dismiss="modal">Cancelar</button>
-					<button type="submit" class="btn btn-primary" id="enviar-reporte-usuario-perfil" >Enviar mensaje</button>
+					<button type="submit" class="btn btn-primary" id="enviar-reporte-usuario-perfil" >Enviar reporte</button>
 				</form>
 			</div>
 		</div>

@@ -79,7 +79,7 @@ $(document).ready(function(){
         $("#reportarUsuarioModal").modal();
     });
 
-    // Al momento de presionar "Enviar" comentario.
+    // Al momento de presionar "Enviar" reporte.
     $(".modal-body").on('click', '#enviar-reporte-usuario-perfil', function (e) {
         $(this.form).submit();              // Se envía el comentario
         $("#reportarUsuarioModal").modal('hide');        // Se oculta el modal
@@ -386,6 +386,27 @@ $(document).ready(function(){
     // Al presionar el enlace "Eliminar de mi lista de canciones favoritas".
     $("#lfu-eliminar-cancion-favoritos").click(function(){
         $("#lfu-eliminar-canciones-favoritos-form").submit(); 
+    });
+
+    // Al presionar "Reportar letra" se muestra el Modal para escribir el reporte.
+    $("#lfu-reportar-letra").click(function(){
+        $("#reportarLetraModal").modal();
+    });
+
+    // Al momento de presionar "Enviar" reporte.
+    $(".modal-body").on('click', '#enviar-reporte-letra', function (e) {
+        $(this.form).submit();              // Se envía el comentario
+        $("#reportarLetraModal").modal('hide');        // Se oculta el modal
+    });
+
+    // Al presionar "Cancelar", el campo del textarea debe quedar en blanco.
+    $("#cancelar-envio-reporte-letra").click(function(){
+        $("#lfu-textarea-reporte-letra").val('');
+    });
+
+    // Al presionar "X" de cerrar, el campo del textarea debe quedar en blanco.
+    $(".cerrar_modal_reporte_letra").click(function(){
+        $("#lfu-textarea-reporte-letra").val('');
     });
 
     /*    
