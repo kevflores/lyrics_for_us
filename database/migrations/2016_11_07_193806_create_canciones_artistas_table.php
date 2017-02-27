@@ -26,12 +26,12 @@ class CreateCancionesArtistasTable extends Migration
             // Llaves foráneas
             $table->foreign('cancion_id')
                 ->references('id')->on('canciones')
-                ->onDelete('restrict')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
 
             $table->foreign('artista_id')
                 ->references('id')->on('artistas')
-                ->onDelete('restrict')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
     }

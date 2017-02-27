@@ -30,12 +30,12 @@ class CreateCancionesLetrasTable extends Migration
             // Llaves foráneas
             $table->foreign('cancion_id')
                 ->references('id')->on('canciones')
-                ->onDelete('restrict')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
 
             $table->foreign('usuario_id')
                 ->references('id')->on('usuarios')
-                ->onDelete('restrict')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
     }
@@ -47,6 +47,6 @@ class CreateCancionesLetrasTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('canciones_letras');
     }
 }

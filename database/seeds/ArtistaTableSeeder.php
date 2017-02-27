@@ -154,6 +154,152 @@ class ArtistaTableSeeder extends Seeder
                      'created_at' => new DateTime, 
                      'updated_at' => new DateTime],
 
+                     ['nombre' => 'Rain', 
+                     'resumen' => 'Cantante surcoreano',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Soyou', 
+                     'resumen' => 'Cantate surcoreana, conocida por pertenecer al grupo Sistar',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Chanyeol', 
+                     'resumen' => 'Integrante de EXO.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Hoya', 
+                     'resumen' => 'Integrante de INFINITE. Rapero.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+                     
+                     ['nombre' => 'Seulgi', 
+                     'resumen' => 'Integrante de Red Velvet.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Donghae & Eunhyuk', 
+                     'resumen' => 'Sub-unidad del grupo surcoreano Super Junior.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Super Junior', 
+                     'resumen' => 'Grupo musical surcoreano.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Song Ji Eun', 
+                     'resumen' => 'Cantante surcoreana perteneciente al grupo SECRET.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Sunmi', 
+                     'resumen' => 'Integrante del famoso grupo musical Wonder Girls.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Lena', 
+                     'resumen' => 'Aprendiz de JYP.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Subin', 
+                     'resumen' => 'Volista principal del grupo Dalshabet.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Roy Kim', 
+                     'resumen' => 'Cantante surcoreano.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Zhoumi', 
+                     'resumen' => 'Cantante chino. Integrante de Super Junior-M.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Valeria Gastaldi', 
+                     'resumen' => 'Cantante argentina. Conocida por haber pertenecido al grupo Bandana.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],            
+
+                     ['nombre' => 'Chris Tomlin', 
+                     'resumen' => 'Cantante estadounidense.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'AOA', 
+                     'resumen' => 'Grupo surcoreano. Ace of Angels.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Jaime Kohen', 
+                     'resumen' => 'Cantante mexicano.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'NU\'EST', 
+                     'resumen' => '',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Jun Hyo Seong', 
+                     'resumen' => 'Cantante surcoreana. Integrante del grupo SECRET.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Marco Barrientos', 
+                     'resumen' => 'Cantante cristiano.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Orange Caramel', 
+                     'resumen' => 'Grupo surcoreano compuesto por Raina, Lizzy y Nana. Es la primera ssub-unidad del grupo After School.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Son Dam Bi', 
+                     'resumen' => 'Cantante y actriz surcoreana.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Jin Akanishi', 
+                     'resumen' => 'Cantante japonés.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Brave Girls', 
+                     'resumen' => 'Grupo surcoreano formado por Brave Brothers.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Minah', 
+                     'resumen' => 'Cantante surcoreana. Integrante del grupo Girl\'s Day.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Apink', 
+                     'resumen' => 'Grupo surcoreano, conocido por su estilo musical retro.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Plastic Tree', 
+                     'resumen' => 'Banda de rock japonesa.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Park Ji Yoon', 
+                     'resumen' => 'Cantante y actriz surcoreana.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['nombre' => 'Standing Egg', 
+                     'resumen' => 'Grupo surcoreano.',
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+
         			 ];
 
         DB::table('artistas')->insert($artistas);

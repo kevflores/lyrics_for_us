@@ -30,16 +30,6 @@ class CreateCancionesTable extends Migration
                 ->references('id')->on('discos')
                 ->onDelete('set null')
                 ->onUpdate('cascade');
-
-            $table->foreign('usuario_id')
-                ->references('id')->on('usuarios')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
-
-            $table->foreign('usuario_modificador_id')
-                ->references('id')->on('usuarios')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
         });
     }
 

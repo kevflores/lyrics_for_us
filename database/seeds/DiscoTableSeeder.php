@@ -206,12 +206,45 @@ class DiscoTableSeeder extends Seeder
                      'updated_at' => new DateTime],
 
                      ['titulo' => '3.3', 
-                     'resumen' => 'Tercer mini-álbum',
+                     'resumen' => 'Tercer mini-álbum.',
                      'fecha' => '2015-12-01',
                      'portada' => NULL,
                      'artista_id' => 16,
                      'created_at' => new DateTime, 
                      'updated_at' => new DateTime],
+
+                     ['titulo' => 'Trap', 
+                     'resumen' => 'Primer mini albúm.',
+                     'fecha' => '2013-06-07',
+                     'portada' => NULL,
+                     'artista_id' => 24,
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['titulo' => 'Sketch', 
+                     'resumen' => 'Segundo mini álbum de la cantante.',
+                     'fecha' => '2016-03-01',
+                     'portada' => NULL,
+                     'artista_id' => 11,
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['titulo' => 'Fantastic', 
+                     'resumen' => 'Segundo mini-álbum.',
+                     'fecha' => '2014-07-14',
+                     'portada' => NULL,
+                     'artista_id' => 24,
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
+                     ['titulo' => 'The Beat Goes On', 
+                     'resumen' => 'Primer album del dúo.',
+                     'fecha' => '2015-05-09',
+                     'portada' => NULL,
+                     'artista_id' => 33,
+                     'created_at' => new DateTime, 
+                     'updated_at' => new DateTime],
+
 
         			 ];
 

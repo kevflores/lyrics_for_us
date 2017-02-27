@@ -26,7 +26,7 @@ class CreateDiscosTable extends Migration
             // Llaves foráneas
             $table->foreign('artista_id')
                 ->references('id')->on('artistas')
-                ->onDelete('restrict')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
     }
