@@ -19,7 +19,10 @@
 			@include('includes.modal_crear_comentario')
 			@if ( $usuarioPerfil->id !== Auth::User()->id )
 				@include('includes.modal_enviar_mensaje_desde_perfil')
-				@include('includes.modal_reportar_usuario')
+				@if ( $reporteComprobacion->count() === 0 )
+					{{-- Si el usuario autenticado no ha realizado un reporte sobre el usuario del perfil que aún no haya sido atendido --}}
+					@include('includes.modal_reportar_usuario')
+				@endif
 			@endif
 		@endif
 
@@ -68,7 +71,23 @@
 						@if ( $usuarioPerfil->url )
 							<div class="perfil-dato-usuario"><i class="fa fa-link lfu-fa-icon" aria-hidden="true"></i> <a href="{{ $usuarioPerfil->url }}" title="{{ $usuarioPerfil->nickname.'\'s URL' }}">{{ $usuarioPerfil->url }}</a></div>
 						@endif
-						<div class="perfil-dato-usuario">Puntos: 0 (Falta calcular)</div>	
+						<div class="perfil-dato-usuario">
+							<i class="fa fa-eye lfu-fa-icon" aria-hidden="true"></i>
+							{{ $usuarioPerfil->visitas }}
+							@if ( $usuarioPerfil->visitas > 1)
+								visitas
+							@else
+								visita
+							@endif
+						</div>
+						<div class="perfil-dato-usuario">
+							<i class="fa fa-line-chart lfu-fa-icon" aria-hidden="true"></i>
+							@if ( $puntosObtenidos->total > 0) 
+								{{ number_format($puntosObtenidos->total, 2, '.', ',') }} puntos
+							@else
+								Sin puntos
+							@endif
+						</div>	
 						<hr class="lfu-separador">
 					</div>
 			    </div>
@@ -89,10 +108,15 @@
 									<i class="fa fa-paper-plane lfu-fa-icon" aria-hidden="true"></i> 
 									<a id="lfu-escribir-mensaje-desde-perfil" style="cursor:pointer">Enviar mensaje privado</a>
 								</div>
-								<div class="perfil-opcion-usuario">
+								@if ( $reporteComprobacion->count() > 0 )
 									<i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> 
-									<a id="lfu-reportar-usuario" style="cursor:pointer">Reportar usuario</a>
-								</div>
+									<span style="font-style:italic;">Tú has reportado a este usuario</span>
+								@else
+									<div class="perfil-opcion-usuario">
+										<i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> 
+										<a id="lfu-reportar-usuario" style="cursor:pointer">Reportar usuario</a>
+									</div>
+								@endif
 							@endif
 						@else
 							<div class="perfil-opcion-usuario">

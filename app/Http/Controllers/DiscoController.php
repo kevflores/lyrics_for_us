@@ -79,7 +79,11 @@ class DiscoController extends Controller
         $usuario = Auth::User();
 
         if ( $disco ) {
-            // Se obtienen los datos del artistas al cual pertenece el disco.
+            // Se actualiza el número de visitas del disco
+            $disco->visitas = $disco->visitas + 1;
+            $disco->save();
+
+            // Se obtienen los datos del artista al cual pertenece el disco.
             $artistaDisco = $disco->artista;
             // Se obtiene el número de usuarios que han agregado el disco a su lista de favoritos
             $numeroFavoritos = $disco->usuarios()->count();

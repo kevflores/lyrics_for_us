@@ -68,6 +68,16 @@
 						<div class="artista-dato resumen-artista"> "{{ $artista->resumen }}"</div>
 					@endif
 
+					<div class="artista-dato">
+						<i class="fa fa-eye lfu-fa-icon" aria-hidden="true"></i>
+						{{ $artista->visitas }}
+						@if ( $artista->visitas > 1)
+							visitas
+						@else
+							visita
+						@endif
+					</div>
+
 					{{-- <!-- Código para actualizar la imagen del artista [SE DEBE USAR al momento de implementar la función del Administrador] -->
 					@if ( $usuario )
 					<form action="{{ route('artistas.actualizar_imagen', ['id_artista' => $artista->id]) }}" method="post", id='lfu-form-config-imagen' enctype="multipart/form-data">

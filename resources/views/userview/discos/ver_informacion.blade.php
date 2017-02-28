@@ -53,6 +53,16 @@
 						<div class="disco-dato resumen-disco"> "{{ $disco->resumen }}"</div>
 					@endif
 
+					<div class="disco-dato">
+						<i class="fa fa-eye lfu-fa-icon" aria-hidden="true"></i>
+						{{ $disco->visitas }}
+						@if ( $disco->visitas > 1)
+							visitas
+						@else
+							visita
+						@endif
+					</div>
+
 					{{-- <!-- Código para actualizar la portada del disco [SE DEBE USAR al momento de implementar la función del Administrador] -->
 					@if ( $usuario )
 					<form action="{{ route('discos.actualizar_imagen', ['id_disco' => $disco->id]) }}" method="post", id='lfu-form-config-imagen' enctype="multipart/form-data">

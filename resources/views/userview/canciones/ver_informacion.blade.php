@@ -74,7 +74,7 @@
 							@endforeach
 						@else
 							@foreach ( $artistasInvitados as $artista )
-								(feat. {{ $artista->nombre }})
+								(feat. <a class="lfu-enlace-sin-decoracion" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}" title="">{{ $artista->nombre }}</a>)
 							@endforeach
 						@endif
 
@@ -107,7 +107,12 @@
 
 					<div class="cancion-dato">
 						<i class="fa fa-eye lfu-fa-icon" aria-hidden="true"></i>
-						{{ $cancion->visitas }} visitas
+						{{ $cancion->visitas }}
+						@if ( $cancion->visitas > 1)
+							visitas
+						@else
+							visita
+						@endif
 					</div>
 
 					 <!-- Código para actualizar la portada del cancion [SE DEBE USAR al momento de implementar la función del Administrador] -->
@@ -210,7 +215,11 @@
 						<hr class="lfu-separador">
 						
 						<div class="lfu-usuario-proveedor">
-							Letra provista por 
+							Letra provista 
+							@if ( $letraModificada )
+								originalmente
+							@endif
+							por 
 							@if ( $usuario )
 								@if ( $usuario->nickname === $usuarioProveedor->nickname )
 									ti
@@ -222,10 +231,11 @@
 							@endif
 							({{ date('d/m/Y', strtotime($letra->fecha_letra)) }})
 							{{-- Mostrar el número de visitas de la letra --}}
-							@if ( $letra->fecha_letra_modificada )
-								- {{ $letra->visitas }} visualizaciones
+							- {{ $letra->visitas }}
+							@if ( $letra->visitas > 1)
+								visualizaciones
 							@else
-								- {{ $letra->visitas }} visualizaciones
+								visualización
 							@endif
 						</div>
 
@@ -243,10 +253,11 @@
 							@endif
 							({{ date('d/m/Y', strtotime($letraModificada->fecha_letra)) }})
 							{{-- Mostrar el número de visitas de la letra modificada --}}
-							@if ( $letraModificada->fecha_letra_modificada )
-								- {{ $letraModificada->visitas }} visualizaciones
+							- {{ $letraModificada->visitas }}
+							@if ( $letraModificada->visitas > 1)
+								visualizaciones
 							@else
-								- {{ $letraModificada->visitas }} visualizaciones
+								visualización
 							@endif
 						</div>
 						@endif
@@ -258,6 +269,7 @@
 							<a id="lfu-reportar-letra" style="cursor:pointer">Reportar letra</a>
 							<hr class="lfu-separador">
 						@elseif ( $usuario && ( $reporteAtendido === false ) )
+							<i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> 
 							<span style="font-style:italic;">Tú has reportado la letra de esta canción</span>
 							<hr class="lfu-separador">
 						@endif
@@ -266,8 +278,10 @@
 						<hr class="lfu-separador">
 						La letra de esta canción aún no ha sido registrada.
 						<br />
+						@if ( $usuario )
 						<a id="lfu-proveer-letra" style="cursor:pointer">¿Deseas compartirla con nosotros?</a>
 						<br />
+						@endif
 						<span style="font-style:italic;color:red;">(Mostrar imagen)</span>
 						{{-- Mostrar alguna imagen alusiva --}}
 						<hr class="lfu-separador">

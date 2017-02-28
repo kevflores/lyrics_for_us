@@ -10,35 +10,27 @@
 	<?php $primerArtista = true; ?>
 	@foreach ( $artistasPrincipales as $artista )
 		@if ( $primerArtista === true)
-			{{$artista->nombre}}
+			<a class="lfu-enlace-sin-decoracion" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}" title="">{{ $artista->nombre }}</a>
 		@else
-			& {{$artista->nombre}}
+			& <a class="lfu-enlace-sin-decoracion" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}" title="">{{ $artista->nombre }}</a>
 		@endif
 		<?php $primerArtista = false; ?>
 	@endforeach
 @else
 	@foreach ( $artistasPrincipales as $artista )
-		de {{ $artista->nombre }}
+		de <a class="lfu-enlace-sin-decoracion" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}" title="">{{ $artista->nombre }}</a>
 	@endforeach
 @endif
 
 @if ( $artistasInvitados->count() > 1 )
-	{{-- En las siguientes líneas no se usa el código Blade, con la intención de poder
-	agrupar los nombres de todos los artistas invitados en una canción e imprimirlos
-	correctamente dentro de los paréntesis sin dejar espacios en blanco que los separen de éstos. --}}
-	<?php
-		$primerArtista = true;
-		foreach ( $artistasInvitados as $artista ) {
-			if ( $primerArtista === true)
-				$invitados = $artista->nombre;
-			else
-				$invitados= $invitados." & ".$artista->nombre;
-			$primerArtista = false;
-		}
-	?>
-	(feat. {{$invitados}})
+	<?php $primerArtista = true; ?>
+	@foreach ( $artistasInvitados as $artista )
+		@if ( $primerArtista === true)
+			(feat. <a class="lfu-enlace-sin-decoracion" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}" title="">{{ $artista->nombre }}</a>
+		@else
+			& <span><a class="lfu-enlace-sin-decoracion" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}" title="">{{$artista->nombre}}</a></span>@endif<?php $primerArtista = false; ?>@endforeach<span>)</span> {{-- No se colocan saltos de línea aquí, debido a que dejaría un espacio antes del cierre de paréntesis --}}
 @else
 	@foreach ( $artistasInvitados as $artista )
-		(feat. {{ $artista->nombre }})
+		(feat. <a class="lfu-enlace-sin-decoracion" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}" title="">{{ $artista->nombre }}</a>)
 	@endforeach
 @endif

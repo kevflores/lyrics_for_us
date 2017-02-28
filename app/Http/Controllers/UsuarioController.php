@@ -128,20 +128,29 @@ class UsuarioController extends Controller
     // Método para mostrar el perfil de un usuario.        
     public function mostrarPerfil($nickname)
     {
-        $usuarioPerfil = DB::table('usuarios')->where('nickname', $nickname)->first();
+        $usuarioPerfil = Usuario::where('nickname', $nickname)->first(); // Usuario del perfil.
+        $usuario = Auth::User(); // Usuario autenticado.
         
-        if ($usuarioPerfil){
+        if ( $usuarioPerfil ){
 
-            // Se consulta el listado de canciones, cuyas letras fueron provistas por el usuario del perfil.
-            /*
-            $letrasProvistas = DB::table('canciones')
-            ->where('canciones.usuario_id', $usuarioPerfil->id)
-            ->select('canciones.*', 'canciones.id AS cancion_id')
-            ->orderBy('fecha_letra', 'desc')
-            ->orderBy('canciones.titulo', 'asc')
-            ->get();
-            */
-
+            if ( $usuario ) {
+                if ( $usuario->id !== $usuarioPerfil->id ) {
+                    // Se actualiza el número de visitas del usuario.
+                    $usuarioPerfil->visitas = $usuarioPerfil->visitas + 1;
+                    $usuarioPerfil->save();
+                }
+                // Se comprueba si el usuario autenticado ha reportado al usuario del Perfil con anterioridad,
+                // y si dicho reporte aún no ha sido atendido.
+                $reporteComprobacion = UsuarioReportado::where('usuario_reportado_id', $usuarioPerfil->id)
+                                    ->where('usuario_reportante_id', $usuario->id)
+                                    ->whereNull('usuario_admin_id')->get();
+            } else {
+                // Se actualiza el número de visitas del usuario.
+                $usuarioPerfil->visitas = $usuarioPerfil->visitas + 1;
+                $usuarioPerfil->save();
+                $reporteComprobacion = NULL;
+            }
+            
             $letrasProvistas = DB::table('canciones_letras AS a')
             ->where('a.usuario_id', $usuarioPerfil->id)
             ->join('canciones AS b', 'a.cancion_id', '=', 'b.id')
@@ -158,10 +167,19 @@ class UsuarioController extends Controller
             ->orderBy('fecha', 'desc')
             ->get();
 
-            return view ('userview.usuario.ver_perfil', ['usuario' => Auth::User(),
+            // Se calculan los puntos obtenidos por sus contribuciones.
+            // PUNTOS = 0.005 * (N° de vis. de letras provistas + N° de vis. de letras modificadas).
+            $puntosObtenidos = DB::table('canciones_letras')
+            ->where('usuario_id', $usuarioPerfil->id)
+            ->select(DB::raw('SUM(visitas)*0.005 AS total'))
+            ->first();
+
+            return view ('userview.usuario.ver_perfil', ['usuario' => $usuario,
                                                          'usuarioPerfil' => $usuarioPerfil,
                                                          'letrasProvistas' => $letrasProvistas,
-                                                         'comentariosUsuario' => $comentariosUsuario]);
+                                                         'comentariosUsuario' => $comentariosUsuario,
+                                                         'puntosObtenidos' => $puntosObtenidos,
+                                                         'reporteComprobacion' => $reporteComprobacion]);
         } 
         else {
             // El usuario no fue encontrado en la BD, por ende, no existe.
@@ -196,20 +214,28 @@ class UsuarioController extends Controller
     {
         $this->validate($request, ['descripcion-reporte' => 'required|string']);
 
-        $reportante = Auth::User();
+        try {
+            $reportante = Auth::User();
+            $reporteComprobacion = UsuarioReportado::where('usuario_reportado_id', $id_usuario)
+                                    ->where('usuario_reportante_id', $reportante->id)
+                                    ->whereNull('usuario_admin_id')->get(); 
 
-        $reporteUsuario = new UsuarioReportado();
-
-        $reporteUsuario->descripcion = $request['descripcion-reporte'];
-        $reporteUsuario->fecha_reporte = new DateTime();
-        $reporteUsuario->usuario_reportado_id = $id_usuario;
-        $reporteUsuario->usuario_reportante_id = $reportante->id; 
-
-        $reporteUsuario->save();
-
-        $mensaje = "El reporte ha sido enviado exitosamente.";
-
-        return redirect()->back()->with(['mensaje' => $mensaje]);
+            // Si el registro es encontrado y el campo 'usuario_admin_id' es NULO, entonces el usuario autenticado
+            // ya había reportado al usuario del perfil, y este reporte aún no ha sida atendido.
+            if ( $reporteComprobacion->count() > 0 ) {
+                return redirect()->back()->with(['mensajeError' => 'Error. El reporte ya fue realizado con anterioridad.']);
+            } else {
+                $reporteUsuario = new UsuarioReportado();
+                $reporteUsuario->descripcion = $request['descripcion-reporte'];
+                $reporteUsuario->fecha_reporte = new DateTime();
+                $reporteUsuario->usuario_reportado_id = $id_usuario;
+                $reporteUsuario->usuario_reportante_id = $reportante->id; 
+                $reporteUsuario->save();
+            }
+        } catch (Exception $e) {
+            
+        }
+        return redirect()->back()->with(['mensaje' => "El reporte ha sido enviado exitosamente."]);
     }
 
     public function verConfiguracion(){

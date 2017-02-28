@@ -79,6 +79,10 @@ class ArtistaController extends Controller
         $usuario = Auth::User();
 
         if ( $artista ) {
+            // Se actualiza el número de visitas del disco
+            $artista->visitas = $artista->visitas + 1;
+            $artista->save();
+
             $nombresArtista = $artista->nombresAlternativos;
 
             // Se obtiene el número de usuarios que han agregado al Artista a sus Favoritos

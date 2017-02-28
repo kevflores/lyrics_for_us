@@ -80,6 +80,10 @@ class CancionController extends Controller
         $usuario = Auth::User();
 
         if ( $cancion ) {
+            // Se actualiza el número de visitas de la canción
+            $cancion->visitas = $cancion->visitas + 1;
+            $cancion->save();
+
             // Se obtiene el número de usuarios que han agregado el disco a su lista de favoritos
             $numeroFavoritos = $cancion->usuarios()->count();
 
@@ -123,9 +127,18 @@ class CancionController extends Controller
             $letraModificada = $cancion->letra()->where('usuario_proveedor', 'false')->first();
             // Si hay letra, entonces hay un usuario modificador
             if ( $letraModificada ) {
+                // Se actualiza el número de visualizaciones de la letra.
+                $letraModificada->visitas = $letraModificada->visitas + 1;
+                $letraModificada->save();
                 $usuarioModificador = Usuario::find($letraModificada->usuario_id);
             } else {
                 $usuarioModificador = null;
+                if ( $letra ) {
+                    // Se actualiza el número de visualizaciones de la letra provista,
+                    // sólo si no ha sido modificada.
+                    $letra->visitas = $letra->visitas + 1;
+                    $letra->save();
+                }
             }
 
             $comentariosCancion = DB::table('comentarios_canciones AS a')
