@@ -24,10 +24,8 @@ class DiscoController extends Controller
 {
     public function index()
     {
-        // Mostrar la vista con todas las opciones disponibles para seleccionar a un disco.
-
-        // Consultar los discos más populares... y REUTILIZAR código en $seleccion === 'top'
-        $discos = null;
+        // Consultar los discos más populares...
+        $discos = $this->topDiscos();
 
         return view('userview.discos.index', ['usuario' => Auth::User(), 
                                                 'seleccion' => 'top',
@@ -36,17 +34,18 @@ class DiscoController extends Controller
 
     public function verLista($seleccion)
     {
-        // Mostrar la lista de discos asociados a la selección del usuario.
-
         // Validar que selección sea "top" o "numero" o "a" - "z" o "A" - "Z"
         if ( $seleccion === 'top') {
 
-            // Consultar los más populares... REUTILIZAR código de index();
-            $discos = null;
+            // Consultar los más populares...
+            $discos = $this->topDiscos();
+            return view('userview.discos.index', ['usuario' => Auth::User(), 
+                                                'seleccion' => 'top',
+                                                'discos' => $discos]);
 
         } elseif ( $seleccion === 'numero' ) {
             $discos = Disco::where(DB::raw('substring(titulo,1,1)'), '~', '^[0-9]')
-                                    ->orderBy('titulo')->paginate(10);
+                                    ->orderBy('titulo')->paginate(12);
         } elseif (preg_match("/^[a-zA-Z]$/", $seleccion)){
             $mayuscula = Str::upper($seleccion);
             $minuscula = Str::lower($seleccion);
@@ -54,14 +53,14 @@ class DiscoController extends Controller
             if ( $seleccion !== 'n' || $seleccion !== 'N' ) {
                 $discos = Disco::where(DB::raw('substring(titulo,1,1)'), $mayuscula)
                                 ->orWhere(DB::raw('substring(titulo,1,1)'), $minuscula)
-                                ->orderBy('titulo')->paginate(10);
+                                ->orderBy('titulo')->paginate(12);
             } else {
                 // Se consulta la lista de discos cuyos títulos comiencen por N/Ñ
                 $discos = Disco::where(DB::raw('substring(titulo,1,1)'), $mayuscula)
                                 ->orWhere(DB::raw('substring(titulo,1,1)'), $minuscula)
                                 ->orWhere(DB::raw('substring(titulo,1,1)'), 'Ñ')
                                 ->orWhere(DB::raw('substring(titulo,1,1)'), 'ñ')
-                                ->orderBy('titulo')->paginate(10);
+                                ->orderBy('titulo')->paginate(12);
             }
         } else {
             // El usuario (probablemente) insertó un valor NO VÁLIDO en la URL.
@@ -70,6 +69,19 @@ class DiscoController extends Controller
         return view('userview.discos.ver_lista', ['usuario' => Auth::User(),
                                                     'seleccion' => $seleccion,
                                                     'discos' => $discos]);
+    }
+
+    // Función para consultar el listado de los doce discos más populares en Lyrics For Us.
+    function topDiscos() 
+    {
+        try {
+            $consulta = DB::table('discos')->select('id','titulo',
+            DB::raw('(visitas * 0.005) + (SELECT COUNT(disco_id) FROM discos_favoritos WHERE disco_id = discos.id) AS puntos'))
+            ->orderBy('puntos', 'desc')->orderBy('titulo')->take(12)->get();
+        } catch (Exception $e) {
+            return NULL;
+        }
+        return $consulta;
     }
     
     public function verInformacion($id_disco)

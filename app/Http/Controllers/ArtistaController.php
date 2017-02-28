@@ -24,10 +24,8 @@ class ArtistaController extends Controller
 {
     public function index()
     {
-        // Mostrar la vista con todas las opciones disponibles para seleccionar a un artista.
-
         // Consultar los más populares...
-        $artistas = null;
+        $artistas = $this->topArtistas();
 
         return view('userview.artistas.index', ['usuario' => Auth::User(), 
                                                 'seleccion' => 'top',
@@ -42,11 +40,14 @@ class ArtistaController extends Controller
         if ( $seleccion === 'top') {
 
             // Consultar los más populares...
-            $artistas = null;
+            $artistas = $this->topArtistas();
+            return view('userview.artistas.index', ['usuario' => Auth::User(), 
+                                                'seleccion' => 'top',
+                                                'artistas' => $artistas]);
 
         } elseif ( $seleccion === 'numero' ) {
             $artistas = Artista::where(DB::raw('substring(nombre,1,1)'), '~', '^[0-9]')
-                                    ->orderBy('nombre')->paginate(10);
+                                    ->orderBy('nombre')->paginate(12);
         } elseif (preg_match("/^[a-zA-Z]$/", $seleccion)){
             $mayuscula = Str::upper($seleccion);
             $minuscula = Str::lower($seleccion);
@@ -54,14 +55,14 @@ class ArtistaController extends Controller
             if ( $seleccion !== 'n' || $seleccion !== 'N' ) {
                 $artistas = Artista::where(DB::raw('substring(nombre,1,1)'), $mayuscula)
                                 ->orWhere(DB::raw('substring(nombre,1,1)'), $minuscula)
-                                ->orderBy('nombre')->paginate(10);
+                                ->orderBy('nombre')->paginate(12);
             } else {
                 // Se consulta la lista de artistas cuyos nombres comiencen por N/Ñ
                 $artistas = Artista::where(DB::raw('substring(nombre,1,1)'), $mayuscula)
                                 ->orWhere(DB::raw('substring(nombre,1,1)'), $minuscula)
                                 ->orWhere(DB::raw('substring(nombre,1,1)'), 'Ñ')
                                 ->orWhere(DB::raw('substring(nombre,1,1)'), 'ñ')
-                                ->orderBy('nombre')->paginate(10);
+                                ->orderBy('nombre')->paginate(12);
             }
         } else {
             // El usuario (probablemente) insertó un valor NO VÁLIDO en la URL.
@@ -70,6 +71,19 @@ class ArtistaController extends Controller
         return view('userview.artistas.ver_lista', ['usuario' => Auth::User(),
                                                     'seleccion' => $seleccion,
                                                     'artistas' => $artistas]);
+    }
+
+    // Función para consultar el listado de los doce artistas más populares en Lyrics For Us.
+    function topArtistas() 
+    {
+        try {
+            $consulta = DB::table('artistas')->select('id','nombre',
+            DB::raw('(visitas * 0.005) + (SELECT COUNT(artista_id) FROM artistas_favoritos WHERE artista_id = artistas.id) AS puntos'))
+            ->orderBy('puntos', 'desc')->orderBy('nombre')->take(12)->get();
+        } catch (Exception $e) {
+            return NULL;
+        }
+        return $consulta;
     }
     
     public function verInformacion($id_artista)

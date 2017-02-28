@@ -27,7 +27,7 @@
 								<a class="lfu-enlace-sin-decoracion-well" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}">
 									<div class="well well-sm well-cancion-nombre">
 										<strong>"{{ $cancion->titulo }}"</strong>
-										@include('includes.imprimir_artistas_principales');
+										@include('includes.imprimir_artistas_principales')
 									</div>
 								</a>
 							@endforeach
@@ -38,7 +38,7 @@
 								<a class="lfu-enlace-sin-decoracion-well" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}">
 									<div class="well well-sm well-cancion-nombre">
 										<strong>"{{ $cancion->titulo }}"</strong>
-										@include('includes.imprimir_artistas_principales');
+										@include('includes.imprimir_artistas_principales')
 									</div>
 								</a>
 							@endforeach
@@ -49,7 +49,7 @@
 								<a class="lfu-enlace-sin-decoracion-well" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}">
 									<div class="well well-sm well-cancion-nombre">
 										<strong>"{{ $cancion->titulo }}"</strong>
-										@include('includes.imprimir_artistas_principales');
+										@include('includes.imprimir_artistas_principales')
 									</div>
 								</a>
 							@endforeach

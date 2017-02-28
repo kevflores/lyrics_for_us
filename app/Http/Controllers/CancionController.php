@@ -28,9 +28,8 @@ class CancionController extends Controller
 {
     public function index()
     {
-        // Mostrar la vista con todas las opciones disponibles para seleccionar a una canción.
-        // Consultar las canciones más populares... y REUTILIZAR código en $seleccion === 'top'
-        $canciones = null;
+        // Consultar las canciones más populares...
+        $canciones = $this->topCanciones();
 
         return view('userview.canciones.index', ['usuario' => Auth::User(), 
                                                 'seleccion' => 'top',
@@ -43,11 +42,14 @@ class CancionController extends Controller
         if ( $seleccion === 'top') {
 
             // Consultar las más populares... REUTILIZAR código de index();
-            $canciones = null;
+            $canciones = $this->topCanciones();
+            return view('userview.canciones.index', ['usuario' => Auth::User(), 
+                                                'seleccion' => 'top',
+                                                'canciones' => $canciones]);
 
         } elseif ( $seleccion === 'numero' ) {
             $canciones = Cancion::where(DB::raw('substring(titulo,1,1)'), '~', '^[0-9]')
-                                    ->orderBy('titulo')->paginate(10);
+                                    ->orderBy('titulo')->paginate(12);
         } elseif (preg_match("/^[a-zA-Z]$/", $seleccion)){
             $mayuscula = Str::upper($seleccion);
             $minuscula = Str::lower($seleccion);
@@ -55,14 +57,14 @@ class CancionController extends Controller
             if ( $seleccion !== 'n' || $seleccion !== 'N' ) {
                 $canciones = Cancion::where(DB::raw('substring(titulo,1,1)'), $mayuscula)
                                 ->orWhere(DB::raw('substring(titulo,1,1)'), $minuscula)
-                                ->orderBy('titulo')->paginate(10);
+                                ->orderBy('titulo')->paginate(12);
             } else {
                 // Se consulta la lista de discos cuyos títulos comiencen por N/Ñ
                 $canciones = Cancion::where(DB::raw('substring(titulo,1,1)'), $mayuscula)
                                 ->orWhere(DB::raw('substring(titulo,1,1)'), $minuscula)
                                 ->orWhere(DB::raw('substring(titulo,1,1)'), 'Ñ')
                                 ->orWhere(DB::raw('substring(titulo,1,1)'), 'ñ')
-                                ->orderBy('titulo')->paginate(10);
+                                ->orderBy('titulo')->paginate(12);
             }
         } else {
             // El usuario (probablemente) insertó un valor NO VÁLIDO en la URL.
@@ -71,6 +73,19 @@ class CancionController extends Controller
         return view('userview.canciones.ver_lista', ['usuario' => Auth::User(),
                                                     'seleccion' => $seleccion,
                                                     'canciones' => $canciones]);
+    }
+
+    // Función para consultar el listado de las doce canciones más populares en Lyrics For Us.
+    function topCanciones() 
+    {
+        try {
+            $consulta = DB::table('canciones')->select('id','titulo',
+            DB::raw('(visitas * 0.005) + (SELECT COUNT(cancion_id) FROM canciones_favoritas WHERE cancion_id = canciones.id) AS puntos'))
+            ->orderBy('puntos', 'desc')->orderBy('titulo')->take(12)->get();
+        } catch (Exception $e) {
+            return NULL;
+        }
+        return $consulta;
     }
     
     public function verInformacion($id_cancion)
