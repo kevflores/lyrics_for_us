@@ -374,41 +374,47 @@ th {
 /* ESTILOS PARA EL MÓDULO "INICIO" */
 
 #lfu-inicio-panel-ultimasletras {
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
     min-height: 500px;
     max-height: 500px;
 }
 
 #lfu-inicio-panel-body-ultimasletras {
-    overflow: auto;
-    min-height: 457px;
-    max-height: 457px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 456px;
+    max-height: 456px;
     padding-bottom: 15px;
 }
 
 #lfu-inicio-panel-topcanciones {
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
     max-height:250px;
     min-height:250px;
     margin-bottom:0px;
 }
 
 #lfu-inicio-panel-body-topcanciones {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     min-height: 207px;
     max-height: 207px;
     padding-bottom: 15px;
 }
 
 #lfu-inicio-panel-topusuarios {
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
     max-height:250px;
     min-height:250px;
     margin-bottom:0px;
 }
 
 #lfu-inicio-panel-body-topusuarios {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     min-height: 207px;
     max-height: 207px;
     padding-bottom: 15px;
@@ -435,6 +441,12 @@ th {
 
 #lfu-inicio-panel-heading-topusuarios {
     border-radius: 0px;
+}
+
+.lfu-separador-datos-inicio {
+    border-top: 0px; 
+    margin-bottom: 3px;
+    margin-top: 3px;
 }
 
 @media (min-width: 768px) {

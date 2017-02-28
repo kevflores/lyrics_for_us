@@ -15,11 +15,22 @@
 	    	<div class="panel panel-primary" id="lfu-inicio-panel-ultimasletras">
 				<div class="panel-heading" id="lfu-inicio-panel-heading-ultimasletras">Últimas letras publicadas</div>
 				<div class="panel-body" id="lfu-inicio-panel-body-ultimasletras" style="">
-					@for($i=0;$i<5;$i++)
-				        Canción N° {{$i+1}}
-				        <br>
-			    	@endfor
-					<hr>
+					<hr class="lfu-separador">
+					@if ( $ultimasLetras->count() > 0 )
+						@foreach ( $ultimasLetras as $letra )
+							<a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $letra->cancion_id]) }}">
+								<span style="font-style:italic;">
+									<strong>"{{ $letra->titulo }}"</strong>
+								</span>
+							</a>
+							@include('includes.imprimir_artistas_principales_ultimas_letras')
+
+							<hr class="lfu-separador-datos-inicio">
+						@endforeach
+					@else
+						Aún no hay letras registradas.
+					@endif
+					<hr class="lfu-separador">
 				</div>
 			</div>
     	</div>
@@ -29,22 +40,40 @@
 	    	<div class="panel panel-primary" id="lfu-inicio-panel-topcanciones">
 				<div class="panel-heading" id="lfu-inicio-panel-heading-topcanciones">Top de canciones favoritas</div>
 				<div class="panel-body" id="lfu-inicio-panel-body-topcanciones">
-					@for($i=0;$i<5;$i++)
-				        Canción N° {{$i+1}}
-				        <br>
-			    	@endfor
-					<hr>
+					<hr class="lfu-separador">
+					@if ( $topCancionesFavoritas->count() > 0 )
+						@foreach ( $topCancionesFavoritas as $cancion )
+							<a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}">
+								<span style="font-style:italic;">
+									<strong>"{{ $cancion->titulo }}"</strong>
+								</span>
+							</a>
+							@include('includes.imprimir_artistas_principales_canciones_favoritas')
+
+							<hr class="lfu-separador-datos-inicio">
+						@endforeach
+					@else
+						Aún no hay canciones favoritas.
+					@endif
+					<hr class="lfu-separador">
 				</div>
 		    </div>
 		    {{-- Sección de top de usuarios colaboradores --}}
 	    	<div class="panel panel-primary" id="lfu-inicio-panel-topusuarios">
 				<div class="panel-heading" id="lfu-inicio-panel-heading-topusuarios">Top de usuarios colaboradores</div>
 				<div class="panel-body" id="lfu-inicio-panel-body-topusuarios">
-					@for($i=0;$i<5;$i++)
-				        Usuario N° {{$i+1}}
-				        <br>
-			    	@endfor
-					<hr>
+					<hr class="lfu-separador">
+					@if ( $topUsuariosColaboradores->count() > 0 )
+						@foreach ( $topUsuariosColaboradores as $usuario )
+							<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">
+									{{ $usuario->nombre }} <strong>({{ $usuario->nickname }})</strong>
+							</a>
+							<hr class="lfu-separador-datos-inicio">
+						@endforeach
+					@else
+						Aún no hay canciones favoritas.
+					@endif
+					<hr class="lfu-separador">
 				</div>
 		    </div>		    
     	</div>

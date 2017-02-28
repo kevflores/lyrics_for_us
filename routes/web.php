@@ -13,8 +13,7 @@
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::get('/', ['uses' => 'InicioController@index', 'as' => 'home'
-    ]);
+    Route::get('/', ['uses' => 'InicioController@index', 'as' => 'home']);
 
     # RUTAS PARA MODO USUARIO
 
