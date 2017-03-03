@@ -8,6 +8,14 @@
 
     @include('includes.bloque_de_mensajes')
 
+    <div class="lfu-seccion-completa col-xs-12">
+
+    <div class="well" style="border-color: rgba(68, 154, 208, 1);">
+    	<strong>Lyrics For Us</strong> es un aplicación web que permite conectar a los amantes de la música, especialmente a aquellas personas interesadas en las letras de las canciones de sus artistas favoritos. Los usuarios de esta aplicación pueden contribuir aportando las letras de las canciones que aún no posean una, así como interactuar con otros usuarios registrados a través de comentarios y mensajes privados.
+    </div>
+
+    </div>
+
 	<div class="lfu-seccion-completa col-xs-12">
     	
 		<div class="lfu-seccion-dividida col-xs-12 col-sm-6" style="">
@@ -15,22 +23,28 @@
 	    	<div class="panel panel-primary" id="lfu-inicio-panel-ultimasletras">
 				<div class="panel-heading" id="lfu-inicio-panel-heading-ultimasletras">Últimas letras publicadas</div>
 				<div class="panel-body" id="lfu-inicio-panel-body-ultimasletras" style="">
-					<hr class="lfu-separador">
 					@if ( $ultimasLetras->count() > 0 )
 						@foreach ( $ultimasLetras as $letra )
-							<a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $letra->cancion_id]) }}">
-								<span style="font-style:italic;">
-									<strong>"{{ $letra->titulo }}"</strong>
-								</span>
-							</a>
-							@include('includes.imprimir_artistas_principales_ultimas_letras')
-
+							<span class="dato-inicio">
+								<a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $letra->cancion_id]) }}">
+									@if (Storage::disk('img-canciones')->has($letra->portada))
+							            <img src="{{ route('canciones.imagen', ['imagenNombre' => 'thumbnail_'.$letra->portada]) }}" alt="{{ $letra->titulo }}" class="img-circle img-dato-inicio">
+									@else
+										<img src="{{ asset('images\lfu-default-cancion.png') }}" alt="{{ $letra->titulo }}" class="img-circle img-dato-inicio">
+									@endif
+									<span style="font-style:italic;">
+										<strong>"{{ $letra->titulo }}"</strong>
+									</span>
+								</a>
+								@include('includes.imprimir_artistas_principales_ultimas_letras')
+							</span>
 							<hr class="lfu-separador-datos-inicio">
 						@endforeach
 					@else
-						Aún no hay letras registradas.
+						<hr class="lfu-separador">
+						Aún no hay letras de canciones registradas.
+						<hr class="lfu-separador">
 					@endif
-					<hr class="lfu-separador">
 				</div>
 			</div>
     	</div>
@@ -40,40 +54,57 @@
 	    	<div class="panel panel-primary" id="lfu-inicio-panel-topcanciones">
 				<div class="panel-heading" id="lfu-inicio-panel-heading-topcanciones">Top de canciones favoritas</div>
 				<div class="panel-body" id="lfu-inicio-panel-body-topcanciones">
-					<hr class="lfu-separador">
+					
 					@if ( $topCancionesFavoritas->count() > 0 )
 						@foreach ( $topCancionesFavoritas as $cancion )
-							<a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}">
-								<span style="font-style:italic;">
-									<strong>"{{ $cancion->titulo }}"</strong>
-								</span>
-							</a>
-							@include('includes.imprimir_artistas_principales_canciones_favoritas')
-
+							<span class="dato-inicio">
+								<a class="lfu-enlace-sin-decoracion" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}">
+									@if (Storage::disk('img-canciones')->has($cancion->portada))
+							            <img src="{{ route('canciones.imagen', ['imagenNombre' => 'thumbnail_'.$cancion->portada]) }}" alt="{{ $cancion->titulo }}" class="img-circle img-dato-inicio">
+									@else
+										<img src="{{ asset('images\lfu-default-cancion.png') }}" alt="{{ $cancion->titulo }}" class="img-circle img-dato-inicio">
+									@endif
+									<span style="font-style:italic;">
+										<strong>"{{ $cancion->titulo }}"</strong>
+									</span>
+								</a>
+								@include('includes.imprimir_artistas_principales_canciones_favoritas')
+							</span>
 							<hr class="lfu-separador-datos-inicio">
 						@endforeach
 					@else
+						<hr class="lfu-separador">
 						Aún no hay canciones favoritas.
+						<hr class="lfu-separador">
 					@endif
-					<hr class="lfu-separador">
+					
 				</div>
 		    </div>
 		    {{-- Sección de top de usuarios colaboradores --}}
 	    	<div class="panel panel-primary" id="lfu-inicio-panel-topusuarios">
 				<div class="panel-heading" id="lfu-inicio-panel-heading-topusuarios">Top de usuarios colaboradores</div>
 				<div class="panel-body" id="lfu-inicio-panel-body-topusuarios">
-					<hr class="lfu-separador">
+					
 					@if ( $topUsuariosColaboradores->count() > 0 )
 						@foreach ( $topUsuariosColaboradores as $usuario )
-							<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">
+							<span class="dato-inicio">
+								<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">
+									@if (Storage::disk('avatars')->has($usuario->imagen))
+							            <img src="{{ route('usuario.avatar', ['imagenNombre' => 'thumbnail_'.$usuario->imagen]) }}" alt="{{ $usuario->nickname }}" class="img-circle img-dato-inicio">
+									@else
+										<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" class="img-circle img-dato-inicio">
+									@endif
 									{{ $usuario->nombre }} <strong>({{ $usuario->nickname }})</strong>
-							</a>
+								</a>
+							</span>
 							<hr class="lfu-separador-datos-inicio">
 						@endforeach
 					@else
-						Aún no hay canciones favoritas.
+						<hr class="lfu-separador">
+						Aún no hay usuarios colaboradores.
+						<hr class="lfu-separador">
 					@endif
-					<hr class="lfu-separador">
+					
 				</div>
 		    </div>		    
     	</div>

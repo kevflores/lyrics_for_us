@@ -445,8 +445,21 @@ th {
 
 .lfu-separador-datos-inicio {
     border-top: 0px; 
-    margin-bottom: 3px;
-    margin-top: 3px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.lfu-separador-datos-inicio:last-child {
+    margin-bottom: 20px;
+}
+
+.img-dato-inicio {
+    height: 30px;
+    width: 30px;
+}
+
+.dato-inicio:hover .img-dato-inicio{
+    filter: brightness(80%);
 }
 
 @media (min-width: 768px) {

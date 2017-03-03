@@ -31,14 +31,14 @@ class InicioController extends Controller
         $ultimasLetras = DB::table('canciones_letras AS a')
                          ->join('canciones AS b', 'a.cancion_id', 'b.id')
                          ->join('usuarios AS c', 'a.usuario_id', 'c.id')
-                         ->select('a.fecha_letra', 'a.cancion_id', 'a.usuario_id', 'b.titulo', 'c.nickname')
+                         ->select('a.fecha_letra', 'a.cancion_id', 'a.usuario_id', 'b.titulo', 'b.portada', 'c.nickname')
                          ->where('usuario_proveedor', true)
                          ->orderBy('a.fecha_letra', 'desc')
                          ->take(15)->get();
 
         $topCancionesFavoritas = DB::table('canciones AS a')
                                 ->join('canciones_favoritas AS b', 'a.id', 'b.cancion_id')
-                                ->select('a.id', 'a.titulo', DB::raw('count(b.cancion_id) AS cantidad'))
+                                ->select('a.id', 'a.titulo', 'a.portada', DB::raw('count(b.cancion_id) AS cantidad'))
                                 ->groupBy('a.id', 'a.titulo')
                                 ->orderBy('cantidad', 'desc')
                                 ->orderBy('titulo', 'asc')
@@ -46,7 +46,8 @@ class InicioController extends Controller
 
         $topUsuariosColaboradores = DB::table('usuarios AS a')
                                     ->join('canciones_letras AS b', 'a.id', 'b.usuario_id')
-                                    ->select('a.id', 'a.nombre', 'a.nickname', DB::raw('sum(b.visitas) AS visualizaciones'))
+                                    ->select('a.id', 'a.nombre', 'a.nickname', 'a.imagen', DB::raw('sum(b.visitas) AS visualizaciones'))
+                                    ->where('b.visitas', '>', 0)
                                     ->groupBy('a.id', 'a.nombre', 'a.nickname')
                                     ->orderBy('visualizaciones', 'desc')
                                     ->orderBy('a.nickname', 'asc')
