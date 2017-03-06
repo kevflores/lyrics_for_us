@@ -86,15 +86,24 @@
 				<div class="panel-body" id="lfu-inicio-panel-body-topusuarios">
 					
 					@if ( $topUsuariosColaboradores->count() > 0 )
-						@foreach ( $topUsuariosColaboradores as $usuario )
+						@foreach ( $topUsuariosColaboradores as $colaborador )
 							<span class="dato-inicio">
-								<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">
-									@if (Storage::disk('avatars')->has($usuario->imagen))
-							            <img src="{{ route('usuario.avatar', ['imagenNombre' => 'thumbnail_'.$usuario->imagen]) }}" alt="{{ $usuario->nickname }}" class="img-circle img-dato-inicio">
+								<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $colaborador->nickname]) }}">
+									@if (Storage::disk('avatars')->has($colaborador->imagen))
+							            <img src="{{ route('usuario.avatar', ['imagenNombre' => 'thumbnail_'.$colaborador->imagen]) }}" alt="{{ $colaborador->nickname }}" class="img-circle img-dato-inicio">
 									@else
-										<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" class="img-circle img-dato-inicio">
+										<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $colaborador->nickname }}" class="img-circle img-dato-inicio">
 									@endif
-									{{ $usuario->nombre }} <strong>({{ $usuario->nickname }})</strong>
+									@if ( $usuario )
+										@if ( $usuario->id === $colaborador->id )
+											Tú
+										@else
+											{{ $colaborador->nombre }} {{ $colaborador->apellido }} 
+										@endif
+									@else
+									{{ $colaborador->nombre }} {{ $colaborador->apellido }} 
+									@endif
+									<strong>({{ $colaborador->nickname }})</strong>
 								</a>
 							</span>
 							<hr class="lfu-separador-datos-inicio">

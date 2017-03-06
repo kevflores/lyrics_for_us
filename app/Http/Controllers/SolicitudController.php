@@ -35,18 +35,22 @@ class SolicitudController extends Controller
     public function verSolicitud($id_solicitud)
     {
         // Mostrar la información correspondiente al registro de la solicitud seleccionada.
-        $usuario = Auth::User();
-        $solicitud = Solicitud::find($id_solicitud);
 
-        if ( $solicitud ) {
-            // Si la solicitud pertenece al usuario autenticado, entonces se muestra
-            if ( $solicitud->usuario_solicitante_id === $usuario->id ) {
-                return view('userview.solicitudes.ver_solicitud', 
-                    ['usuario' => $usuario, 'solicitud' => $solicitud]);
+        if ( is_numeric($id_solicitud) ) {
+            // Si el ID de la solicitud es un valor entero...
+            $usuario = Auth::User();
+            $solicitud = Solicitud::find($id_solicitud);
+
+            if ( $solicitud ) {
+                // Si la solicitud pertenece al usuario autenticado, entonces se muestra
+                if ( $solicitud->usuario_solicitante_id === $usuario->id ) {
+                    return view('userview.solicitudes.ver_solicitud', 
+                        ['usuario' => $usuario, 'solicitud' => $solicitud]);
+                }
             }
         }
-        // Sino, se redirecciona a Home.
-        return view('userview.home', ['usuario' => $usuario]);
+        // Sino, se redirecciona a la lista de solicitudes.
+        return redirect()->action("SolicitudController@verLista");
     }
 
     public function enviarSolicitud(Request $request)

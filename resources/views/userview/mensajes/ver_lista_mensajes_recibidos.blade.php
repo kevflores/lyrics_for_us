@@ -85,14 +85,25 @@
 
 		</form>
 
-
-
 	@else
-			
-		<div class="jumbotron info" style="margin:auto;">
-        	No hay mensajes.
+
+        <div>
+			<div class="panel panel-primary" id="lfu-panel-mensajes" style="">
+				<div class="panel-heading sin-texto" id="lfu-panel-heading-mensajes"></div>	
+			</div>
+		</div>
+
+		<div class="jumbotron info" id="lfu-jumbotron" style="margin:auto;">
+        	No hay mensajes recibidos.
         	<a id="lfu-escribir-mensaje" style="display:block;margin-top:20px;cursor:pointer;">Presione aquí para escribir un mensaje</a>
         </div>
+
+		<div class="lfu-seccion-completa col-xs-12">
+			<div class="panel panel-primary panel-footer-mensajes">
+				<div class="panel-primary panel-footer sin-texto panel-footer-mensajes" id="lfu-panel-footer"></div>
+			</div>
+		</div>
+
 	@endif
 
 	{{ $mensajes->links() }}

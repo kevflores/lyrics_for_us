@@ -24,7 +24,7 @@
 	<div class="lfu-seccion-completa col-xs-12">
     	<div class="panel panel-primary" id="lfu-panel-mensaje" style="border-bottom-left-radius:0px;border-bottom-right-radius:0px;">
 			<div class="panel-heading" id="lfu-panel-mensaje-heading"><strong>Mensaje de <a class="lfu-enlace-sin-decoracion" style="color:white;border-bottom-left-radius:0px;border-bottom-right-radius:0px;" href="{{ route('usuario.perfil', ['nickname' => $mensaje->usuarioEmisor()->first()->nickname]) }}">{{ $mensaje->usuarioEmisor()->first()->nickname }}</a></strong></div>
-			<div class="panel-body">
+			<div class="panel-body" id="lfu-mensaje-body">
 				<strong>Para: </strong><span class="info-mensaje">Mí</span>
 				<br>
 				<strong>De: </strong><span class="info-mensaje">{{ $mensaje->usuarioEmisor()->first()->nombre." ".$mensaje->usuarioEmisor()->first()->apellido." (".$mensaje->usuarioEmisor()->first()->nickname.")" }}</span>

@@ -24,8 +24,7 @@
                         @if (!$usuario)
                             <li {{ current_page("ingreso") ? 'class=active' : '' }}><a href="{{ route('usuario.ingreso') }}">Login</a></li>
                             <li {{ current_page("registro") ? 'class=active' : '' }}><a href="{{ route('usuario.registro') }}">Registro</a></li>
-                        @endif
-                        @if ($usuario)
+                        @else
                             <li class="dropdown" >
                               <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mi cuenta <span class="caret"></span>
                               </a>

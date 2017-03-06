@@ -31,22 +31,24 @@ class MensajeController extends Controller
     public function verMensajeRecibido($id_mensaje)
     {
         // Mostrar un mensaje en específico de la lista de mensajes recibidos por el usuario autenticado.
-        $usuario = Auth::User();
-        $mensajeRecibido = DB::table('mensajes')->where('id',$id_mensaje)->first();
-
-        if ( $usuario->id === $mensajeRecibido->usuario_receptor_id ) {
-            if ( $mensajeRecibido->estado_receptor === false ) {
-                return redirect()->action('MensajeController@verMensajesRecibidos');
-            } else {
-                $mensaje = Mensaje::find($mensajeRecibido->id);
-                if ( $mensajeRecibido->visto === false ){
-                    $mensaje->visto = true;
-                    $mensaje->update();
+        
+        if ( is_numeric( $id_mensaje ) ) {
+            $usuario = Auth::User();
+            $mensajeRecibido = DB::table('mensajes')->where('id',$id_mensaje)->first();
+            if ( $usuario->id === $mensajeRecibido->usuario_receptor_id ) {
+                if ( $mensajeRecibido->estado_receptor === false ) {
+                    return redirect()->action('MensajeController@verMensajesRecibidos');
+                } else {
+                    $mensaje = Mensaje::find($mensajeRecibido->id);
+                    if ( $mensajeRecibido->visto === false ){
+                        $mensaje->visto = true;
+                        $mensaje->update();
+                    }
+                    return view('userview.mensajes.ver_mensaje_recibido', ['usuario' => $usuario, 'mensaje' => $mensaje]);
                 }
-                return view('userview.mensajes.ver_mensaje_recibido', ['usuario' => $usuario, 'mensaje' => $mensaje]);
             }
         }
-        return view('userview.home', ['usuario' => $usuario]);
+        return redirect()->action("MensajeController@verMensajesRecibidos");
     }
     
     public function borrarMensajeRecibido(Request $request)
@@ -56,14 +58,16 @@ class MensajeController extends Controller
         $usuario = Auth::User();
         $mensaje = Mensaje::find($request['id_mensaje']);
 
-        if ($mensaje->usuario_receptor_id === $usuario->id) {
-            $mensaje->estado_receptor = false;
-            if ( $mensaje->estado_emisor === false ) {
-                $mensaje->delete();
-            } else {
-                $mensaje->update();
+        if ( $mensaje ) {
+            if ($mensaje->usuario_receptor_id === $usuario->id) {
+                $mensaje->estado_receptor = false;
+                if ( $mensaje->estado_emisor === false ) {
+                    $mensaje->delete();
+                } else {
+                    $mensaje->update();
+                }
+                return redirect()->back()->with(['mensaje' => 'El mensaje ha sido eliminado satisfactoriamente.']);
             }
-            return redirect()->back()->with(['mensaje' => 'El mensaje ha sido eliminado satisfactoriamente.']);
         }
         return redirect()->back()->with(['mensajeError' => 'Error. Eliminación fallida.']);
     }
@@ -205,18 +209,21 @@ class MensajeController extends Controller
         // Mostrar un mensaje en específico de la lista de mensajes enviados por el usuario autenticado.
         // Sólo lo puede ver el usuario emisor
         // Mostrar un mensaje en específico de la lista de mensajes recibidos por el usuario autenticado.
-        $usuario = Auth::User();
-        $mensajeEnviado = DB::table('mensajes')->where('id',$id_mensaje)->first();
+        
+        if ( is_numeric($id_mensaje) ) {
+            $usuario = Auth::User();
+            $mensajeEnviado = DB::table('mensajes')->where('id',$id_mensaje)->first();
 
-        if ( $usuario->id === $mensajeEnviado->usuario_emisor_id ) {
-            if ( $mensajeEnviado->estado_emisor === false ) {
-                return redirect()->action('MensajeController@verMensajesEnviados');
-            } else {
-                $mensaje = Mensaje::find($mensajeEnviado->id);
-                return view('userview.mensajes.ver_mensaje_enviado', ['usuario' => $usuario, 'mensaje' => $mensaje]);
+            if ( $usuario->id === $mensajeEnviado->usuario_emisor_id ) {
+                if ( $mensajeEnviado->estado_emisor === false ) {
+                    return redirect()->action('MensajeController@verMensajesEnviados');
+                } else {
+                    $mensaje = Mensaje::find($mensajeEnviado->id);
+                    return view('userview.mensajes.ver_mensaje_enviado', ['usuario' => $usuario, 'mensaje' => $mensaje]);
+                }
             }
         }
-        return view('userview.home', ['usuario' => $usuario]);
+        return redirect()->action('MensajeController@verMensajesEnviados');
     }
     
     public function borrarMensajeEnviado(Request $request)

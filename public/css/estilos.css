@@ -227,6 +227,11 @@ th {
     margin-bottom:13px;
 }
 
+#lfu-jumbotron {
+    border-bottom-right-radius: 0px; 
+    border-bottom-left-radius: 0px;
+}
+
 /* FIN DE ESTILOS GENERALES */
 
 
@@ -1592,14 +1597,50 @@ a[href="#lfu-panel-collapse-comentarios"] {
     font-style: italic;
 }
 
-#lfu-panel-mensaje {
+#lfu-panel-mensaje { /* Estilo para el mensaje individual */
     border-color: rgba(68, 154, 208, 1);
     margin-bottom: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
-#lfu-panel-mensaje-heading {
+#lfu-panel-mensaje-heading { /* Estilo para modal de "Escribir mensaje" */
     background-color: rgba(92, 180, 238, 1); 
     font-size: 14px;
+    border-color: rgba(68, 154, 208, 1);
+}
+
+#lfu-panel-mensajes {
+    border-color: rgba(68, 154, 208, 1);
+    margin-bottom: 0px;
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#lfu-mensaje-body {
+    border-bottom-right-radius: 0px; 
+    border-bottom-left-radius: 0px;
+}
+
+#lfu-panel-heading-mensajes {
+    background-color: rgba(92, 180, 238, 1); /* rgba(68, 154, 208, 1) */
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-color: rgba(68, 154, 208, 1);
+}
+
+.panel-heading.sin-texto {
+    height: 40px; /*Se le da una altura al panel-heading, ya que no contiene texto.*/
+}
+
+.panel-footer-mensajes {
+    border-top: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
     border-color: rgba(68, 154, 208, 1);
 }
 
@@ -1632,8 +1673,20 @@ a[href="#lfu-panel-collapse-comentarios"] {
     border-right:0px;
 }
 
+#lfu-solicitud-body {
+    border-bottom-right-radius: 0px; 
+    border-bottom-left-radius: 0px;
+}
+
 .info-solicitud {
     font-style: italic;
+}
+
+.panel-footer-solicitudes {
+    border-top: 0px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-color: rgba(68, 154, 208, 1);
 }
 
 /* FIN DE ESTILOS PARA EL SUBMÓDULO "SOLICITUDES" */

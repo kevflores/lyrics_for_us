@@ -64,17 +64,17 @@
 				<div class="panel-heading" id="lfu-panel-heading-solicitudes">Mis Solicitudes</div>	    	
 			</div>
 		</div>
-		<div class="jumbotron info" id="lfu-jumbotron" style="margin:auto;">
+		<div class="jumbotron info jumbo-" id="lfu-jumbotron" style="margin:auto;">
         	Aún no ha realizado solicitudes.
         	<a id="lfu-realizar-solicitud" style="display:block;margin-top:20px;cursor:pointer;">Presione aquí para realizar una solicitud</a>
         </div>
 	@endif
 
 	<div class="lfu-seccion-completa col-xs-12">
-			<div class="panel panel-primary panel-footer-configuracion">
-				<div class="panel-primary panel-footer sin-texto panel-footer-configuracion" id="lfu-panel-footer"></div>
-			</div>
+		<div class="panel panel-primary panel-footer-solicitudes">
+			<div class="panel-primary panel-footer sin-texto panel-footer-solicitudes" id="lfu-panel-footer"></div>
 		</div>
+	</div>
 
 	{{ $solicitudes->links() }}
 

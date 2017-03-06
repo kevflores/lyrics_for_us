@@ -21,7 +21,8 @@ class InicioController extends Controller
 {
 	public function index()
 	{
-    	// return view('welcome'); // Página principal (usada como "intro" de la app) 
+    	// return view('welcome');
+        // Página principal (usada como "intro" de la app) 
         return redirect()->action("InicioController@indexUsuario");
 	}
 
@@ -46,9 +47,9 @@ class InicioController extends Controller
 
         $topUsuariosColaboradores = DB::table('usuarios AS a')
                                     ->join('canciones_letras AS b', 'a.id', 'b.usuario_id')
-                                    ->select('a.id', 'a.nombre', 'a.nickname', 'a.imagen', DB::raw('sum(b.visitas) AS visualizaciones'))
+                                    ->select('a.id', 'a.nombre', 'a.apellido', 'a.nickname', 'a.imagen', DB::raw('sum(b.visitas) AS visualizaciones'))
                                     ->where('b.visitas', '>', 0)
-                                    ->groupBy('a.id', 'a.nombre', 'a.nickname')
+                                    ->groupBy('a.id', 'a.nombre', 'a.apellido', 'a.nickname')
                                     ->orderBy('visualizaciones', 'desc')
                                     ->orderBy('a.nickname', 'asc')
                                     ->take(5)->get();
