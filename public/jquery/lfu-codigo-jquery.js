@@ -409,25 +409,34 @@ $(document).ready(function(){
         $("#lfu-textarea-reporte-letra").val('');
     });
 
-    // Al presionar "¿Deseas compartirla (la letra )con nosotros?" se muestra el Modal para escribir la letra.
+    // Modal de REGISTRAR LETRA DE CANCIÓN
     $("#lfu-proveer-letra").click(function(){
         $("#proveerLetraModal").modal();
     });
-
-    // Al momento de presionar "Registrar letra".
     $(".modal-body").on('click', '#guardar-letra', function (e) {
         $(this.form).submit();              // Se envía el comentario
         $("#proveerLetraModal").modal('hide');        // Se oculta el modal
     });
-
-    // Al presionar "Cancelar", el campo del textarea debe quedar en blanco.
     $("#cancelar-guardado-letra").click(function(){
         $("#lfu-textarea-letra-cancion").val('');
     });
-
-    // Al presionar "X" de cerrar, el campo del textarea debe quedar en blanco.
     $(".cerrar_modal_proveer_letra").click(function(){
         $("#lfu-textarea-letra-cancion").val('');
+    });
+
+    // Modal de BÚSQUEDA
+    $("#lfu-buscar").click(function(){
+        $("#buscarModal").modal();
+    });
+    $("#realizar-busqueda").click(function(){
+        $("#formRealizarBusqueda").submit(); 
+        $("#buscarModal").modal('hide'); // Se oculta el modal
+    });
+    $("#cancelar-busqueda").click(function(){
+        $("#lfu-palabra-clave").val('');
+    });
+    $(".cerrar_modal_busqueda").click(function(){
+        $("#lfu-palabra-clave").val('');
     });
 
     /*    

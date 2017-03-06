@@ -26,6 +26,8 @@
 
     <body>
 
+        @include('includes.modal_buscar')
+
         @include('includes.header_usuario')
         
         <div class="container">

@@ -32,7 +32,7 @@ class MensajeController extends Controller
     {
         // Mostrar un mensaje en específico de la lista de mensajes recibidos por el usuario autenticado.
         
-        if ( is_numeric( $id_mensaje ) ) {
+        if ( ctype_digit( $id_mensaje ) ) {
             $usuario = Auth::User();
             $mensajeRecibido = DB::table('mensajes')->where('id',$id_mensaje)->first();
             if ( $usuario->id === $mensajeRecibido->usuario_receptor_id ) {
@@ -210,7 +210,7 @@ class MensajeController extends Controller
         // Sólo lo puede ver el usuario emisor
         // Mostrar un mensaje en específico de la lista de mensajes recibidos por el usuario autenticado.
         
-        if ( is_numeric($id_mensaje) ) {
+        if ( ctype_digit($id_mensaje) ) {
             $usuario = Auth::User();
             $mensajeEnviado = DB::table('mensajes')->where('id',$id_mensaje)->first();
 

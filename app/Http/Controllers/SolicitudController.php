@@ -36,7 +36,7 @@ class SolicitudController extends Controller
     {
         // Mostrar la información correspondiente al registro de la solicitud seleccionada.
 
-        if ( is_numeric($id_solicitud) ) {
+        if ( ctype_digit($id_solicitud) ) {
             // Si el ID de la solicitud es un valor entero...
             $usuario = Auth::User();
             $solicitud = Solicitud::find($id_solicitud);

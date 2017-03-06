@@ -116,8 +116,8 @@ Route::group(['middleware' => ['web']], function () {
 
 
     # BUSCAR
-
-    Route::get('/buscar', 'BusquedaController@index')->name('buscar');
+    Route::get('/busqueda', 'BusquedaController@index')->name('buscar');
+    Route::post('/busqueda', 'BusquedaController@resultados')->name('resultados');
 
 
     # IMÁGENES

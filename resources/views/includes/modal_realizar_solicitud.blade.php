@@ -1,4 +1,4 @@
-<!-- Modal para realizaR y enviar una solicitud -->
+<!-- Modal para realizar y enviar una solicitud -->
 <div class="modal fade" id="realizarSolicitudModal" role="dialog">
 	<div class="modal-dialog">
 	<!-- Contenido del Modal-->

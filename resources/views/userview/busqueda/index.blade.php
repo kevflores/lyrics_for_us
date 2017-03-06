@@ -6,6 +6,8 @@
 
 @section('contenido')
     
-	<h3>Buscar (Vista de Usuario)</h3>
+	<h3>Realizar Búsqueda</h3>
+	<br>
+	<br>
     
 @endsection
