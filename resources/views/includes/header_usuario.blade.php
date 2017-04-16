@@ -41,8 +41,10 @@
                               </ul>
                             </li>
                         @endif
-                        <li {{ current_page("buscar") ? 'class=active' : '' }}>
-                            <a id="lfu-buscar" style="cursor:pointer"><span class="glyphicon glyphicon-search"></span></a>
+                        <li {{ current_page("busqueda") ? 'class=active' : '' }}>
+                            <a @if (!current_page("busqueda")) id="lfu-buscar" @else href="{{ route('buscar') }}" @endif style="cursor:pointer">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </a>
                         </li>
                     </ul>
                 </div>

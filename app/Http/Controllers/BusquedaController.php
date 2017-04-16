@@ -25,39 +25,62 @@ class BusquedaController extends Controller
     public function resultados(Request $request)
     {
     	// Mostrar los resultados relacionados al término especificado en el campo de búsqueda.
-    	$this->validate($request, [
-    							'tipo_busqueda' => 'required',
-    							'palabra_clave' => 'required|string'
-    							]);
 
-    	$tipo_busqueda = $request['tipo_busqueda'];
-    	$palabra_clave = $request['palabra_clave'];
+        $tipo_busqueda = $request['tipo_busqueda'];
+        $palabra_clave = preg_replace('/\s+/', ' ', trim($request['palabra_clave'])); // Para eliminar espacios en blanco extras.
 
-    	switch ( $tipo_busqueda ) {
-    		case 0: // Buscar TODO (Canciones, Artistas y Discos).
-    			$resultados = 'TODO';
-    			break;
-    		case 1: // Buscar sólo canciones.
-    			$rCanciones = DB::table('canciones')->select('*')
-    												->where(DB::raw('UPPER(titulo)'), 'LIKE', DB::raw('UPPER(\'%'.$palabra_clave.'%\')'))
-    												->get();
-    			return view('userview.busqueda.resultados', ['usuario' => Auth::User(),
-    														 'resultados' => $resultados=null,
-    														 'rCanciones' => $rCanciones]);
+        // VALIDAR que palabra_clave NO esté vacía para no realizar ninguna búsqueda.
+        if ( $palabra_clave === null || $palabra_clave === '') {
+            $tipo_busqueda = 4; // Para que no se muestren resultados.
+        } else {
+            $palabras = preg_replace('/\s+/', '|', $palabra_clave); // Se conforma el conjunto de palabras clave.
+        }
+
+        $rTodos = null;
+        $rCanciones = null;
+        $rArtistas = null;
+        $rDiscos = null;
+
+        switch ( $tipo_busqueda ) {
+            case 0: // Buscar TODO (Canciones, Artistas y Discos).
+                $rTodos = true;
+                $rArtistas = DB::table('artistas')->select('*')
+                                ->where(DB::raw('UPPER(nombre)'), '~', DB::raw("UPPER('".$palabras."')"))
+                                ->get();
+                $rDiscos = DB::table('discos')->select('*')
+                                ->where(DB::raw('UPPER(titulo)'), '~', DB::raw("UPPER('".$palabras."')"))
+                                ->get();
+                $rCanciones = DB::table('canciones')->select('*')
+                                ->where(DB::raw('UPPER(titulo)'), '~', DB::raw("UPPER('".$palabras."')"))
+                                ->get();
+                break;
+            case 1: // Buscar sólo canciones.
+                $rArtistas = DB::table('artistas')->select('*')
+                                ->where(DB::raw('UPPER(nombre)'), '~', DB::raw("UPPER('".$palabras."')"))
+                                ->get();
     			break;
     		case 2: // Buscar sólo artistas.
-    			$resultados = Artista::where('nombre','LIKE', '%'.$palabra_clave.'%')->get();
+    			$rDiscos = DB::table('discos')->select('*')
+                                ->where(DB::raw('UPPER(titulo)'), '~', DB::raw("UPPER('".$palabras."')"))
+                                ->get();
     			break;
     		case 3: // Buscar sólo discos.
-    			$resultados = Disco::where('titulo','LIKE', '%'.$palabra_clave.'%')->get();
+    			$rCanciones = DB::table('canciones')->select('*')
+                                ->where(DB::raw('UPPER(titulo)'), '~', DB::raw("UPPER('".$palabras."')"))
+                                ->get();
     			break;
     		default:
-    			$resultados = 'No hay resultados';
+    			$rTodos = false;
     			break;
     	}
 
     	return view('userview.busqueda.resultados', ['usuario' => Auth::User(),
-    												 'resultados' => $resultados]);
+                                                             'tipo_busqueda' => $tipo_busqueda,
+                                                             'palabra_clave' => $palabra_clave,
+                                                             'rTodos' => $rTodos,
+                                                             'rCanciones' => $rCanciones,
+                                                             'rArtistas' => $rArtistas,
+                                                             'rDiscos' => $rDiscos]);
     }
 
 }

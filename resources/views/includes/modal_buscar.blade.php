@@ -13,10 +13,10 @@
             		<div class="form-group col-xs-12 col-sm-6 {{ $errors->has('tipo_busqueda') ? 'has-error' : '' }}">
 						{!! Form::label('tipo_busqueda','Buscar', array('class'=>'label-izquierda', )) !!}
 						{!! Form::select('tipo_busqueda', 
-							[1 => 'Canción',
-							 2 => 'Artista',
-						     3 => 'Disco',
-						     0 => 'Todo'],
+							[0 => 'Todo',
+							 1 => 'Artista',
+						     2 => 'Disco',
+						     3 => 'Canción'],
 						    old('tipo_busqueda'), ['class'=>'form-control']); !!}
 					</div>
             		<div class="form-group col-xs-12 col-sm-6 {{ $errors->has('palabra_clave') ? 'has-error' : '' }}">
