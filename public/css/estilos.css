@@ -1,7 +1,7 @@
 /* ESTILOS GENERALES */
 
-.modal-header, h4, .cerrar_modal, .estilo-cerrar-modal {
-  background-color: rgba(49, 123, 176, 1);
+.modal-header, .cerrar_modal, .estilo-cerrar-modal {
+  background-color: rgba(92, 180, 238, 1);
   color:white !important;
   text-align: center;
   /*font-size: 30px;*/
@@ -1249,7 +1249,8 @@ th {
 }
 
 #lfu-perfil-panel-body-letras{
-    /*overflow-x: hidden;*/
+    overflow-y: auto;
+    overflow-x: hidden;
     min-height: 657px;
     max-height: 657px;
     padding-bottom: 15px;

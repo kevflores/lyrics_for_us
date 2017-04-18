@@ -157,7 +157,7 @@
 					    			<strong>{{ $usuarioPerfil->nickname }}</strong> ha provisto la letra de una canción:
 					    		@endif
 				    		@endif
-				    		<hr class="lfu-separador">
+				    		<hr class="lfu-separador" style="border-color:transparent;">
 				    		
 				    		<?php $fecha = null;?>
 				    		{{-- Se imprime el listado de las canciones, agrupándolas por fecha en la cual el usuario proveyó la letra --}}
@@ -167,17 +167,17 @@
 					    			<hr class="lfu-separador" style="border-top: 0px;">
 					    			@include('includes.imprimir_listado_letras_provistas')
 					    		@else
-					    			@if ( $fecha === $letraProvista->fecha_letra )
+					    			@if ( $fecha === date('d/m/Y', strtotime($letraProvista->fecha_letra)) )
 					    				<hr class="lfu-separador-cancion-misma-fecha">
 					    				@include('includes.imprimir_listado_letras_provistas')
 					    			@else
-					    				<hr class="lfu-separador" >
+					    				<hr class="lfu-separador"  style="border-color:transparent;">
 					    				<span class="label label-info">{{ date('d/m/Y', strtotime($letraProvista->fecha_letra)) }}</span>
 						    			<hr class="lfu-separador" style="border-top: 0px;">
 					    				@include('includes.imprimir_listado_letras_provistas')
 					    			@endif
 					    		@endif
-					            <?php $fecha = $letraProvista->fecha_letra; ?>
+					            <?php $fecha = date('d/m/Y', strtotime($letraProvista->fecha_letra)); ?>
 					        @endforeach
 					        <hr class="lfu-separador">
 					    @else

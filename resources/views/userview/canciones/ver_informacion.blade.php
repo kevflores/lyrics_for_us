@@ -115,7 +115,7 @@
 						@endif
 					</div>
 
-					 <!-- Código para actualizar la portada del cancion [SE DEBE USAR al momento de implementar la función del Administrador] -->
+					{{-- <!-- Código para actualizar la portada del cancion [SE DEBE USAR al momento de implementar la función del Administrador] -->
 					@if ( $usuario )
 					<form action="{{ route('canciones.actualizar_imagen', ['id_cancion' => $cancion->id]) }}" method="post", id='lfu-form-config-imagen' enctype="multipart/form-data">
 						{!! csrf_field() !!}
@@ -128,7 +128,7 @@
 						<button type="submit" class="btn btn-primary">Subir nueva imagen</button>
 					</form>
 					@endif
-					
+					--}}
 					
 					<hr class="lfu-separador">
 				</div>
