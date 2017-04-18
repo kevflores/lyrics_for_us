@@ -17,9 +17,7 @@ class BusquedaController extends Controller
 {
     public function index()
     {
-    
-    	return view('userview.busqueda.index', ['usuario' => Auth::User()
-    											]);
+    	return view('userview.busqueda.index', ['usuario' => Auth::User()]);
     }
 
     public function resultados(Request $request)
@@ -32,8 +30,10 @@ class BusquedaController extends Controller
         // VALIDAR que palabra_clave NO esté vacía para no realizar ninguna búsqueda.
         if ( $palabra_clave === null || $palabra_clave === '') {
             $tipo_busqueda = 4; // Para que no se muestren resultados.
+            $mensajeError = "Debe ingresar al menos una palabra clave.";
         } else {
             $palabras = preg_replace('/\s+/', '|', $palabra_clave); // Se conforma el conjunto de palabras clave.
+            $mensajeError = null;
         }
 
         $rTodos = null;
@@ -80,7 +80,8 @@ class BusquedaController extends Controller
                                                              'rTodos' => $rTodos,
                                                              'rCanciones' => $rCanciones,
                                                              'rArtistas' => $rArtistas,
-                                                             'rDiscos' => $rDiscos]);
+                                                             'rDiscos' => $rDiscos,
+                                                             'mensajeError' => $mensajeError]);
     }
 
 }

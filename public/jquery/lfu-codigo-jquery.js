@@ -439,6 +439,42 @@ $(document).ready(function(){
         $("#lfu-palabra-clave").val('');
     });
 
+    // Al presionar "Ver Listado de Artistas" en la sección de búsqueda.
+    $("a[id='ver-listado-artistas']").click(function(){
+        $("#ver-listado-artistas").hide();
+        $("#ocultar-listado-artistas").show();
+    });
+
+    // Al presionar "Ocultar Listado de Artistas" en la sección de búsqueda.
+    $("a[id='ocultar-listado-artistas']").click(function(){
+        $("#ver-listado-artistas").show();
+        $("#ocultar-listado-artistas").hide();
+    });
+
+    // Al presionar "Ver Listado de Discos" en la sección de búsqueda.
+    $("a[id='ver-listado-discos']").click(function(){
+        $("#ver-listado-discos").hide();
+        $("#ocultar-listado-discos").show();
+    });
+
+    // Al presionar "Ocultar Listado de Discos" en la sección de búsqueda.
+    $("a[id='ocultar-listado-discos']").click(function(){
+        $("#ver-listado-discos").show();
+        $("#ocultar-listado-discos").hide();
+    });
+
+    // Al presionar "Ver Listado de Canciones" en la sección de búsqueda.
+    $("a[id='ver-listado-canciones']").click(function(){
+        $("#ver-listado-canciones").hide();
+        $("#ocultar-listado-canciones").show();
+    });
+
+    // Al presionar "Ocultar Listado de Canciones" en la sección de búsqueda.
+    $("a[id='ocultar-listado-canciones']").click(function(){
+        $("#ver-listado-canciones").show();
+        $("#ocultar-listado-canciones").hide();
+    });
+
     /*    
     $('.eliminar-artista-favorito').on('click', function(event) {
         event.preventDefault();

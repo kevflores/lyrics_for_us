@@ -6,11 +6,25 @@
 
 @section('contenido')
     
+	@if( $mensajeError )
+		<div class="lfu-seccion-completa col-xs-12">
+        <div class="col-xs-1 col-sm-2 col-md-3 col-lg-3 lfu-espacio-responsive"></div>
+        <div class="col-xs-10 col-sm-8 col-md-6 col-lg-6">
+            <div class="alert alert-danger alert-dismissable">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong>{{ $mensajeError }}</strong>
+            </div>
+        </div>
+        <div class="col-xs-1 col-sm-2 col-md-3 col-lg-3 lfu-espacio-responsive"></div>
+    </div>
+	@endif
+    
 	<div class="lfu-seccion-completa col-xs-12">
 		<div class="panel panel-primary" id="lfu-panel-solicitudes" style="border-bottom-left-radius:0px;border-bottom-right-radius:0px;">
 			<div class="panel-heading" id="lfu-panel-heading-solicitudes">Búsqueda</div>
 			<div class="panel-body" id="lfu-solicitud">
 				<div class="col-md-8 col-md-offset-2">
+
 					<form action="{{ route('resultados') }}" method="post">
 			  		{!! csrf_field() !!}
 
@@ -24,7 +38,7 @@
 						   $tipo_busqueda, ['class'=>'form-control']); !!}
 						</div>
 
-			    	<div class="form-group col-xs-12 col-sm-6 {{ $errors->has('palabra_clave') ? 'has-error' : '' }}">
+			    	<div class="form-group col-xs-12 col-sm-6 {{ $mensajeError ? 'has-error' : '' }}">
 							{!! Form::label('palabra_clave','Palabras Clave', array('class'=>'label-izquierda', )) !!}
 							{!! Form::text('palabra_clave', $palabra_clave, ['class'=>'form-control', 'style' => 'text-align:left;', 'id' => 'lfu-palabra-clave']) !!}
 						</div>
@@ -52,8 +66,11 @@
 								  @if ($rArtistas->count() > 0)
 									  <div class="panel panel-primary lfu-panel-resultados">
 									    <div class="panel-heading" role="tab" id="lfu-resultados-artistas">
-									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-									          Ver Listado de Artistas
+									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="ver-listado-artistas">
+									          Mostrar Listado de Artistas <i class="fa fa-caret-down" aria-hidden="true"></i>
+									        </a>
+									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" id="ocultar-listado-artistas" style="display:none;">
+									          Ocultar Listado de Artistas <i class="fa fa-caret-up" aria-hidden="true"></i>
 									        </a>
 									    </div>
 									    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="lfu-resultados-artistas">
@@ -103,8 +120,11 @@
 								  @if ($rDiscos->count() > 0)
 									  <div class="panel panel-primary lfu-panel-resultados">
 									    <div class="panel-heading" role="tab" id="lfu-resultados-discos">
-									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-									          Ver Listado de Discos
+									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" id="ver-listado-discos">
+									          Mostrar Listado de Discos <i class="fa fa-caret-down" aria-hidden="true"></i>
+									        </a>
+									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" id="ocultar-listado-discos" style="display:none;">
+									          Ocultar Listado de Discos <i class="fa fa-caret-up" aria-hidden="true"></i>
 									        </a>
 									    </div>
 									    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="lfu-resultados-discos">
@@ -157,8 +177,11 @@
 								  @if ($rCanciones->count() > 0)
 									  <div class="panel panel-primary lfu-panel-resultados">
 									    <div class="panel-heading " role="tab" id="lfu-resultados-canciones">
-									        <a class="lfu-enlace-resultados" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-									          Ver Listado de Canciones
+									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"  id="ver-listado-canciones">
+									          Mostrar Listado de Canciones <i class="fa fa-caret-down" aria-hidden="true"></i>
+									        </a>
+									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" id="ocultar-listado-canciones" style="display:none;">
+									          Ocultar Listado de Canciones <i class="fa fa-caret-up" aria-hidden="true"></i>
 									        </a>
 									    </div>
 									    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="lfu-resultados-canciones">
@@ -209,7 +232,7 @@
 								  @endif
 								</div>
 							@else
-								No se encontraron resultados.
+								No hay resultados.
 							@endif
 						@endif
 					@elseif ( $rArtistas )
@@ -218,7 +241,9 @@
 								<?php $cantidad++; ?>
 							@endforeach
 
-							@if ( $cantidad === 1 )
+							@if ( $cantidad === 0 )
+								No hay resultados.
+							@elseif ( $cantidad === 1 )
 								<div style="margin: auto 0;text-align:center;">
 									@foreach ($rArtistas as $artista)
 										<a class="lfu-enlace-sin-decoracion-well" href="{{ route('artistas.informacion', ['id_artista' => $artista->id]) }}">
@@ -254,8 +279,10 @@
 							@foreach ($rDiscos  as $disco)
 								<?php $cantidad++; ?>
 							@endforeach
-
-							@if ( $cantidad === 1 )
+							
+							@if ( $cantidad === 0 )
+								No hay resultados.
+							@elseif ( $cantidad === 1 )
 								<div style="margin: auto 0;text-align:center;">
 									@foreach ($rDiscos as $disco)
 										<a class="lfu-enlace-sin-decoracion-well" href="{{ route('discos.informacion', ['id_disco' => $disco->id]) }}">
@@ -294,8 +321,10 @@
 							@foreach ($rCanciones  as $cancion)
 								<?php $cantidad++; ?>
 							@endforeach
-
-							@if ( $cantidad === 1 )
+							
+							@if ( $cantidad === 0 )
+								No hay resultados.
+							@elseif( $cantidad === 1 )
 								<div style="margin: auto 0;text-align:center;">
 									@foreach ($rCanciones as $cancion)
 										<a class="lfu-enlace-sin-decoracion-well" href="{{ route('canciones.informacion', ['id_cancion' => $cancion->id]) }}">

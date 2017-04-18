@@ -1868,12 +1868,9 @@ a[href="#lfu-panel-collapse-comentarios"] {
 }
 
 .lfu-panel-body-resultados {
-    border: solid 1px rgba(68, 154, 208, 1);
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    background-color: #E9F2FA;
+    border: none;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 #lfu-resultados-artistas, #lfu-resultados-discos, #lfu-resultados-canciones {
@@ -1881,11 +1878,11 @@ a[href="#lfu-panel-collapse-comentarios"] {
     font-size: 14px;
 }
 
-.lfu-enlace-resultados:link, .lfu-enlace-sin-decoracion:visited {
+.lfu-enlace-resultados:link, .lfu-enlace-resultados:visited {
     color: rgba(49, 123, 176, 1);
 }
 
-.lfu-enlace-resultados:hover, .lfu-enlace-sin-decoracion:active {
+.lfu-enlace-resultados:hover, .lfu-enlace-resultados:active {
     color: rgba(49, 123, 176, 1);
 }
 
