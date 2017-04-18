@@ -1862,6 +1862,33 @@ a[href="#lfu-panel-collapse-comentarios"] {
 
 
 /* ESTILOS PARA EL MÓDULO "BUSCAR" */
+
+.lfu-panel-resultados {
+    border: none;
+}
+
+.lfu-panel-body-resultados {
+    border: solid 1px rgba(68, 154, 208, 1);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: #E9F2FA;
+}
+
+#lfu-resultados-artistas, #lfu-resultados-discos, #lfu-resultados-canciones {
+    background-color: transparent;
+    font-size: 14px;
+}
+
+.lfu-enlace-resultados:link, .lfu-enlace-sin-decoracion:visited {
+    color: rgba(49, 123, 176, 1);
+}
+
+.lfu-enlace-resultados:hover, .lfu-enlace-sin-decoracion:active {
+    color: rgba(49, 123, 176, 1);
+}
+
 /* FIN DE ESTILOS PARA EL MÓDULO "BUSCAR" */
 
 

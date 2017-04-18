@@ -50,14 +50,14 @@
 							@if ( ($rArtistas->count() + $rDiscos->count() + $rCanciones->count()) > 0 )
 								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 								  @if ($rArtistas->count() > 0)
-									  <div class="panel panel-primary">
-									    <div class="panel-heading" role="tab" id="headingOne" style="background-color:rgba(92, 180, 238, 1);font-size:14px;">
-									        <a class="lfu-enlace-sin-decoracion" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+									  <div class="panel panel-primary lfu-panel-resultados">
+									    <div class="panel-heading" role="tab" id="lfu-resultados-artistas">
+									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 									          Ver Listado de Artistas
 									        </a>
 									    </div>
-									    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-									      <div class="panel-body">
+									    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="lfu-resultados-artistas">
+									      <div class="panel-body lfu-panel-body-resultados">
 
 													<?php $cantidad = 0; ?>
 													@foreach ($rArtistas as $artista)
@@ -101,14 +101,14 @@
 									  </div>
 								  @endif
 								  @if ($rDiscos->count() > 0)
-									  <div class="panel panel-primary">
-									    <div class="panel-heading" role="tab" id="headingTwo" style="background-color:rgba(92, 180, 238, 1);font-size:14px;">
-									        <a class="lfu-enlace-sin-decoracion" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+									  <div class="panel panel-primary lfu-panel-resultados">
+									    <div class="panel-heading" role="tab" id="lfu-resultados-discos">
+									        <a class="lfu-enlace-resultados" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
 									          Ver Listado de Discos
 									        </a>
 									    </div>
-									    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-									      <div class="panel-body">
+									    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="lfu-resultados-discos">
+									      <div class="panel-body lfu-panel-body-resultados">
 									        
 													<?php $cantidad = 0; ?>
 													@foreach ($rDiscos  as $disco)
@@ -155,14 +155,14 @@
 									  </div>
 								  @endif
 								  @if ($rCanciones->count() > 0)
-									  <div class="panel panel-primary">
-									    <div class="panel-heading" role="tab" id="headingThree" style="background-color:rgba(92, 180, 238, 1);font-size:14px;">
-									        <a class="lfu-enlace-sin-decoracion" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+									  <div class="panel panel-primary lfu-panel-resultados">
+									    <div class="panel-heading " role="tab" id="lfu-resultados-canciones">
+									        <a class="lfu-enlace-resultados" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
 									          Ver Listado de Canciones
 									        </a>
 									    </div>
-									    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-									      <div class="panel-body">
+									    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="lfu-resultados-canciones">
+									      <div class="panel-body lfu-panel-body-resultados">
 
 													<?php $cantidad = 0; ?>
 													@foreach ($rCanciones  as $cancion)
