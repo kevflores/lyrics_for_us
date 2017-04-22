@@ -195,18 +195,24 @@ class UsuarioController extends Controller
 
         $emisor = Auth::User();
 
-        $comentarioUsuario = new ComentarioUsuario();
+        if ( $emisor ) {
+            try {
+                $comentarioUsuario = new ComentarioUsuario();
+                $comentarioUsuario->descripcion = $request['descripcion-comentario'];
+                $comentarioUsuario->fecha = new DateTime();
+                $comentarioUsuario->usuario_receptor_id = $id_usuario;
+                $comentarioUsuario->usuario_emisor_id = $emisor->id; 
+                $comentarioUsuario->save();
 
-        $comentarioUsuario->descripcion = $request['descripcion-comentario'];
-        $comentarioUsuario->fecha = new DateTime();
-        $comentarioUsuario->usuario_receptor_id = $id_usuario;
-        $comentarioUsuario->usuario_emisor_id = $emisor->id; 
+                return response()->json(['insertado'=> true, 'comentarioUsuario' => $comentarioUsuario], 200);
 
-        $comentarioUsuario->save();
-
-        $mensaje = "El comentario ha sido enviado exitosamente.";
-
-        return redirect()->back()->with(['mensaje' => $mensaje]);
+            } catch ( \Illuminate\Database\QueryException $e) {
+                return response()->json(array('insertado'=> false));
+            }
+        } else {
+            return response()->json(array('insertado'=> false));
+        }
+        
     }
 
     // Método para registrar el reporte realizado sobre un usuario.
@@ -232,8 +238,8 @@ class UsuarioController extends Controller
                 $reporteUsuario->usuario_reportante_id = $reportante->id; 
                 $reporteUsuario->save();
             }
-        } catch (Exception $e) {
-            
+        } catch ( \Illuminate\Database\QueryException $e) {
+            return redirect()->back()->with('mensajeError', 'El reporte no pudo ser enviado.');
         }
         return redirect()->back()->with(['mensaje' => "El reporte ha sido enviado exitosamente."]);
     }

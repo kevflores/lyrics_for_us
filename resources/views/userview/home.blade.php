@@ -126,14 +126,6 @@
 		</div>
 	</div>
 
-    {{-- Prueba para el front-end --}}
-    <h6 class="col-xs-12">Resolución: 
-        <div class="visible-xs">Extra-Small</div>
-        <div class="visible-sm">Small</div>
-        <div class="visible-md">Medium</div>
-        <div class="visible-lg">Large</div>
-    </h6>
-
     {{--
 
     {!! Form::open(['url' => route('userhome'), 'method' => 'get']) !!}
