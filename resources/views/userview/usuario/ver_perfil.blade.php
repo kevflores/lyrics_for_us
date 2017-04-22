@@ -237,7 +237,7 @@
 										<strong>(Tú)</strong>
 										@endif
 									@endif
-									<span style="font-style:italic;font-size:12px;"> (El {{ date('d/m/Y', strtotime($comentario->fecha)) }} a las {{ date('H:m:s', strtotime($comentario->fecha)) }})</span>
+									<span style="font-style:italic;font-size:12px;"> (El {{ date('d/m/Y', strtotime($comentario->fecha)) }} a las {{ substr($comentario->fecha, 11, 8)  }})</span>
 									<p id="lfu-comentario-descripcion">{{ $comentario->descripcion }}</p>
 								</div>
 
@@ -276,39 +276,36 @@
 
 	@endif
 
+	<div id="lfu-cargando" style="display:none;color:rgba(92, 180, 238, 1);margin-bottom:15px;">
+OJO					</div>
+
 @endsection
 
 @section('codigo-jquery-ajax')
-	@if ( $usuario )
+	@if ( $usuario && $usuarioPerfil )
 	<script>
-		/* Código jQuery AJAX */
+		
+		var cargando = $("#lfu-cargando");
 
+		/* Código jQuery AJAX para Enviar Comentario en Perfil de Usuario */
 		$("#enviar-comentario").click(function() {
 
-			//Se verifica que el valor del campo este vacio y se eliminan los espacios
 		    if ($('#lfu-textarea-comentario').val().trim() === '') {
-		    	console.log("Vacio.");
 		        $('#div-lfu-textarea-comentario').addClass('has-error');
 		        $('#mensaje-error-comentario').show();
 		    } else {
 		    	$('#div-lfu-textarea-comentario').removeClass('has-error');
 		        $('#mensaje-error-comentario').hide();
-		       	console.log("No vacio.");
 		       	var id_usuario = {{ $usuarioPerfil->id }};
 	            var comment = $('#lfu-textarea-comentario').val();
 	            var form = $('#formulario-comentar-perfil');
 	            var url = form.attr('action').replace(':USER_ID', id_usuario);
 	            var data = form.serialize();
 
-	            // tu elemento que quieres activar.
-				var cargando = $("#lfu-cargando");
-
-				// evento ajax start
 				$(document).ajaxStart(function() {
 					cargando.show();
 				});
 
-				// evento ajax stop
 				$(document).ajaxStop(function() {
 					cargando.hide();
 				});
@@ -317,43 +314,41 @@
 	            	$("#comentarModal").modal('hide'); // Se oculta el modal
 	            	$("#lfu-textarea-comentario").val('');
 
-	            	console.log("Estado: "+result['insertado']);
-	            	console.log("Descripcion del comentario: "+result['comentarioUsuario'].descripcion);
+	            	var descripcionComentario = result['comentarioUsuario'].descripcion;
+	            	var fechaComentario = ((result['comentarioUsuario'].fecha.date).split(' ')[0]).match(/([^T]+)/)[0].split("-").reverse().join("/");
+	            	var horaComentario = ((result['comentarioUsuario'].fecha.date).split(' ')[1]).substring(0,8);;
 
-	            	var comentario = result['comentarioUsuario'].descripcion;
-	            	var fecha = result['comentarioUsuario'].fecha;
+	            	console.log("Nuevo Comentario: "+descripcionComentario);
+	         		console.log("Fecha: "+fechaComentario);
+	         		console.log("Hora: "+horaComentario);
 
-	            	var nuevo = '<div class="media-left lfu-container-avatar-comentario">'+
-	'<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $comentario->nickname]) }}">'+
-	'@if (Storage::disk('avatars')->has($comentario->imagen_usuario))'+
-        '<img src="{{ route('usuario.avatar', ['imagenNombre' => 'thumbnail_'.$comentario->imagen_usuario]) }}" alt="{{ $comentario->nickname }}"class="img-circle media-object lfu-comentario-avatar">'+
-	'@else'+
-		'<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $comentario->nickname }}" class="img-circle media-object lfu-comentario-avatar" >'+
-	'@endif'+
-	'</a>'+
-'</div>'+
+	            	var nuevoComentario = 
+        				'<div class="media-left lfu-container-avatar-comentario">'+
+							'<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">'+
+							'@if (Storage::disk('avatars')->has($usuario->imagen))'+
+						        '<img src="{{ route('usuario.avatar', ['imagenNombre' => 'thumbnail_'.$usuario->imagen]) }}" alt="{{ $usuario->nickname }}"class="img-circle media-object lfu-comentario-avatar">'+
+							'@else'+
+								'<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" class="img-circle media-object lfu-comentario-avatar" >'+
+							'@endif'+
+							'</a>'+
+						'</div>'+
+						'<div class="media-body lfu-comentario-individual">'+
+							'<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">'+
+								'<strong class="media-heading lfu-comentario-autor">{{$usuario->nickname}}</strong>'+
+							'</a>'+
+							'<strong> (Tú)</strong>'+
+							'<span style="font-style:italic;font-size:12px;"> (El '+fechaComentario+' a las '+horaComentario+')</span>'+
+							'<p id="lfu-comentario-descripcion">'+descripcionComentario+'</p>'+
+						'</div>'+
+						'<hr class="lfu-separador-comentarios">';
 
-'<div class="media-body lfu-comentario-individual">'+
-	'<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $comentario->nickname]) }}">'+
-		'<strong class="media-heading lfu-comentario-autor">{{$comentario->nickname}}</strong>'+
-	'</a>'+
-	'@if ( $usuario )'+
-		'@if ($comentario->usuario_emisor_id === $usuario->id)'+
-		'<strong>(Tú)</strong>'+
-		'@endif'+
-	'@endif'+
-	'<span style="font-style:italic;font-size:12px;"> (El {{ date('d/m/Y', strtotime('+fecha+')) }} a las {{ date('H:m:s', strtotime('+fecha+')) }})</span>'+
-	'<p id="lfu-comentario-descripcion">'+comentario+'</p>'+
-'</div>'+
+	            	$('#lfu-comentarios').prepend(nuevoComentario);
 
-'<hr class="lfu-separador-comentarios">';
-
-	            	$('#lfu-comentarios').prepend(nuevo);
-
+	            	console.log(nuevoComentario);
 	            });
 		    }
-
 	    });
+
 	</script>
 	@endif
 @endsection

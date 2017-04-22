@@ -14,20 +14,6 @@
 				</h4>
 			</div>
 			<div class="modal-body" >
-				
-				{{--
-				<form action="{{ route('usuario.comentar', ['id_usuario' => $usuarioPerfil->id]) }}" method="post">
-					{!! csrf_field() !!}
-					<div class="form-group col-xs-12 {{ $errors->has('descripcion-comentario') ? 'has-error' : '' }}">
-						<textarea class="form-control" rows="8" cols="50" id="lfu-textarea-comentario" name="descripcion-comentario" placeholder="Ingresar comentario..." style="resize: none;" autofocus>{{ old('descripcion-comentario') }}</textarea>
-					</div>
-					<div>
-						<span id="msg">Aquí.</span>
-					</div>
-					<button type="button" class="btn btn-danger" id="cancelar-comentario" data-dismiss="modal">Cancelar</button>
-					<button type="submit" class="btn btn-primary" id="enviar-comentario" >Enviar</button>
-				</form>
-				--}}
 
 				{!! Form::open(['route' => ['usuario.comentar', ':USER_ID'], 'method' => 'POST', 'id' => 'formulario-comentar-perfil']) !!}
 
