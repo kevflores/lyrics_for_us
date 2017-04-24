@@ -4,7 +4,7 @@
 	<!-- Contenido del Modal-->
 		<div class="modal-content">
 			<div class="modal-header" >
-				<button type="button" class="close estilo-cerrar-modal cerrar_modal_envio_mensaje" data-dismiss="modal">&times;</button>
+				<button type="button" class="close estilo-cerrar-modal" data-dismiss="modal">&times;</button>
 				<h4><span class="glyphicon glyphicon-pencil"></span> Escribir mensaje privado para: {{ $usuarioPerfil->nombre.' '.$usuarioPerfil->apellido }}</h4>
 			</div>
 			<div class="modal-body" >
@@ -25,4 +25,4 @@
 			</div>
 		</div>
 	</div>
-</div> 
+</div>

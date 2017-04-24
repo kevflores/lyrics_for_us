@@ -292,7 +292,7 @@ OJO					</div>
 
 		    if ($('#lfu-textarea-comentario').val().trim() === '') {
 		        $('#div-lfu-textarea-comentario').addClass('has-error');
-		        $('#mensaje-error-comentario').show();
+		        $('#mensaje-error-comentario').fadeIn();
 		    } else {
 		    	$('#div-lfu-textarea-comentario').removeClass('has-error');
 		        $('#mensaje-error-comentario').hide();
@@ -311,43 +311,71 @@ OJO					</div>
 				});
 
 	            $.post(url, data, function(result) {
-	            	$("#comentarModal").modal('hide'); // Se oculta el modal
-	            	$("#lfu-textarea-comentario").val('');
+	            	if ( result['insertado'] === true) {
+						$("#comentarModal").modal('hide'); // Se oculta el modal
+		            	$("#lfu-textarea-comentario").val('');
 
-	            	var descripcionComentario = result['comentarioUsuario'].descripcion;
-	            	var fechaComentario = ((result['comentarioUsuario'].fecha.date).split(' ')[0]).match(/([^T]+)/)[0].split("-").reverse().join("/");
-	            	var horaComentario = ((result['comentarioUsuario'].fecha.date).split(' ')[1]).substring(0,8);;
+		            	var descripcionComentario = result['comentarioUsuario'].descripcion;
+		            	var fechaComentario = ((result['comentarioUsuario'].fecha.date).split(' ')[0]).match(/([^T]+)/)[0].split("-").reverse().join("/");
+		            	var horaComentario = ((result['comentarioUsuario'].fecha.date).split(' ')[1]).substring(0,8);;
 
-	            	console.log("Nuevo Comentario: "+descripcionComentario);
-	         		console.log("Fecha: "+fechaComentario);
-	         		console.log("Hora: "+horaComentario);
+		            	console.log("Nuevo Comentario: "+descripcionComentario);
+		         		console.log("Fecha: "+fechaComentario);
+		         		console.log("Hora: "+horaComentario);
 
-	            	var nuevoComentario = 
-        				'<div class="media-left lfu-container-avatar-comentario">'+
-							'<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">'+
-							'@if (Storage::disk('avatars')->has($usuario->imagen))'+
-						        '<img src="{{ route('usuario.avatar', ['imagenNombre' => 'thumbnail_'.$usuario->imagen]) }}" alt="{{ $usuario->nickname }}"class="img-circle media-object lfu-comentario-avatar">'+
-							'@else'+
-								'<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" class="img-circle media-object lfu-comentario-avatar" >'+
-							'@endif'+
-							'</a>'+
-						'</div>'+
-						'<div class="media-body lfu-comentario-individual">'+
-							'<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">'+
-								'<strong class="media-heading lfu-comentario-autor">{{$usuario->nickname}}</strong>'+
-							'</a>'+
-							'<strong> (Tú)</strong>'+
-							'<span style="font-style:italic;font-size:12px;"> (El '+fechaComentario+' a las '+horaComentario+')</span>'+
-							'<p id="lfu-comentario-descripcion">'+descripcionComentario+'</p>'+
-						'</div>'+
-						'<hr class="lfu-separador-comentarios">';
+		            	var nuevoComentario = 
+	        				'<div class="media-left lfu-container-avatar-comentario">'+
+								'<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">'+
+								'@if (Storage::disk('avatars')->has($usuario->imagen))'+
+							        '<img src="{{ route('usuario.avatar', ['imagenNombre' => 'thumbnail_'.$usuario->imagen]) }}" alt="{{ $usuario->nickname }}"class="img-circle media-object lfu-comentario-avatar">'+
+								'@else'+
+									'<img src="{{ asset('images\lfu-default-avatar.png') }}" alt="{{ $usuario->nickname }}" class="img-circle media-object lfu-comentario-avatar" >'+
+								'@endif'+
+								'</a>'+
+							'</div>'+
+							'<div class="media-body lfu-comentario-individual">'+
+								'<a class="lfu-enlace-sin-decoracion" href="{{ route('usuario.perfil', ['nickname' => $usuario->nickname]) }}">'+
+									'<strong class="media-heading lfu-comentario-autor">{{$usuario->nickname}}</strong>'+
+								'</a>'+
+								'<strong> (Tú)</strong>'+
+								'<span style="font-style:italic;font-size:12px;"> (El '+fechaComentario+' a las '+horaComentario+')</span>'+
+								'<p id="lfu-comentario-descripcion">'+descripcionComentario+'</p>'+
+							'</div>'+
+							'<hr class="lfu-separador-comentarios">';
+		            	$('#lfu-comentarios').prepend(nuevoComentario);
 
-	            	$('#lfu-comentarios').prepend(nuevoComentario);
+		            	//$('html, body').animate({ scrollTop: 0 }, 'fast');
 
-	            	console.log(nuevoComentario);
-	            });
+		            	toastr.options = {
+						  "closeButton": false,
+						  "debug": false,
+						  "newestOnTop": false,
+						  "progressBar": false,
+						  "positionClass": "toast-bottom-right",
+						  "preventDuplicates": false,
+						  "onclick": null,
+						  "showDuration": "300",
+						  "hideDuration": "1000",
+						  "timeOut": "10000",
+						  "extendedTimeOut": "1000",
+						  "showEasing": "swing",
+						  "hideEasing": "linear",
+						  "showMethod": "fadeIn",
+						  "hideMethod": "fadeOut"
+						}
+						
+		            	toastr.success('El comentario ha sido publicado.');
+	            	} else {
+	            		$('#errorEnvioComentario').modal();
+	            	}
+	            })
+				.fail(function(jqXHR, textStatus, errorThrown) {
+				    $('#errorEnvioComentario').modal();
+				});
 		    }
 	    });
+
+
 
 	</script>
 	@endif

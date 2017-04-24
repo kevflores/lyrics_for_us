@@ -1,6 +1,6 @@
 /* ESTILOS GENERALES */
 
-.modal-header, .cerrar_modal, .estilo-cerrar-modal {
+.modal-header, .cerrar_modal, .estilo-cerrar-modal, .cerrar_modal_error {
   background-color: rgba(92, 180, 238, 1);
   color:white !important;
   text-align: center;
@@ -10,6 +10,10 @@
 .modal-header {
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+}
+
+.modal-header-error {
+    background-color: #7B2121;
 }
 
 .modal-footer {

@@ -316,7 +316,7 @@ class MensajeController extends Controller
 
             return redirect()->back()->with(['mensajeEnviado' => $idMensaje]);
 
-        } elseif ( $origen === 'vista_de_perfil_de_usuario' ) {
+        } elseif ( $origen === 'vista_de_perfil_de_usuario' && $id_receptor ) {
 
             $this->validate($request, [
                 'asunto' => 'required|string|max:100',

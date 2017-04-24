@@ -22,6 +22,7 @@
         -->
         <link rel="stylesheet" href="{{ URL::to('bootstrap-3.3.7/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ URL::to('css/estilos.css') }}">
+        <link rel="stylesheet" href="{{ URL::to('toastr/toastr.min.css') }}" crossorigin="anonymous">
     </head>
 
     <body>
@@ -42,10 +43,11 @@
         <!-- Latest compiled and minified JavaScript -->
         <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
         <script src="{{ URL::to('bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
+        <!-- Código para el estilo del ícono de "Cargando" -->
         <script src="http://spin.js.org/spin.js"></script>
-
         <!-- Código jQuery creado para mejorar el Front-end -->
         <script src="{{ URL::to('jquery/lfu-codigo-jquery.js') }}"></script>
+        <script src="{{ URL::to('toastr/toastr.min.js') }}"  crossorigin="anonymous"></script>
 
         @yield('codigo-jquery-ajax')
 
