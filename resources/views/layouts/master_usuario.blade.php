@@ -45,11 +45,16 @@
         <script src="{{ URL::to('bootstrap-3.3.7/js/bootstrap.min.js') }}"></script>
         <!-- Código para el estilo del ícono de "Cargando" -->
         <script src="http://spin.js.org/spin.js"></script>
+        <!-- Código Toastr -->
+        <script src="{{ URL::to('toastr/toastr.min.js') }}"  crossorigin="anonymous"></script>
         <!-- Código jQuery creado para mejorar el Front-end -->
         <script src="{{ URL::to('jquery/lfu-codigo-jquery.js') }}"></script>
-        <script src="{{ URL::to('toastr/toastr.min.js') }}"  crossorigin="anonymous"></script>
 
         @yield('codigo-jquery-ajax')
+
+        @include('includes.bloque_de_mensajes_de_exito')
+
+
 
     </body>
 </html>

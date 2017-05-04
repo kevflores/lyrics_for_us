@@ -9,18 +9,32 @@
 			</div>
 			<div class="modal-body" >
 
-				<form action="{{ route('enviar_mensaje', ['id_receptor' => $usuarioPerfil->id, 'origen' => 'vista_de_perfil_de_usuario']) }}" method="post">
-            		{!! csrf_field() !!}
-            		<div class="form-group col-xs-12 {{ $errors->has('asunto') ? 'has-error' : '' }}">
-							{!! Form::label('asunto','Asunto', array('class'=>'label-izquierda', )) !!}
-							{!! Form::text('asunto', old('asunto'), ['class'=>'form-control','style' => 'text-align:left;', 'id' => 'lfu-asunto-mensaje']) !!}
+				{!! Form::open(['route' => ['enviar_mensaje', 'id_receptor' => $usuarioPerfil->id, 'origen' => 'vista_de_perfil_de_usuario'], 'method' => 'POST', 'id' => 'formulario-enviar-mensaje-desde-perfil']) !!}
+
+					{!! csrf_field() !!}
+					
+					<div class="form-group col-xs-12 {{ $errors->has('asunto') ? 'has-error' : '' }}" id="div-lfu-asunto-mensaje">
+						{!! Form::label('asunto','Asunto', array('class'=>'label-izquierda')) !!}
+						{!! Form::text('asunto', old('asunto'), ['class'=>'form-control','style' => 'text-align:left;', 'id' => 'lfu-asunto-mensaje']) !!}
+						<div id="mensaje-error-asunto" style="display:none;margin-top:7px;">
+							<span style="color:#880E0E;text-size:12px;">Debes ingresar el asunto del mensaje.</span>
 						</div>
-					<div class="form-group col-xs-12 {{ $errors->has('descripcion-mensaje') ? 'has-error' : '' }}">
-						<textarea class="form-control" rows="8" cols="50" id="lfu-textarea-mensaje" name="descripcion-mensaje" placeholder="Ingresar mensaje..." style="resize: none;">{{ old('descripcion-mensaje') }}</textarea>
 					</div>
+					<div class="form-group col-xs-12 {{ $errors->has('descripcion-mensaje') ? 'has-error' : '' }}" id="div-lfu-textarea-mensaje">
+						<textarea class="form-control" rows="8" cols="50" id="lfu-textarea-mensaje" name="descripcion-mensaje" placeholder="Ingresar mensaje..." style="resize: none;">{{ old('descripcion-mensaje') }}</textarea>
+						<div id="mensaje-error-textarea" style="display:none;margin-top:7px;">
+							<span style="color:#880E0E;text-size:12px;">Debes ingresar el contenido del mensaje.</span>
+						</div>
+					</div>
+
+					<div id="lfu-cargando-envio-mensaje" style="display:none;color:rgba(92, 180, 238, 1);margin-bottom:15px;">
+						Enviando Mensaje Privado...
+					</div>
+
 					<button type="button" class="btn btn-danger" id="cancelar-envio-mensaje" data-dismiss="modal">Cancelar</button>
-					<button type="submit" class="btn btn-primary" id="enviar-mensaje-desde-perfil" >Enviar mensaje</button>
-				</form>
+					<button type="button" class="btn btn-primary" id="enviar-mensaje-desde-perfil" >Enviar mensaje</button>
+
+				{!! Form::close() !!}
 
 			</div>
 		</div>

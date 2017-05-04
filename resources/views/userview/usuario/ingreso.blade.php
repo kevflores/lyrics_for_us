@@ -8,9 +8,9 @@
 
     @include('includes.bloque_de_mensajes')
     
-    <div class="visible-xs visible-sm col-xs-1 visible-sm col-sm-2 visible-md col-md-3 visible-lg col-lg-4 lfu-espacio-responsive"></div>
+    <div class="visible-xs visible-sm col-xs-1 visible-sm col-sm-2 visible-md col-md-3 visible-lg col-lg-3 lfu-espacio-responsive"></div>
 
-    <div class="lfu-seccion-completa col-xs-10 col-sm-8 col-md-6 col-lg-4">
+    <div class="lfu-seccion-completa col-xs-10 col-sm-8 col-md-6 col-lg-6">
 
         <form action="{{ route('usuario.continuar_ingreso') }}" method="post">
             {!! csrf_field() !!}

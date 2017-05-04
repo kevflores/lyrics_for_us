@@ -6,9 +6,9 @@
 
 @section('contenido')
     
-	@include('includes.bloque_de_mensajes')
-
 	<div class="lfu-seccion-completa col-xs-12">
+
+		@include('includes.bloque_de_mensajes')
     	
 		<div class="lfu-seccion-dividida col-xs-12 col-sm-8" style="">
     		

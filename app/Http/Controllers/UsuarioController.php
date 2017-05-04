@@ -92,11 +92,11 @@ class UsuarioController extends Controller
 
         if (Auth::attempt(['nickname' => $request['login'], 'password' => $request['password']])) {
             // Se verifica si el login es igual a algún "nickname" con su password correspondiente...
-            $mensaje = "¡Bienvenido, ".Auth::User()->nombre." ".Auth::User()->apellido."!";
+            $mensaje = "¡Hola, ".Auth::User()->nombre." ".Auth::User()->apellido."!";
             return redirect()->route('userhome')->with(['mensaje' => $mensaje]);
         } elseif (Auth::attempt(['email' => $request['login'], 'password' => $request['password']])) {
             // Se verifica si el login es igual a algún "email" con su password correspondiente...
-            $mensaje = "¡Bienvenido, ".Auth::User()->nombre." ".Auth::User()->apellido."!";
+            $mensaje = "¡Hola, ".Auth::User()->nombre." ".Auth::User()->apellido."!";
             return redirect()->route('userhome')->with(['mensaje' => $mensaje]);
         } else {
             $mensaje = "Credenciales incorrectas.";

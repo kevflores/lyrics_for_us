@@ -76,8 +76,10 @@
 							{{ $usuarioPerfil->visitas }}
 							@if ( $usuarioPerfil->visitas > 1)
 								visitas
+							@elseif ($usuarioPerfil->visitas == 1)
+								1 visita
 							@else
-								visita
+								Sin visitas
 							@endif
 						</div>
 						<div class="perfil-dato-usuario">
@@ -245,8 +247,10 @@
 							@endforeach
 							<i class="fa fa-circle-o lfu-fa-icon" aria-hidden="true"></i>
 						@else
-							<p>No hay comentarios</p>
-							<hr class="lfu-separador-comentarios">
+							<div id="lfu-sin-comentarios">
+								<p>No hay comentarios</p>
+								<hr class="lfu-separador-comentarios">
+							</div>
 						@endif
 						</div>
 					</div>
@@ -276,8 +280,7 @@
 
 	@endif
 
-	<div id="lfu-cargando" style="display:none;color:rgba(92, 180, 238, 1);margin-bottom:15px;">
-OJO					</div>
+	<div id="lfu-cargando" style="display:none;color:rgba(92, 180, 238, 1);margin-bottom:15px;"></div>
 
 @endsection
 
@@ -285,9 +288,7 @@ OJO					</div>
 	@if ( $usuario && $usuarioPerfil )
 	<script>
 		
-		var cargando = $("#lfu-cargando");
-
-		/* Código jQuery AJAX para Enviar Comentario en Perfil de Usuario */
+		// INICIO de Código jQuery AJAX para Enviar Comentario en Perfil de Usuario
 		$("#enviar-comentario").click(function() {
 
 		    if ($('#lfu-textarea-comentario').val().trim() === '') {
@@ -301,6 +302,8 @@ OJO					</div>
 	            var form = $('#formulario-comentar-perfil');
 	            var url = form.attr('action').replace(':USER_ID', id_usuario);
 	            var data = form.serialize();
+
+	            var cargando = $("#lfu-cargando-envio-comentario");
 
 				$(document).ajaxStart(function() {
 					cargando.show();
@@ -342,40 +345,99 @@ OJO					</div>
 								'<p id="lfu-comentario-descripcion">'+descripcionComentario+'</p>'+
 							'</div>'+
 							'<hr class="lfu-separador-comentarios">';
+						$('#lfu-sin-comentarios').hide( "slow" );
 		            	$('#lfu-comentarios').prepend(nuevoComentario);
 
-		            	//$('html, body').animate({ scrollTop: 0 }, 'fast');
-
-		            	toastr.options = {
-						  "closeButton": false,
-						  "debug": false,
-						  "newestOnTop": false,
-						  "progressBar": false,
-						  "positionClass": "toast-bottom-right",
-						  "preventDuplicates": false,
-						  "onclick": null,
-						  "showDuration": "300",
-						  "hideDuration": "1000",
-						  "timeOut": "10000",
-						  "extendedTimeOut": "1000",
-						  "showEasing": "swing",
-						  "hideEasing": "linear",
-						  "showMethod": "fadeIn",
-						  "hideMethod": "fadeOut"
-						}
-						
-		            	toastr.success('El comentario ha sido publicado.');
+		            	toastr.success('Tu comentario ha sido publicado.');
 	            	} else {
-	            		$('#errorEnvioComentario').modal();
+	            		toastr.error('Error: Tu comentario no pudo ser publicado.');
 	            	}
 	            })
 				.fail(function(jqXHR, textStatus, errorThrown) {
-				    $('#errorEnvioComentario').modal();
+				    toastr.error('Error: Tu comentario no pudo ser publicado.');
 				});
 		    }
 	    });
+		// FIN de Código jQuery AJAX para Enviar Comentario en Perfil de Usuario
 
+		// INICIO de Código jQuery AJAX para Enviar Mensaje Privado desde Perfil de Usuario
+		$("#enviar-mensaje-desde-perfil").click(function() {
 
+			var error = false;
+
+		    if ($('#lfu-asunto-mensaje').val().trim() === '') {
+		        $('#div-lfu-asunto-mensaje').addClass('has-error');
+		        $('#mensaje-error-asunto').fadeIn();
+		        error = true;
+		    } else {
+		    	$('#div-lfu-asunto-mensaje').removeClass('has-error');
+		        $('#mensaje-error-asunto').hide();
+		    } 
+
+		    if ($('#lfu-textarea-mensaje').val().trim() === '') {
+		        $('#div-lfu-textarea-mensaje').addClass('has-error');
+		        $('#mensaje-error-textarea').fadeIn();
+		        error = true;
+		    } else {
+		    	$('#div-lfu-textarea-mensaje').removeClass('has-error');
+		        $('#mensaje-error-textarea').hide();
+		    } 
+
+		    if ( error === false ) {
+		    	$('#div-lfu-asunto-mensaje').removeClass('has-error');
+		    	$('#div-lfu-textarea-mensaje').removeClass('has-error');
+		        $('#mensaje-error-asunto').hide();
+		        $('#mensaje-error-textarea').hide();
+
+	            var form = $('#formulario-enviar-mensaje-desde-perfil');
+	            var url = form.attr('action');
+	            var data = form.serialize();
+
+				var cargando = $("#lfu-cargando-envio-mensaje");
+
+				$(document).ajaxStart(function() {
+					cargando.show();
+				});
+
+				$(document).ajaxStop(function() {
+					cargando.hide();
+				});
+
+	            $.post(url, data, function(result) {
+	            	if ( result['enviado'] === true) {
+						$("#enviarMensajeDesdePerfilModal").modal('hide'); // Se oculta el modal
+		            	$("#lfu-asunto-mensaje").val('');
+		            	$("#lfu-textarea-mensaje").val('');
+
+		            	var idMensajePrivado = result['mensajePrivado'].id;
+
+		            	console.log("ID del mensaje privado enviado: "+idMensajePrivado);
+
+		         		var mensajeConLink = 'El <a href="{{ route('ver_mensaje_enviado', ['id_mensaje' => ':MENSAJE_ID']) }}">mensaje privado</b></a> ha sido enviado satisfactoriamente.';
+
+		         		var mensajeConLinkFinal = mensajeConLink.replace(':MENSAJE_ID', idMensajePrivado);
+    					
+    					toastr.success(mensajeConLinkFinal);
+	            	} else {
+	            		toastr.error('Error: El mensaje privado no pudo ser enviado.');
+	            	}
+	            })
+				.fail(function(jqXHR, textStatus, errorThrown) {
+				    toastr.error('Error: El mensaje privado no pudo ser enviado.');
+				});
+
+		    }
+	    });
+
+		$('#lfu-asunto-mensaje').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                // Para que se active el SUBMIT al presionar ENTER en el campo de texto del Asunto.
+                return false;
+            }
+        });
+		// FIN de Código jQuery AJAX para Enviar Mensaje Privado desde Perfil de Usuario
 
 	</script>
 	@endif

@@ -214,12 +214,15 @@ class MensajeController extends Controller
             $usuario = Auth::User();
             $mensajeEnviado = DB::table('mensajes')->where('id',$id_mensaje)->first();
 
-            if ( $usuario->id === $mensajeEnviado->usuario_emisor_id ) {
-                if ( $mensajeEnviado->estado_emisor === false ) {
-                    return redirect()->action('MensajeController@verMensajesEnviados');
-                } else {
-                    $mensaje = Mensaje::find($mensajeEnviado->id);
-                    return view('userview.mensajes.ver_mensaje_enviado', ['usuario' => $usuario, 'mensaje' => $mensaje]);
+            // Se verifica si la consulta retornó algún resultado.
+            if ( $mensajeEnviado ) {
+                if ( $usuario->id === $mensajeEnviado->usuario_emisor_id ) {
+                    if ( $mensajeEnviado->estado_emisor === false ) {
+                        return redirect()->action('MensajeController@verMensajesEnviados');
+                    } else {
+                        $mensaje = Mensaje::find($mensajeEnviado->id);
+                        return view('userview.mensajes.ver_mensaje_enviado', ['usuario' => $usuario, 'mensaje' => $mensaje]);
+                    }
                 }
             }
         }
@@ -295,7 +298,7 @@ class MensajeController extends Controller
 
         if ( $origen === "vista_de_nuevo_mensaje" ) {
 
-             $this->validate($request, [
+            $this->validate($request, [
                 'asunto' => 'required|string|max:100',
                 'descripcion-mensaje' => 'required|string',
                 'nickname' => 'required|string|exists:usuarios,nickname'
@@ -323,17 +326,24 @@ class MensajeController extends Controller
                 'descripcion-mensaje' => 'required|string'
             ]);
 
-            $mensaje = new Mensaje();
-            $mensaje->asunto = $request['asunto'];
-            $mensaje->descripcion = $request['descripcion-mensaje'];
-            $mensaje->fecha = new DateTime();
-            $mensaje->usuario_receptor_id = $id_receptor;
-            $mensaje->usuario_emisor_id = $emisor->id; 
-            $mensaje->save();
+            if ( $emisor ) {
+                try {
+                    $mensaje = new Mensaje();
+                    $mensaje->asunto = $request['asunto'];
+                    $mensaje->descripcion = $request['descripcion-mensaje'];
+                    $mensaje->fecha = new DateTime();
+                    $mensaje->usuario_receptor_id = $id_receptor;
+                    $mensaje->usuario_emisor_id = $emisor->id; 
+                    $mensaje->save();
 
-            $idMensaje = $mensaje->id;
+                    return response()->json(['enviado'=> true, 'mensajePrivado' => $mensaje], 200);
 
-            return redirect()->back()->with(['mensajeEnviado' => $idMensaje]);
+                } catch ( \Illuminate\Database\QueryException $e) {
+                    return response()->json(array('enviado'=> false));
+                }
+            } else {
+                return response()->json(array('enviado'=> false));
+            }
         }
 
         return redirect()->back();

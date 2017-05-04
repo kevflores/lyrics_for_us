@@ -6,8 +6,6 @@
 
 @section('contenido')
 
-    @include('includes.bloque_de_mensajes')
-
     <div class="lfu-seccion-completa col-xs-12">
 
     <div class="well" style="border-color: rgba(68, 154, 208, 1);">

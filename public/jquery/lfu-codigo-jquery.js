@@ -27,13 +27,41 @@ $(document).ready(function(){
         , position: 'absolute' // Element positioning
         }
 
-        var target = document.getElementById('lfu-cargando');
+        var target = document.getElementById('lfu-cargando-envio-comentario');
         var spinner = new Spinner(opts).spin(target);
+
+        var target2 = document.getElementById('lfu-cargando-envio-mensaje');
+        var spinner = new Spinner(opts).spin(target2);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     FIN DE CÓDIGO PARA MOSTRAR EL SPINNER DE "CARGANDO"
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    INICIO DE CÓDIGO PARA CONFIGURAR EL TOASTR
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        toastr.options = {
+          "closeButton": false,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-bottom-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "10000",
+          "extendedTimeOut": "10000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    FIN DE CÓDIGO PARA CONFIGURAR EL TOASTR
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     INICIO DE CÓDIGO PARA EL MÓDULO DE INICIO
@@ -119,6 +147,7 @@ $(document).ready(function(){
             $("#enviarMensajeDesdePerfilModal").modal();
         });
 
+        /*
         // Al momento de presionar "Enviar" comentario.
         $(".modal-body").on('click', '#enviar-mensaje-desde-perfil', function (e) {
             $(this.form).submit();              // Se envía el comentario
@@ -126,6 +155,7 @@ $(document).ready(function(){
             //$("#lfu-textarea-mensaje").val(''); // El campo queda en blanco
             $("#enviarMensajeDesdePerfilModal").modal('hide');        // Se oculta el modal
         });
+        */
 
         // Al presionar "Cancelar", el campo del textarea debe quedar en blanco.
         $("#cancelar-envio-mensaje").click(function(){

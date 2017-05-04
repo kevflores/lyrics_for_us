@@ -26,7 +26,7 @@
 						</div>
 					</div>
 					
-					<div id="lfu-cargando" style="display:none;color:rgba(92, 180, 238, 1);margin-bottom:15px;">
+					<div id="lfu-cargando-envio-comentario" style="display:none;color:rgba(92, 180, 238, 1);margin-bottom:15px;">
 						Enviando Comentario...
 					</div>
 					
@@ -39,22 +39,3 @@
 		</div>
 	</div>
 </div> 
-
-<!-- Modal para mostrar modal con Error en el envío de comentario -->
-<div class="modal fade" id="errorEnvioComentario" role="dialog">
-	<div class="modal-dialog">
-	<!-- Contenido del Modal-->
-		<div class="modal-content">
-			<div class="modal-header modal-header-error" >
-				<button type="button" class="close cerrar_modal_error" data-dismiss="modal">&times;</button>
-				<h4>
-					<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Error
-				</h4>
-			</div>
-			<div class="modal-body" >
-				El comentario no pudo ser enviado.
-			</div>
-		</div>
-	</div>
-</div>
-
