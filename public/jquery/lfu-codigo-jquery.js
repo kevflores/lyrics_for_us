@@ -31,7 +31,10 @@ $(document).ready(function(){
         var spinner = new Spinner(opts).spin(target);
 
         var target2 = document.getElementById('lfu-cargando-envio-mensaje');
-        var spinner = new Spinner(opts).spin(target2);
+        var spinner2 = new Spinner(opts).spin(target2);
+
+        var target3 = document.getElementById('lfu-cargando-envio-reporte-usuario');
+        var spinner3 = new Spinner(opts).spin(target3);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     FIN DE CÓDIGO PARA MOSTRAR EL SPINNER DE "CARGANDO"
@@ -114,14 +117,6 @@ $(document).ready(function(){
             $("#comentarModal").modal();
             $("#lfu-textarea-comentario").focus();
         });
-        
-        /*
-        // Al momento de presionar "Enviar" comentario.
-        $(".modal-body").on('click', '#enviar-comentario', function (e) {
-            $(this.form).submit();              // Se envía el comentario
-            $("#comentarModal").modal('hide');        // Se oculta el modal
-        });
-        */
 
         // Al presionar "Cancelar", el campo del textarea debe quedar en blanco.
         $("#cancelar-comentario").click(function(){
@@ -147,16 +142,6 @@ $(document).ready(function(){
             $("#enviarMensajeDesdePerfilModal").modal();
         });
 
-        /*
-        // Al momento de presionar "Enviar" comentario.
-        $(".modal-body").on('click', '#enviar-mensaje-desde-perfil', function (e) {
-            $(this.form).submit();              // Se envía el comentario
-            //$("#lfu-asunto-mensaje").val(''); // El campo queda en blanco
-            //$("#lfu-textarea-mensaje").val(''); // El campo queda en blanco
-            $("#enviarMensajeDesdePerfilModal").modal('hide');        // Se oculta el modal
-        });
-        */
-
         // Al presionar "Cancelar", el campo del textarea debe quedar en blanco.
         $("#cancelar-envio-mensaje").click(function(){
             $("#lfu-asunto-mensaje").val('');
@@ -172,12 +157,6 @@ $(document).ready(function(){
         // Al presionar "Reportar usuario" se muestra el Modal para escribir el reporte.
         $("#lfu-reportar-usuario").click(function(){
             $("#reportarUsuarioModal").modal();
-        });
-
-        // Al momento de presionar "Enviar" reporte.
-        $(".modal-body").on('click', '#enviar-reporte-usuario-perfil', function (e) {
-            $(this.form).submit();              // Se envía el comentario
-            $("#reportarUsuarioModal").modal('hide');        // Se oculta el modal
         });
 
         // Al presionar "Cancelar", el campo del textarea debe quedar en blanco.

@@ -110,15 +110,19 @@
 									<i class="fa fa-paper-plane lfu-fa-icon" aria-hidden="true"></i> 
 									<a id="lfu-escribir-mensaje-desde-perfil" style="cursor:pointer">Enviar mensaje privado</a>
 								</div>
-								@if ( $reporteComprobacion->count() > 0 )
-									<i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> 
-									<span style="font-style:italic;">Tú has reportado a este usuario</span>
-								@else
-									<div class="perfil-opcion-usuario">
+								<div id="contenedor-reporte">
+									@if ( $reporteComprobacion->count() > 0 )
+									<div id="div-usuario-reportado" style="margin-bottom: 5px;">
 										<i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> 
-										<a id="lfu-reportar-usuario" style="cursor:pointer">Reportar usuario</a>
+										<span style="font-style:italic;">Tú has reportado a este usuario</span>
 									</div>
-								@endif
+									@else
+										<div class="perfil-opcion-usuario" id="div-reportar-usuario">
+											<i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> 
+											<a id="lfu-reportar-usuario" style="cursor:pointer">Reportar usuario</a>
+										</div>
+									@endif
+								</div>
 							@endif
 						@else
 							<div class="perfil-opcion-usuario">
@@ -320,7 +324,7 @@
 
 		            	var descripcionComentario = result['comentarioUsuario'].descripcion;
 		            	var fechaComentario = ((result['comentarioUsuario'].fecha.date).split(' ')[0]).match(/([^T]+)/)[0].split("-").reverse().join("/");
-		            	var horaComentario = ((result['comentarioUsuario'].fecha.date).split(' ')[1]).substring(0,8);;
+		            	var horaComentario = ((result['comentarioUsuario'].fecha.date).split(' ')[1]).substring(0,8);
 
 		            	console.log("Nuevo Comentario: "+descripcionComentario);
 		         		console.log("Fecha: "+fechaComentario);
@@ -438,6 +442,49 @@
             }
         });
 		// FIN de Código jQuery AJAX para Enviar Mensaje Privado desde Perfil de Usuario
+
+		// INICIO de Código jQuery AJAX para Reportar Usuario
+		$("#enviar-reporte-usuario-perfil").click(function() {
+
+		    if ($('#lfu-textarea-reporte-usuario').val().trim() === '') {
+		        $('#div-lfu-textarea-reporte').addClass('has-error');
+		        $('#mensaje-error-reporte-usuario').fadeIn();
+		    } else {
+		    	$('#div-lfu-textarea-reporte').removeClass('has-error');
+		        $('#mensaje-error-reporte-usuario').hide();
+		       	var id_usuario = {{ $usuarioPerfil->id }};
+	            var form = $('#formulario-reportar-usuario');
+	            var url = form.attr('action').replace(':USER_ID', id_usuario);
+	            var data = form.serialize();
+
+	            var cargando = $("#lfu-cargando-envio-reporte-usuario");
+
+				$(document).ajaxStart(function() {
+					cargando.show();
+				});
+
+				$(document).ajaxStop(function() {
+					cargando.hide();
+				});
+
+	            $.post(url, data, function(result) {
+	            	if ( result['reportado'] === true) {
+	            		var mensajeReporte = '<div style="margin-bottom:5px;"><i class="fa fa-flag lfu-fa-icon" aria-hidden="true"></i> <span style="font-style:italic;">Tú has reportado a este usuario</span></div>'
+						$("#reportarUsuarioModal").modal('hide'); // Se oculta el modal
+		            	$("#lfu-textarea-reporte-usuario").val('');
+		            	$("#div-reportar-usuario").fadeOut();
+		            	$("#contenedor-reporte").prepend(mensajeReporte);
+		            	toastr.success('Has reportado a {{ $usuarioPerfil->nickname }}');
+	            	} else {
+	            		toastr.error('Error.');
+	            	}
+	            })
+				.fail(function(jqXHR, textStatus, errorThrown) {
+				    toastr.error('Error.');
+				});
+		    }
+	    });
+		// FIN de Código jQuery AJAX para Reportar Usuario
 
 	</script>
 	@endif

@@ -212,36 +212,41 @@ class UsuarioController extends Controller
         } else {
             return response()->json(array('insertado'=> false));
         }
-        
     }
 
     // Método para registrar el reporte realizado sobre un usuario.
     public function reportar(Request $request, $id_usuario)
     {
         $this->validate($request, ['descripcion-reporte' => 'required|string']);
+        
+        $reportante = Auth::User();
 
-        try {
-            $reportante = Auth::User();
-            $reporteComprobacion = UsuarioReportado::where('usuario_reportado_id', $id_usuario)
-                                    ->where('usuario_reportante_id', $reportante->id)
-                                    ->whereNull('usuario_admin_id')->get(); 
+        if ( $reportante ) {
+            try {
+                $reporteComprobacion = UsuarioReportado::where('usuario_reportado_id', $id_usuario)
+                                        ->where('usuario_reportante_id', $reportante->id)
+                                        ->whereNull('usuario_admin_id')->get(); 
 
-            // Si el registro es encontrado y el campo 'usuario_admin_id' es NULO, entonces el usuario autenticado
-            // ya había reportado al usuario del perfil, y este reporte aún no ha sida atendido.
-            if ( $reporteComprobacion->count() > 0 ) {
-                return redirect()->back()->with(['mensajeError' => 'Error. El reporte ya fue realizado con anterioridad.']);
-            } else {
-                $reporteUsuario = new UsuarioReportado();
-                $reporteUsuario->descripcion = $request['descripcion-reporte'];
-                $reporteUsuario->fecha_reporte = new DateTime();
-                $reporteUsuario->usuario_reportado_id = $id_usuario;
-                $reporteUsuario->usuario_reportante_id = $reportante->id; 
-                $reporteUsuario->save();
+                // Si el registro es encontrado y el campo 'usuario_admin_id' es NULO, entonces el usuario autenticado
+                // ya había reportado al usuario del perfil, y este reporte aún no ha sida atendido.
+                if ( $reporteComprobacion->count() > 0 ) {
+                    return response()->json(array('reportado'=> false));
+                } else {
+                    $reporteUsuario = new UsuarioReportado();
+                    $reporteUsuario->descripcion = $request['descripcion-reporte'];
+                    $reporteUsuario->fecha_reporte = new DateTime();
+                    $reporteUsuario->usuario_reportado_id = $id_usuario;
+                    $reporteUsuario->usuario_reportante_id = $reportante->id; 
+                    $reporteUsuario->save();
+
+                    return response()->json(['reportado'=> true], 200);
+                }
+            } catch ( \Illuminate\Database\QueryException $e) {
+                return response()->json(array('reportado'=> false));
             }
-        } catch ( \Illuminate\Database\QueryException $e) {
-            return redirect()->back()->with('mensajeError', 'El reporte no pudo ser enviado.');
+        } else {
+            return response()->json(array('reportado'=> false));
         }
-        return redirect()->back()->with(['mensaje' => "El reporte ha sido enviado exitosamente."]);
     }
 
     public function verConfiguracion(){
