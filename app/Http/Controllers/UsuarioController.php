@@ -249,7 +249,8 @@ class UsuarioController extends Controller
         }
     }
 
-    public function verConfiguracion(){
+    public function verConfiguracion()
+    {
         /* Mostrar toda la información del usuario autenticado, de modo que éste pueda
            modificar lo que crea conveniente. */
         return view ('userview.usuario.ver_configuracion', ['usuario' => Auth::User()]);
@@ -309,7 +310,7 @@ class UsuarioController extends Controller
         $imagenAlmacenada = Storage::put($imagenUbicacion, file_get_contents($imagen->getRealPath()));
 
         // Si la imagen fue almacenada...
-        if($imagenAlmacenada){
+        if ($imagenAlmacenada){
             // Se crea el thumbnail de la imagen.
             $thumbnail = Image::make($imagen->getRealPath()); // use this if you want facade style code
             $thumbnail->resize(intval(100), null, function($constraint) {
@@ -440,77 +441,54 @@ class UsuarioController extends Controller
 
     public function eliminarFavorito (Request $request, $tipo=null, $id_favorito=null)
     {
-        $usuario = Auth::user();
-
         $this->validate($request, ['tipo' => 'required', 'id_favorito' => 'required|integer']);
 
-        $tipo = $request['tipo'];
-        $id_favorito = $request['id_favorito'];
-
-        switch ($tipo) {
-            case "artista":
-                $artistaFavorito = ArtistaFavorito::find($id_favorito);
-                if ( $artistaFavorito->usuario_id === $usuario->id ) {
-                    $nombreArtista = Artista::find($artistaFavorito->artista_id);
-                    $artistaFavorito->delete();
-                    return redirect()->back()->with('mensaje', $nombreArtista->nombre.' ya no forma parte de sus artistas favoritos.');
-                } else {
-                    return redirect()->back()->with('mensajeError', 'Eliminación fallida.');
-                }
-                break;
-            case "disco":
-                $discoFavorito = DiscoFavorito::find($id_favorito);
-                if ( $discoFavorito->usuario_id === $usuario->id ) {
-                    $disco = Disco::find($discoFavorito->disco_id);
-                    $discoFavorito->delete();
-                    return redirect()->back()->with('mensaje', '"'.$disco->titulo.'" ya no forma parte de sus discos favoritos.');
-                } else {
-                    return redirect()->back()->with('mensajeError', 'Eliminación fallida.');
-                }
-                break;
-            case "cancion":
-                $cancionFavorita = CancionFavorita::find($id_favorito);
-                if ( $cancionFavorita->usuario_id === $usuario->id ) {
-                    $cancion = Cancion::find($cancionFavorita->cancion_id);
-                    $cancionFavorita->delete();
-                    return redirect()->back()->with('mensaje', '"'.$cancion->titulo.'" ya no forma parte de sus canciones favoritas.');
-                } else {
-                    return redirect()->back()->with('mensajeError', 'Eliminación fallida.');
-                }
-                break;
-        }
-
-        return redirect()->back()->with('mensajeError', 'Eliminación fallida.');
-
-        /*
         $usuario = Auth::user();
 
-        $this->validate($request, [
-            'tipo' => 'required',
-            'artista' => 'required'
-        ]);
+        if ( $usuario ) {
+            $tipo = $request['tipo'];
+            $id_favorito = $request['id_favorito'];
 
-        $tipo = $request['tipo'];
-        $id_favorito = $request['artista'];
-
-        switch ($tipo) {
-            case "artista":
-                $artistaFavorito = ArtistaFavorito::where('id', $id_favorito)->first();
-                if ( $artistaFavorito->usuario_id === $usuario->id ) {
-                    $artistaFavorito->delete();
-                } else {
-                    return redirect()->back();
-                }
-                break;
-            case "disco":
-                break;
-            case "cancion":
-                break;
-            default:
-                echo "Tipo?";
+            switch ($tipo) {
+                case "artista":
+                    $artistaFavorito = ArtistaFavorito::find($id_favorito);
+                    if ( $artistaFavorito ) {
+                        if ( $artistaFavorito->usuario_id === $usuario->id ) {
+                            $nombreArtista = Artista::find($artistaFavorito->artista_id);
+                            $artistaFavorito->delete();
+                            return response()->json(['eliminado'=> true, 'tipo' => 'artista', 'id' => $id_favorito, 'mensaje' => $nombreArtista->nombre.' ya no forma parte de tus artistas favoritos.'], 200);
+                        } else {
+                            return response()->json(array('reportado'=> false));
+                        }
+                    }
+                    break; 
+                case "disco":
+                    $discoFavorito = DiscoFavorito::find($id_favorito);
+                    if ( $discoFavorito ) {
+                        if ( $discoFavorito->usuario_id === $usuario->id ) {
+                            $disco = Disco::find($discoFavorito->disco_id);
+                            $discoFavorito->delete();
+                            return response()->json(['eliminado'=> true, 'tipo' => 'disco', 'id' => $id_favorito, 'mensaje' => '"'.$disco->titulo.'" ya no forma parte de sus discos favoritos.'], 200);
+                        } else {
+                            return response()->json(array('reportado'=> false));
+                        }
+                    }
+                    break;
+                case "cancion":
+                    $cancionFavorita = CancionFavorita::find($id_favorito);
+                    if ( $cancionFavorita ) {
+                        if ( $cancionFavorita->usuario_id === $usuario->id ) {
+                            $cancion = Cancion::find($cancionFavorita->cancion_id);
+                            $cancionFavorita->delete();
+                            return response()->json(['eliminado'=> true, 'tipo' => 'cancion', 'id' => $id_favorito, 'mensaje' => '"'.$cancion->titulo.'" ya no forma parte de sus canciones favoritas.'], 200);
+                        } else {
+                            return response()->json(array('reportado'=> false));
+                        }
+                    }
+                    break;
+            }
         }
-        return response()->json(['message' => 'Eliminado'], 200);
-        */
+        return response()->json(array('reportado'=> false));
     }
 
 

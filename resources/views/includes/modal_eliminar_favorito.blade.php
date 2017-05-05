@@ -13,9 +13,8 @@
 					<input type="hidden" name="tipo">
 					<input type="hidden" name="id_favorito">
 					<button type="button" class="btn btn-danger" id="cancelar" data-dismiss="modal">Cancelar</button>
-					<button type="submit" class="btn btn-primary" id="confirmarEliminacionFavorito" >Eliminar</button>
-				</form>
-				
+					<button type="button" class="btn btn-primary" id="confirmarEliminacionFavorito" >Eliminar</button>
+				</form>	
 			</div>
 		</div>
 	</div>

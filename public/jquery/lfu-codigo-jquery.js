@@ -175,42 +175,9 @@ $(document).ready(function(){
 
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    INICIO DE CÓDIGO PARA EL SUBMÓDULO DE CONFIGURACIÓN DE CUENTA
+    INICIO DE CÓDIGO PARA LA SECCIÓN DE FAVORITOS DEL USUARIO
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-        // Al presionar "Actualizar Contraseña" se muestra el Modal para confirmar la actualización.
-        $("#lfu-actualizarPassword").click(function(){
-            $("#actualizarPasswordModal").modal();
-        });
-
-        // Al momento de presionar "Confirmar Actualización" de la contraeña.
-        $("#enviarNuevaPassword").click(function(){
-            $("#lfu-configuracion-panel-body-password".form).submit(); 
-            $("#actualizarPasswordModal").modal('hide');                // Se oculta el modal
-        });
-
-        // Al presionar "Cancelar" la actualización de la contraseña. 
-        $("#cancelar-actualizacion").click(function(){
-            $("#password-actual").val('');
-        });
-
-        // Al presionar "X" de cerrar la actualización de la contraseña,
-        // el campo de la contraseña actual debe quedar en blanco.
-        $(".cerrar_modal_actpass").click(function(){
-            $("#lfu-password-actual").val('');
-        });
-        
-        // Al presionar "Eliminar imagen" se muestra el Modal para confirmar la eliminación.
-        $("#lfu-eliminar-imagen").click(function(){
-            $("#eliminarImagenModal").modal();
-        });
-
-        // Al momento de presionar "Eliminar" en el Modal.
-        $("#confirmarEliminacionImagen").click(function(){
-            $("lfu-form-eliminar-imagen").submit(); 
-            $("#eliminarImagenModal").modal('hide'); // Se oculta el modal
-        });
-
+/*
         // Al presionar el ícono de "Eliminar artista favorito" se muestra el Modal para confirmar la eliminación.
         $(".eliminar-artista-favorito").click(function(event){
             event.preventDefault();
@@ -251,6 +218,48 @@ $(document).ready(function(){
         $("#confirmarEliminacionFavorito").click(function(){
             $("formEliminarFavorito").submit(); 
             $("#eliminarFavoritoModal").modal('hide'); // Se oculta el modal
+        });
+*/
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    FIN DE CÓDIGO PARA LA SECCIÓN DE FAVORITOS DEL USUARIO
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    INICIO DE CÓDIGO PARA EL SUBMÓDULO DE CONFIGURACIÓN DE CUENTA
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        // Al presionar "Actualizar Contraseña" se muestra el Modal para confirmar la actualización.
+        $("#lfu-actualizarPassword").click(function(){
+            $("#actualizarPasswordModal").modal();
+        });
+
+        // Al momento de presionar "Confirmar Actualización" de la contraeña.
+        $("#enviarNuevaPassword").click(function(){
+            $("#lfu-configuracion-panel-body-password".form).submit(); 
+            $("#actualizarPasswordModal").modal('hide');                // Se oculta el modal
+        });
+
+        // Al presionar "Cancelar" la actualización de la contraseña. 
+        $("#cancelar-actualizacion").click(function(){
+            $("#password-actual").val('');
+        });
+
+        // Al presionar "X" de cerrar la actualización de la contraseña,
+        // el campo de la contraseña actual debe quedar en blanco.
+        $(".cerrar_modal_actpass").click(function(){
+            $("#lfu-password-actual").val('');
+        });
+        
+        // Al presionar "Eliminar imagen" se muestra el Modal para confirmar la eliminación.
+        $("#lfu-eliminar-imagen").click(function(){
+            $("#eliminarImagenModal").modal();
+        });
+
+        // Al momento de presionar "Eliminar" en el Modal.
+        $("#confirmarEliminacionImagen").click(function(){
+            $("lfu-form-eliminar-imagen").submit(); 
+            $("#eliminarImagenModal").modal('hide'); // Se oculta el modal
         });
 
         // Al presionar el ícono de "Eliminar mensaje" se muestra el Modal para confirmar la eliminación.
