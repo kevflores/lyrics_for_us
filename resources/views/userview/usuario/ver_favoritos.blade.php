@@ -280,17 +280,27 @@
             		var mensaje = result['mensaje'];
             		var tipo = result['tipo'];
             		var id_favorito = result['id'];
+            		var sinFavoritos = result['sinFavoritos'];
 
 					$("#eliminarFavoritoModal").modal('hide');
 
 					if (tipo == 'artista') {
 						$(".contenedor-artista-favorito").find("[data-idfavorito='" + id_favorito + "']").fadeOut();
+						if (sinFavoritos === true) {
+							alert("Yodel it!");
+						}
 					} else {
 						if (tipo == 'disco') {
 							$(".contenedor-disco-favorito").find("[data-idfavorito='" + id_favorito + "']").fadeOut();
+							if (sinFavoritos === true) {
+								alert("Yodel it!");
+							}
 						} else {
 							// tipo == cancion
 							$(".contenedor-cancion-favorita").find("[data-idfavorito='" + id_favorito + "']").fadeOut();
+							if (sinFavoritos === true) {
+								alert("Yodel it!");
+							}
 						}
 					}
 

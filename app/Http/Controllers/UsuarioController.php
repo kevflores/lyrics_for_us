@@ -456,7 +456,14 @@ class UsuarioController extends Controller
                         if ( $artistaFavorito->usuario_id === $usuario->id ) {
                             $nombreArtista = Artista::find($artistaFavorito->artista_id);
                             $artistaFavorito->delete();
-                            return response()->json(['eliminado'=> true, 'tipo' => 'artista', 'id' => $id_favorito, 'mensaje' => $nombreArtista->nombre.' ya no forma parte de tus artistas favoritos.'], 200);
+
+                            // Se verifica si el usuario no tiene más artistas favoritos para mostrar el mensaje "Aún no posees artistas favoritos." en caso de que corresponda.
+                            $artistasFavoritos = Usuario::find($usuario->id)->artistasFavoritos()->first();
+                            if ( $artistasFavoritos ) {
+                                return response()->json(['eliminado'=> true, 'tipo' => 'artista', 'id' => $id_favorito, 'mensaje' => $nombreArtista->nombre.' ya no forma parte de tus artistas favoritos.', 'sinFavoritos' => false], 200);
+                            } else {
+                                return response()->json(['eliminado'=> true, 'tipo' => 'artista', 'id' => $id_favorito, 'mensaje' => $nombreArtista->nombre.' ya no forma parte de tus artistas favoritos.', 'sinFavoritos' => true], 200);
+                            }
                         } else {
                             return response()->json(array('reportado'=> false));
                         }
